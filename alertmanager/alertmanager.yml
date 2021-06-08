@@ -1,0 +1,50 @@
+# global:
+#   slack_api_url: https://hooks.slack.com/services/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
+
+# route:
+#   receiver: 'slack'
+
+# receivers:
+# - name: 'slack'
+#   slack_configs:
+#     - username: 'Prometheus'
+#       channel: '#techtalk-prom-demo'
+#       text: "<!channel> \n {{ range .Alerts}}summary: {{ .Annotations.summary }}\n description: {{ .Annotations.description }} \n\n{{ end }}"
+# - name: 'pushover'
+#   pushover_configs:
+#     - token: ay4yuv58m9k9c11qvbbpqmpawfyko6
+#       user_key: uq2igmdbjbpz5ay2n4mc1ry7djs8yz
+#       title: Hi
+#       message: HiHi
+#       url: http://localhost:9093
+# global:
+#   slack_api_url: https://hooks.slack.com/services/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
+
+route:
+  receiver: 'slack'
+
+receivers:
+- name: 'slack'
+  webhook_configs:
+  # - message: {"groupLabels": {"scale": "up", "service": "vossibility_helloworld"}}
+    # url: 'http://scaler:8080/v1/scale-service'
+  - url: 'http://receiver-test:9245/receive'
+    send_resolved: true
+
+
+
+
+# route:
+#   group_by: ['job']
+#   group_wait: 1s
+#   group_interval: 5m
+#   repeat_interval: 12h
+#   receiver: webhook
+#   routes:
+#   - receiver: webhook
+#     continue: true  
+# receivers:
+#     - name: webhook
+#       webhook_configs:
+#       - url: 'http://localhost:9245/receive'
+#         send_resolved: true````

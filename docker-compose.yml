@@ -1,0 +1,89 @@
+version: '3.7'
+
+services:
+  helloworld:
+    image: stack-demo
+    deploy: 
+      replicas: 1
+    networks:
+      - scaler
+      - proxy
+    ports:
+      - "9090:8080"
+  
+  receiver-test:
+    image: receiver-demo
+    deploy: 
+      replicas: 1
+    networks:
+      - scaler
+      - proxy
+    ports:
+      - "9245:9245"
+  
+  scaler:
+    image: thomasjpfan/docker-scaler:${TAG:-master}
+    environment:
+      - ALERTMANAGER_ADDRESS=http://alert-manager:9093
+      - SERVER_PREFIX=/scaler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - scaler
+      - proxy
+    ports:
+      - "8080:8080"
+    deploy:
+      replicas: 1
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/scaler
+        - com.df.port=8080
+      placement:
+        constraints: [node.role == manager]
+  
+
+  prometheus:
+    image: prom/prometheus:v2.21.0
+    deploy:
+      replicas: 1
+    networks:
+      - scaler
+      - proxy
+    ports:
+      - 9000:9090
+    depends_on:
+      - alertmanager
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+  
+  alertmanager:
+    image: prom/alertmanager:v0.20.0
+    deploy:
+      replicas: 1
+    ports:
+      - 9093:9093
+    command:
+      - '--log.level=debug'
+      - '--config.file=/alertmanager.yml'
+      - '--web.external-url=http://localhost:9093/'
+    volumes:
+      - ./alertmanager/alertmanager.yml:/alertmanager.yml
+    networks:
+      - scaler
+      - proxy
+  
+
+ 
+networks:
+  scaler:
+    external: true
+  proxy:
+    external: true
+
+
+volumes:
+  prometheus-data:

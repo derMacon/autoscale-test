@@ -1,0 +1,8 @@
+### kubernetes cheat sheet:
+- `kubectl apply -f <NAME>`: apply config file
+- `kubectl get all`: get all information
+- `kubectl describe <POD-NAME>`: see pod status
+- `docker stack rm <STACK-NAME>`: remove all services from stack
+- `docker service rm <SERVICE-NAME>`: remove specific service
+- `docker stack services <STACK-NAME>`: see replica status
+- `docker stack deploy --compose-file docker-compose.yml <STACK-NAME>`: deploy stack from docker compose file
