@@ -6,9 +6,6 @@ services:
     image: bwolf/activemq-prometheus
     deploy: 
       replicas: 1
-    networks:
-      - scaler
-      - proxy
     ports:
       - "61616:61616"
       - "61613:61613"
@@ -20,9 +17,6 @@ services:
     image: stack-demo
     deploy: 
       replicas: 1
-    networks:
-      - scaler
-      - proxy
     ports:
       - "9090:8080"
   
@@ -30,9 +24,6 @@ services:
     image: receiver-demo
     deploy: 
       replicas: 1
-    networks:
-      - scaler
-      - proxy
     ports:
       - "9245:9245"
   
@@ -43,9 +34,6 @@ services:
       - SERVER_PREFIX=/scaler
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - scaler
-      - proxy
     ports:
       - "8743:8080"
       # - "8080:8080"
@@ -64,9 +52,6 @@ services:
     image: prom/prometheus:v2.21.0
     deploy:
       replicas: 1
-    networks:
-      - scaler
-      - proxy
     ports:
       - 9000:9090
     depends_on:
@@ -88,15 +73,6 @@ services:
       - '--web.external-url=http://localhost:9093/'
     volumes:
       - ./alertmanager/alertmanager.yml:/alertmanager.yml
-    networks:
-      - scaler
-      - proxy
- 
-networks:
-  scaler:
-    external: true
-  proxy:
-    external: true
 
 
 volumes:
