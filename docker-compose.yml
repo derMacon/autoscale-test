@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+
+  activemq:
+    image: bwolf/activemq-prometheus
+    deploy: 
+      replicas: 1
+    networks:
+      - scaler
+      - proxy
+    ports:
+      - "61616:61616"
+      - "61613:61613"
+      - "8161:8161"
+      - "8080:8080"
+    restart: unless-stopped
+
   helloworld:
     image: stack-demo
     deploy: 
@@ -32,14 +47,14 @@ services:
       - scaler
       - proxy
     ports:
-      - "8080:8080"
+      - "8743:8743"
     deploy:
       replicas: 1
       labels:
         - com.df.notify=true
         - com.df.distribute=true
         - com.df.servicePath=/scaler
-        - com.df.port=8080
+        - com.df.port=8743
       placement:
         constraints: [node.role == manager]
   

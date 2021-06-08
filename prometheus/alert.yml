@@ -1,6 +1,7 @@
 groups:
   - name: UpscaleAlert
     rules:
-      - alert: InstanceDown 
-        expr: up{instance="localhost:9090",job="services"} < 3 
+      - alert: TooFewConsumers 
+        expr: org_apache_activemq_Broker_TotalMessageCount > 1 
+        # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
