@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>testreceiver</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>latest</version>
     <name>testreceiver</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -49,6 +49,37 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.3</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>receiver-demo</repository>
+                    <tag>${project.version}</tag>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

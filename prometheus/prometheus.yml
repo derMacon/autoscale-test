@@ -1,6 +1,6 @@
 global:
   scrape_interval: 1s
-  scrape_timeout: 10s
+  scrape_timeout: 1s
 
 rule_files:
   - alert.yml

@@ -23,33 +23,47 @@ public class DefaultController {
     }
 
     @RequestMapping("/receive")
-    public void receiveGet() {
+    public void receiveGet(@RequestBody String jsonBody) {
         log.info("received get alert");
-        callScaleApi();
+        callScaleApi("localhost:8080");
+        callScaleApi("localhost:8743");
+        callScaleApi("scaler:8080");
+        callScaleApi("scaler:8743");
     }
 
     @PostMapping("/receive")
     public void receivePost(@RequestBody String jsonBody) {
         log.info("received post alert: {}", jsonBody);
-        callScaleApi();
+        callScaleApi("localhost:8080");
+        callScaleApi("localhost:8743");
+        callScaleApi("scaler:8080");
+        callScaleApi("scaler:8743");
     }
 
-    private void callScaleApi() {
+    private void callScaleApi(String host) {
 
-        RestTemplate restTemplate = new RestTemplate();
+        try {
 
-        String url = "http://scaler:8743/v1/scale-service";
-        String requestJson = "{" +
-                "\"groupLabels\": " +
-                "{\"scale\": \"up\", " +
-                "\"service\": \"vossibility_helloworld\"}" +
-                "}";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+            RestTemplate restTemplate = new RestTemplate();
 
-        HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
-        String answer = restTemplate.postForObject(url, entity, String.class);
-        System.out.println(answer);
+//        String url = "http://localhost:8743/v1/scale-service";
+//        String url = "http://scaler:8743/v1/scale-service";
+            String url = "http://" + host + "/v1/scale-service";
+            String requestJson = "{" +
+                    "\"groupLabels\": " +
+                    "{\"scale\": \"up\", " +
+                    "\"service\": \"vossibility_helloworld\"}" +
+                    "}";
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
+            String answer = restTemplate.postForObject(url, entity, String.class);
+            System.out.println(answer);
+            System.out.println("--------> success <--------");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
