@@ -37,7 +37,7 @@ public class DefaultController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/v1/scale-service";
+        String url = "http://scaler:8080/v1/scale-service";
         String requestJson = "{" +
                 "\"groupLabels\": " +
                 "{\"scale\": \"up\", " +
