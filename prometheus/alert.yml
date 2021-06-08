@@ -1,7 +1,7 @@
 groups:
-  - name: UpscaleAlert
+  - name: upscaleAlert
     rules:
-      - alert: TooFewConsumers 
-        expr: org_apache_activemq_Broker_TotalMessageCount > 1 
+      - alert: tooFewConsumers_lowOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount > 1 and org_apache_activemq_Broker_TotalMessageCount < 10 and org_apache_activemq_Broker_TotalConsumerCount < 3
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 

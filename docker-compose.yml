@@ -58,7 +58,6 @@ services:
       placement:
         constraints: [node.role == manager]
   
-
   prometheus:
     image: prom/prometheus:v2.21.0
     deploy:

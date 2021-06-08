@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -28,8 +29,8 @@ public class DefaultController {
     }
 
     @PostMapping("/receive")
-    public void receivePost() {
-        log.info("received post alert");
+    public void receivePost(@RequestBody String jsonBody) {
+        log.info("received post alert: {}", jsonBody);
         callScaleApi();
     }
 
