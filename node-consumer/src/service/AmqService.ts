@@ -9,14 +9,8 @@ export class AmqService {
 
 	constructor(workerService: WorkerService) {
 		this.workerService = workerService;
-
-		if (process.env.AMQ_BROKER_HOSTNAME == undefined) {
-			console.log('----------------> undefined')
-		}
-		console.log('amp queue host: ', process.env.AMQ_QUEUE_NAME!);
-
 		this.queueDestination = process.env.AMQ_QUEUE_NAME!;
-
+		
 		this.connectOptions = {
 			'host': process.env.AMQ_BROKER_HOSTNAME!,
 			'port': +process.env.AMQ_BROKER_PORT!,
