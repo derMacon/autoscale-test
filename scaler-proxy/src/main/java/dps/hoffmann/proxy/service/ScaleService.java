@@ -2,6 +2,7 @@ package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.RequestType;
 import dps.hoffmann.proxy.properties.DelegationProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  * Service that makes the actual api calls to the scaler api service
  */
 @Service
+@Slf4j
 public class ScaleService {
 
     private static final String urlFormat = "http://%s:%s%s";
@@ -21,11 +23,14 @@ public class ScaleService {
     @Autowired
     private DelegationProperties delegationProperties;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     public ScaleService(DelegationProperties delegationProperties) {
         apiUrl = String.format(urlFormat,
                 delegationProperties.getHostname(),
                 delegationProperties.getPort(),
-                delegationProperties.getLowPrioScaleEndpoint());
+                delegationProperties.getEndpoint());
     }
 
     /**
@@ -34,20 +39,21 @@ public class ScaleService {
      *                    correct request
      */
     public void scale(RequestType requestType) {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
+        String requestJson = requestType.getRequestBody(delegationProperties.getService());
+        log.info("request api url: {}", apiUrl);
+        log.info("request json: {}", requestJson);
 
+        try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            String requestJson = delegationProperties.getRequestJson();
             HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
             String answer = restTemplate.postForObject(apiUrl, entity, String.class);
-            System.out.println(answer);
-            System.out.println("--------> success <--------");
+            log.info("scaler api answer: {}", answer);
         } catch(Exception e) {
             e.printStackTrace();
         }
+
     }
 
 }

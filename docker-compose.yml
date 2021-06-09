@@ -6,6 +6,8 @@ services:
     image: bwolf/activemq-prometheus
     deploy: 
       replicas: 1
+    networks:
+      - scaler
     ports:
       - "61616:61616"
       - "61613:61613"
@@ -17,6 +19,8 @@ services:
     image: stack-demo
     deploy: 
       replicas: 1
+    networks:
+      - scaler
     ports:
       - "9090:8080"
   
@@ -24,6 +28,8 @@ services:
     image: scaler-proxy
     deploy: 
       replicas: 1
+    networks:
+      - scaler
     ports:
       - "9245:9245"
   
@@ -37,6 +43,8 @@ services:
     ports:
       - "8743:8080"
       # - "8080:8080"
+    networks:
+      - scaler
     deploy:
       replicas: 1
       labels:
@@ -56,6 +64,8 @@ services:
       - 9000:9090
     depends_on:
       - alertmanager
+    networks:
+      - scaler
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
@@ -67,6 +77,8 @@ services:
       replicas: 1
     ports:
       - 9093:9093
+    networks:
+      - scaler
     command:
       - '--log.level=debug'
       - '--config.file=/alertmanager.yml'
@@ -74,6 +86,9 @@ services:
     volumes:
       - ./alertmanager/alertmanager.yml:/alertmanager.yml
 
+networks:
+  scaler:
+    external: true
 
 volumes:
   prometheus-data:

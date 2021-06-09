@@ -28,7 +28,7 @@ receivers:
   webhook_configs:
   # - message: {"groupLabels": {"scale": "up", "service": "vossibility_helloworld"}}
     # url: 'http://scaler:8080/v1/scale-service'
-  - url: 'http://scaler-proxy:9245/receive'
+  - url: 'http://scaler-proxy:9245/delegate'
     send_resolved: true
 
 

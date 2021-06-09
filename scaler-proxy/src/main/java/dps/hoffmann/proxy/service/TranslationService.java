@@ -28,7 +28,8 @@ public class TranslationService {
      */
     public RequestType translateRequest(String jsonBody) {
         // todo maybe use ObjectMapper to translate to map ???
-        String patternStr = ".*" + fieldName + "\":(.*?),.*";
+        log.info("json body: {}", jsonBody);
+        String patternStr = ".*" + fieldName + "\":\"(.*?)\",.*";
         Pattern patternObj = Pattern.compile(patternStr);
         Matcher matcher = patternObj.matcher(jsonBody);
 
@@ -43,7 +44,7 @@ public class TranslationService {
         // todo maybe use streams
         RequestType request = null;
         for (RequestType type : RequestType.values()) {
-            if (jsonValue.equalsIgnoreCase(type.getRequestContent())) {
+            if (jsonValue.equalsIgnoreCase(type.getRequestName())) {
                 request = type;
             }
         }
