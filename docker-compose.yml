@@ -23,7 +23,45 @@ services:
       - scaler
     ports:
       - "9090:8080"
+
+  history-db:
+    image: postgres:13-alpine
+    deploy: 
+      replicas: 1
+    ports:
+      - "7004:7004"
+    command: -p 7004
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=${SUPPLIER_USER_NAME}
+      - POSTGRES_PASSWORD=${SUPPLIER_USER_PASSWORD}
+      - POSTGRES_DB=${SUPPLIER_DATABASE_NAME}
+    volumes:
+      - history-db:/var/lib/postgresql/data
+    restart: unless-stopped
   
+  supplier-backend:
+    image: supplier-backend
+    ports:
+      - "8284:8284"
+    depends_on:
+      - activemq
+      - history-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_HOST=history-db
+      - DATABASE_USER=${SCRIPT_USER_NAME}
+      - DATABASE_PASSWORD=${SCRIPT_USER_PASSWORD}
+      - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
+      - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
+      - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
+      - AMQ_BROKER_HOSTNAME=activemq
+      - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
+      - SERVER_PORT=${SUPPLIER_BACKEND_PORT}
+      - "SPRING_PROFILES_ACTIVE=prod"
+
   scaler-proxy:
     image: scaler-proxy
     deploy: 
@@ -92,3 +130,4 @@ networks:
 
 volumes:
   prometheus-data:
+  history-db:
