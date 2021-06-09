@@ -15,28 +15,11 @@ export class PersistenceService {
 | could not connect to db |\n\
 +-------------------------+\n'
 
-
-	private dbClient: PgDriver.Pool;
+	private dbClient: PgDriver.Pool | undefined = undefined;
 
 	constructor() {
-		this.dbClient = new PgDriver.Pool({
-			host: process.env.PG_HOSTNAME,
-			database: process.env.PG_DATABASE_NAME,
-			user: process.env.PG_USER_NAME,
-			max: 20,
-			idleTimeoutMillis: 30000,
-  			connectionTimeoutMillis: 2000,
-			password: process.env.PG_USER_PASSWORD,
-			port: Number(process.env.PG_DATABASE_PORT),
-		});
-
-		this.dbClient.connect(err => {
-			if (err) {
-				console.log(this.ERROR_LOG_MSG);
-			} else {
-				console.log(this.CONNECTED_LOG_MSG);
-			}
-		});
+		console.log("- db port: ", process.env.PG_DATABASE_PORT);
+		this.connectDB();
 
 		// load schema file
 		fs.readFile("./schema.sql", (error: any, data: any) => {
@@ -48,7 +31,7 @@ export class PersistenceService {
 			// let query: string = data.toString().replace(/(\r\n|\n|\r|\t)/gm, "");
 
 			// query database 
-			this.dbClient.query(query, (err, res) => {
+			this.dbClient!.query(query, (err, res) => {
 				if (err) {
 					console.error(err);
 					return;
@@ -60,6 +43,29 @@ export class PersistenceService {
 		});
 
 	}
+
+	connectDB(): void {
+		this.dbClient = new PgDriver.Pool({
+			host: process.env.PG_HOSTNAME,
+			database: process.env.PG_DATABASE_NAME,
+			user: process.env.PG_USER_NAME,
+			max: 20,
+			idleTimeoutMillis: 30000,
+  			connectionTimeoutMillis: 2000,
+			password: process.env.PG_USER_PASSWORD,
+			port: Number(process.env.PG_DATABASE_PORT),
+		});
+		
+		this.dbClient.connect(err => {
+			if (err) {
+				console.log(this.ERROR_LOG_MSG);
+				setTimeout(() => this.connectDB(), 1000);
+			} else {
+				console.log(this.CONNECTED_LOG_MSG);
+			}
+		});
+	}
+
 
 	saveResult(result: ResultWrapper): void {
 
@@ -80,7 +86,7 @@ export class PersistenceService {
 			'${this.transformDate(result.processedTimestamp!)}'
 		);`;
 
-		this.dbClient.query(query, (err, res) => {
+		this.dbClient!.query(query, (err, res) => {
 			if (err) {
 				console.error(err);
 				return;
