@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * (e.g. can be used by prometheus)
  */
 @RestController
-@RequestMapping("/benchmark")
 @Slf4j
 public class StatsController {
 
