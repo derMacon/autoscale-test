@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>UXC20120800037</MsgId>
+      <CreDtTm>2021-05-08T13:30:49.419</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1717.17</CtrlSum>
+      <InitgPty>
+        <Nm>Initiating Party Name</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>UXC20120800037R00001</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1717.17</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SDVA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2021-05-08</Dt>  
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>GL</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>AT331200000696200104</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BKAUATW0XXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>UXC20120300037I00001</InstrId>
+          <EndToEndId>UXC20120300036E00001</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">1717.17</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>HYVEDEMM047</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>DE NAME</Nm>
+          <PstlAdr>
+            <Ctry>DE</Ctry>
+            <AdrLine>Point Courrier 201</AdrLine>
+            <AdrLine>IT 91191 Gif sur Yvette</AdrLine>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE7979320075037742545600</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Unstructured Remittance Info Val enrich 17</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
