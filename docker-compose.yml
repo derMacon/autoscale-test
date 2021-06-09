@@ -20,8 +20,8 @@ services:
     ports:
       - "9090:8080"
   
-  receiver-test:
-    image: receiver-demo
+  scaler-proxy:
+    image: scaler-proxy
     deploy: 
       replicas: 1
     ports:
