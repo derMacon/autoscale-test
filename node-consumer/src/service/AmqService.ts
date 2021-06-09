@@ -9,6 +9,12 @@ export class AmqService {
 
 	constructor(workerService: WorkerService) {
 		this.workerService = workerService;
+
+		if (process.env.AMQ_BROKER_HOSTNAME == undefined) {
+			console.log('----------------> undefined')
+		}
+		console.log('amp queue host: ', process.env.AMQ_QUEUE_NAME!);
+
 		this.queueDestination = process.env.AMQ_QUEUE_NAME!;
 
 		this.connectOptions = {
@@ -28,10 +34,11 @@ export class AmqService {
 
 		stompit.connect(this.connectOptions, function(error: any, client: any) {
 			if (error) {
-				console.log('connect error ' + error.message);
+				console.log(' - amq connection error: ' + error.message);
+				setTimeout(() => that.connectBroker(), 1000)
 				return;
 			}
-	
+
 			const subscribeHeaders = {
 				'destination': that.queueDestination,
 				'ack': 'client-individual'
@@ -41,6 +48,7 @@ export class AmqService {
 				
 				if (error) {
 					console.log('subscribe error ' + error.message);
+					setTimeout(() => that.connectBroker(), 1000)
 					return;
 				}
 				
@@ -49,6 +57,8 @@ export class AmqService {
 					console.log('read message error ' + error.message);
 					return;
 				}
+
+				console.log("new message received");
 				
 				that.workerService.work(body);
 				client.ack(message);

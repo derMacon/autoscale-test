@@ -6,14 +6,10 @@ import { XsdChecker } from './utils/XsdChecker';
 
 require('dotenv').config();
 
-// let workerService: WorkerService = new WorkerService(
-// 	new XsdChecker(),
-// 	new ElementExtractor(),
-// 	new PersistenceService()
-// );
-
-// new AmqService(workerService).connectBroker();
-
-
+let workerService: WorkerService = new WorkerService(
+	new XsdChecker(),
+	new ElementExtractor(),
 	new PersistenceService()
-	// console.log("test")
+);
+
+new AmqService(workerService).connectBroker();
