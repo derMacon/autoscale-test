@@ -14,28 +14,6 @@ services:
       - "8161:8161"
       - "8080:8080"
     restart: unless-stopped
-
-  # env-test:
-  #   image: env-test
-  #   deploy: 
-  #     replicas: 1
-  #   networks:
-  #     - scaler
-  #   environment:
-  #     - "SPRING_PROFILES_ACTIVE=prod"
-  #     - TESTVAL=${TESTVAL}
-  #   ports:
-  #     - "9933:9933"
-
-
-  helloworld:
-    image: stack-demo
-    deploy: 
-      replicas: 1
-    networks:
-      - scaler
-    ports:
-      - "9090:8080"
   
   pgadmin:
     image: dpage/pgadmin4
@@ -89,8 +67,8 @@ services:
       - scaler
     environment:
       - DATABASE_HOST=history-db
-      - DATABASE_USER=${SCRIPT_USER_NAME}
-      - DATABASE_PASSWORD=${SCRIPT_USER_PASSWORD}
+      - DATABASE_USER=${SUPPLIER_USER_NAME}
+      - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
       - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
       - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
       - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
@@ -98,67 +76,6 @@ services:
       - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
       - SERVER_PORT=${SUPPLIER_BACKEND_PORT}
       - "SPRING_PROFILES_ACTIVE=prod"
-
-  scaler-proxy:
-    image: scaler-proxy
-    deploy: 
-      replicas: 1
-    networks:
-      - scaler
-    ports:
-      - "9245:9245"
-  
-  scaler:
-    image: thomasjpfan/docker-scaler:${TAG:-master}
-    environment:
-      - ALERTMANAGER_ADDRESS=http://alert-manager:9093
-      - SERVER_PREFIX=/scaler
-      - DEFAULT_MAX_REPLICAS=50
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "8743:8080"
-      # - "8080:8080"
-    networks:
-      - scaler
-    deploy:
-      replicas: 1
-      labels:
-        - com.df.notify=true
-        - com.df.distribute=true
-        - com.df.servicePath=/scaler
-        - com.df.port=8080
-        # - com.df.port=8743
-      placement:
-        constraints: [node.role == manager]
-
-  alertmanager:
-    image: prom/alertmanager:v0.20.0
-    deploy:
-      replicas: 1
-    ports:
-      - 9093:9093
-    networks:
-      - scaler
-    command:
-      - '--log.level=debug'
-      - '--config.file=/alertmanager.yml'
-      - '--web.external-url=http://localhost:9093/'
-    volumes:
-      - ./alertmanager/alertmanager.yml:/alertmanager.yml
-  
-  prometheus:
-    image: prom/prometheus:v2.21.0
-    deploy:
-      replicas: 1
-    ports:
-      - 9000:9090
-    networks:
-      - scaler
-    volumes:
-      - ./prometheus:/etc/prometheus
-      - prometheus-data:/prometheus
-    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
 
   supplier-frontend:
     image: supplier-frontend:latest
@@ -193,6 +110,72 @@ services:
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
       - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
   
+  scaler-proxy:
+    image: scaler-proxy
+    deploy: 
+      replicas: 1
+    networks:
+      - scaler
+    ports:
+      - "9245:9245"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - DATABASE_HOST=history-db
+      - DATABASE_USER=${SUPPLIER_USER_NAME}
+      - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
+      - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
+      - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
+  
+  scaler:
+    image: thomasjpfan/docker-scaler:${TAG:-master}
+    environment:
+      - ALERTMANAGER_ADDRESS=http://alert-manager:9093
+      - SERVER_PREFIX=/scaler
+      - DEFAULT_MAX_REPLICAS=50
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8743:8080"
+    networks:
+      - scaler
+    deploy:
+      replicas: 1
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/scaler
+        - com.df.port=8080
+      placement:
+        constraints: [node.role == manager]
+
+  alertmanager:
+    image: prom/alertmanager:v0.20.0
+    deploy:
+      replicas: 1
+    ports:
+      - 9093:9093
+    networks:
+      - scaler
+    command:
+      - '--log.level=debug'
+      - '--config.file=/alertmanager.yml'
+      - '--web.external-url=http://localhost:9093/'
+    volumes:
+      - ./data/alertmanager/alertmanager.yml:/alertmanager.yml
+  
+  prometheus:
+    image: prom/prometheus:v2.21.0
+    deploy:
+      replicas: 1
+    ports:
+      - 9000:9090
+    networks:
+      - scaler
+    volumes:
+      - ./data/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+
   grafana:
     image: grafana/grafana:latest
     container_name: monitoring_grafana

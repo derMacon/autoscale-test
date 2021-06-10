@@ -1,0 +1,109 @@
+version: '3'
+
+services:
+
+  activemq:
+    image: rmohr/activemq:5.14.0-alpine
+    container_name: activemq 
+    ports:
+      - "${AMQ_TCP_PORT}:61616"
+      - "${AMQ_STOMP_PORT}:61613"
+      - "${AMQ_WEB_PORT}:8161"
+    restart: unless-stopped
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+    ports:
+      - "${PGADMIN_LISTEN_PORT}:5050"
+
+  script-db:
+    image: postgres:13-alpine
+    container_name: script-db
+    ports:
+      - "${SCRIPT_DATABASE_PORT}:${SCRIPT_DATABASE_PORT}"
+    command: -p ${SCRIPT_DATABASE_PORT}
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=${SCRIPT_USER_NAME}
+      - POSTGRES_PASSWORD=${SCRIPT_USER_PASSWORD}
+      - POSTGRES_DB=${SCRIPT_DATABASE_NAME}
+    volumes:
+      - script-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  history-db:
+    image: postgres:13-alpine
+    container_name: history-db
+    ports:
+      - "${SUPPLIER_DATABASE_PORT}:${SUPPLIER_DATABASE_PORT}"
+    command: -p ${SUPPLIER_DATABASE_PORT}
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=${SUPPLIER_USER_NAME}
+      - POSTGRES_PASSWORD=${SUPPLIER_USER_PASSWORD}
+      - POSTGRES_DB=${SUPPLIER_DATABASE_NAME}
+    volumes:
+      - history-db:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  supplier-backend:
+    image: supplier-backend
+    container_name: supplier-backend
+    ports:
+      - "${SUPPLIER_BACKEND_PORT}:${SUPPLIER_BACKEND_PORT}"
+    depends_on:
+      - activemq
+      - history-db
+    restart: unless-stopped
+    environment:
+      - DATABASE_HOST=history-db
+      - DATABASE_USER=${SCRIPT_USER_NAME}
+      - DATABASE_PASSWORD=${SCRIPT_USER_PASSWORD}
+      - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
+      - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
+      - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
+      - AMQ_BROKER_HOSTNAME=activemq
+      - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
+      - SERVER_PORT=${SUPPLIER_BACKEND_PORT}
+      - "SPRING_PROFILES_ACTIVE=prod"
+      
+  supplier-frontend:
+    image: supplier-frontend:latest
+    container_name: supplier-frontend
+    build: supplier-frontend/
+    ports:
+      - "${SUPPLIER_FRONTEND_PORT}:80"
+    depends_on:
+      - supplier-backend
+    restart: unless-stopped
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - API_HOSTNAME=supplier-backend
+      - API_PORT=${SUPPLIER_BACKEND_PORT}
+
+  node-consumer:
+    image: node-consumer:latest
+    container_name: node-consumer
+    build: node-consumer/
+    depends_on:
+      - activemq
+      - script-db
+    restart: unless-stopped
+    environment: 
+      - PG_HOSTNAME=script-db
+      - AMQ_BROKER_HOSTNAME=activemq
+      - PG_DATABASE_NAME=${SCRIPT_DATABASE_NAME}
+      - PG_DATABASE_PORT=${SCRIPT_DATABASE_PORT}
+      - PG_USER_NAME=${SCRIPT_USER_NAME}
+      - PG_USER_PASSWORD=${SCRIPT_USER_PASSWORD}
+      - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
+      - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
+
+volumes:
+  script-db:
+  history-db:

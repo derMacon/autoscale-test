@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.controller;
 
 import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.service.PersistenceService;
 import dps.hoffmann.proxy.service.ScaleService;
 import dps.hoffmann.proxy.service.TranslationService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class DefaultController {
     @Autowired
     private ScaleService scaleService;
 
+    @Autowired
+    private PersistenceService persistenceService;
+
 
     /**
      * Liveness probe, can be used by metric scrapers like prometheus to
@@ -49,6 +53,7 @@ public class DefaultController {
         log.info("delegation endpoint called");
         RequestType type = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", type);
+        persistenceService.save(type);
         scaleService.scale(type);
     }
 
@@ -57,49 +62,49 @@ public class DefaultController {
 
     // todo old stuff - delete this
 
-    @RequestMapping("/receive")
-    public void receiveGet(@RequestBody String jsonBody) {
-        log.info("received get alert");
-        callScaleApiOld("localhost:8080");
-        callScaleApiOld("localhost:8743");
-        callScaleApiOld("scaler:8080");
-        callScaleApiOld("scaler:8743");
-    }
-
-    @PostMapping("/receive")
-    public void receivePost(@RequestBody String jsonBody) {
-        log.info("received post alert: {}", jsonBody);
-        callScaleApiOld("localhost:8080");
-        callScaleApiOld("localhost:8743");
-        callScaleApiOld("scaler:8080");
-        callScaleApiOld("scaler:8743");
-    }
-
-    private void callScaleApiOld(String host) {
-
-        try {
-
-            RestTemplate restTemplate = new RestTemplate();
-
-//        String url = "http://localhost:8743/v1/scale-service";
-//        String url = "http://scaler:8743/v1/scale-service";
-            String url = "http://" + host + "/v1/scale-service";
-            log.info("url: {}", url);
-            String requestJson = "{" +
-                    "\"groupLabels\": " +
-                    "{\"scale\": \"up\", " +
-                    "\"service\": \"vossibility_helloworld\"}" +
-                    "}";
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
-            String answer = restTemplate.postForObject(url, entity, String.class);
-            System.out.println(answer);
-            System.out.println("--------> success <--------");
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @RequestMapping("/receive")
+//    public void receiveGet(@RequestBody String jsonBody) {
+//        log.info("received get alert");
+//        callScaleApiOld("localhost:8080");
+//        callScaleApiOld("localhost:8743");
+//        callScaleApiOld("scaler:8080");
+//        callScaleApiOld("scaler:8743");
+//    }
+//
+//    @PostMapping("/receive")
+//    public void receivePost(@RequestBody String jsonBody) {
+//        log.info("received post alert: {}", jsonBody);
+//        callScaleApiOld("localhost:8080");
+//        callScaleApiOld("localhost:8743");
+//        callScaleApiOld("scaler:8080");
+//        callScaleApiOld("scaler:8743");
+//    }
+//
+//    private void callScaleApiOld(String host) {
+//
+//        try {
+//
+//            RestTemplate restTemplate = new RestTemplate();
+//
+////        String url = "http://localhost:8743/v1/scale-service";
+////        String url = "http://scaler:8743/v1/scale-service";
+//            String url = "http://" + host + "/v1/scale-service";
+//            log.info("url: {}", url);
+//            String requestJson = "{" +
+//                    "\"groupLabels\": " +
+//                    "{\"scale\": \"up\", " +
+//                    "\"service\": \"vossibility_helloworld\"}" +
+//                    "}";
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//            HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
+//            String answer = restTemplate.postForObject(url, entity, String.class);
+//            System.out.println(answer);
+//            System.out.println("--------> success <--------");
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }
