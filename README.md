@@ -14,7 +14,7 @@ Project to showcase the general approach of processing an instant payment provid
 - **grafana**: displays the metrics scraped by the prometheus component
 
 ### Dashboard
-![dashboard](./_docs/img/dashbaord01.png)
+![dashboard](./_docs/img/dashboard01.png)
 
 ### Useful cli commands
 - `docker stack rm vossibility && docker stack deploy --compose-file docker-compose.yml vossibility`
