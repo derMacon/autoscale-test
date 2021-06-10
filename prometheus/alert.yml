@@ -1,7 +1,10 @@
 groups:
-  - name: upscaleAlert
+  - name: scaleAlert
     rules:
-      - alert: tooFewConsumers_lowOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount > 1 and org_apache_activemq_Broker_TotalMessageCount < 10 and org_apache_activemq_Broker_TotalConsumerCount < 3
+      - alert: tooFewConsumers_smallOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount > 10 and org_apache_activemq_Broker_TotalMessageCount < 50 and org_apache_activemq_Broker_TotalConsumerCount < 2
         # expr: up{instance="localhost:9090",job="services"} < 3 
+        for: 0m 
+      - alert: tooManyConsumers_smallOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount < 11 and org_apache_activemq_Broker_TotalConsumerCount > 1
         for: 0m 

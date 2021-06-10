@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @Getter
 public class DelegationProperties {
 
+    private static final String requestJsonFormat = "{" +
+            "\"groupLabels\": " +
+            "{\"scale\": \"up\", " +
+            "\"service\": \"%s\"}" +
+            "}";
+
     @Value("${delegation.hostname}")
     private String hostname;
 
@@ -21,4 +27,7 @@ public class DelegationProperties {
     @Value("${delegation.service}")
     private String service;
 
+    public String getRequestBody() {
+        return String.format(requestJsonFormat, service);
+    }
 }

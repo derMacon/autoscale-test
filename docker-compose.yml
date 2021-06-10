@@ -113,6 +113,7 @@ services:
     environment:
       - ALERTMANAGER_ADDRESS=http://alert-manager:9093
       - SERVER_PREFIX=/scaler
+      - DEFAULT_MAX_REPLICAS=50
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -164,6 +165,8 @@ services:
     networks:
       - scaler
     build: supplier-frontend/
+    deploy:
+      replicas: 1
     ports:
       - "${SUPPLIER_FRONTEND_PORT}:80"
     restart: unless-stopped
@@ -178,6 +181,8 @@ services:
       - scaler
     build: node-consumer/
     restart: unless-stopped
+    deploy:
+      replicas: 1
     environment: 
       - PG_HOSTNAME=script-db
       - AMQ_BROKER_HOSTNAME=activemq

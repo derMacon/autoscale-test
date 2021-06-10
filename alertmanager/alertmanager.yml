@@ -22,6 +22,9 @@
 
 route:
   receiver: 'slack'
+  group_wait: 1s
+  group_interval: 1s
+  repeat_interval: 10s
 
 receivers:
 - name: 'slack'
@@ -29,7 +32,7 @@ receivers:
   # - message: {"groupLabels": {"scale": "up", "service": "vossibility_helloworld"}}
     # url: 'http://scaler:8080/v1/scale-service'
   - url: 'http://scaler-proxy:9245/delegate'
-    send_resolved: true
+    send_resolved: false
 
 
 

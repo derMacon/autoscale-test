@@ -1,4 +1,3 @@
-import { waitForDebugger } from 'inspector';
 import { WorkerService } from './WorkerService';
 const stompit = require('stompit');
 

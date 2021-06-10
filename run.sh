@@ -9,5 +9,5 @@ mvn -f scaler-proxy/pom.xml clean package -DskipTests
 echo 'create network'
 docker network create scaler
 
-./parseStackConfig
+./parseStackConfig.sh
 

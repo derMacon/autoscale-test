@@ -39,10 +39,18 @@ public class ScaleService {
      *                    correct request
      */
     public void scale(RequestType requestType) {
-        String requestJson = requestType.getRequestBody(delegationProperties.getService());
+        String serviceToScale = delegationProperties.getService();
+        String requestJson = requestType.getRequestJson(serviceToScale);
+
         log.info("request api url: {}", apiUrl);
         log.info("request json: {}", requestJson);
 
+        for (int i = 0; i < requestType.getInterval(); i++) {
+            sendRequest(requestJson);
+        }
+    }
+
+    private void sendRequest(String requestJson) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -53,7 +61,6 @@ public class ScaleService {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
