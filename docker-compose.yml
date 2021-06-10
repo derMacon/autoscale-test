@@ -192,7 +192,19 @@ services:
       - PG_USER_PASSWORD=${SCRIPT_USER_PASSWORD}
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
       - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
-
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring_grafana
+    restart: unless-stopped
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    networks:
+      - scaler
+    ports:
+      - 3000:3000
 
 networks:
   scaler:
