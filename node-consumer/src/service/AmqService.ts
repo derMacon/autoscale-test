@@ -1,3 +1,4 @@
+import { waitForDebugger } from 'inspector';
 import { WorkerService } from './WorkerService';
 const stompit = require('stompit');
 
@@ -55,11 +56,19 @@ export class AmqService {
 				console.log("new message received");
 				
 				that.workerService.work(body);
+				that.wait(3000)
 				client.ack(message);
 				// client.disconnect();
 				});
 			});
 		});
 	}
-	
+
+	wait(ms: any){
+		var start = new Date().getTime();
+		var end = start;
+		while(end < start + ms) {
+		  	end = new Date().getTime();
+	   	}
+	}
 }

@@ -14,15 +14,22 @@ export class WorkerService {
 	) {}
 
 	work(msgBody: string): void {
-		let payment: PaymentMessage = JSON.parse(msgBody);
-		let result: ResultWrapper = new ResultWrapper(payment);
+		let payment: PaymentMessage | undefined = undefined;
+		try {
+			payment = JSON.parse(msgBody);
+		} catch(e: any) {
+			console.log('input is not valid json, message will be taken out of the queue regardless')
+			return;
+		}
 
-		console.log(`batch ${payment.batchId} - new payment`)
+		let result: ResultWrapper = new ResultWrapper(payment!);
 
-		if (this.xsdChecker.isValidXml(payment)) {
+		console.log(`batch ${payment!.batchId} - new payment`)
+
+		if (this.xsdChecker.isValidXml(payment!)) {
 			console.log(" -> xsd checker: valid xml");
 
-			let extractedElement: string = this.elemExtractor.extract(payment);
+			let extractedElement: string = this.elemExtractor.extract(payment!);
 
 			result.appendProcessedTimestamp(new Date())
 					.appendExtractedElem(extractedElement);
