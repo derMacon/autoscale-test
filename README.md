@@ -17,7 +17,7 @@ Project to showcase the general approach of processing an instant payment provid
 ![dashboard](./_docs/img/dashboard01.png)
 
 ### Benchmark Request Form
-![form](./_docs/img/react01.png)
+![form](./_docs/img/react01.PNG)
 
 ### Useful cli commands
 - `docker stack rm vossibility && docker stack deploy --compose-file docker-compose.yml vossibility`
