@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.properties.DelegationProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -35,10 +37,12 @@ public class ScaleService {
 
     /**
      * Makes the call to the scaler service with the appropriate request body
-     * @param requestType type of the request, will be tranlslated to the
-     *                    correct request
+     * @param instruction holds information about the type of the request,
+     *                   will be translated to the correct request
      */
-    public void scale(RequestType requestType) {
+    @Transactional
+    public void scale(ScalingInstruction instruction) {
+        RequestType requestType = instruction.getRequestType();
         String serviceToScale = delegationProperties.getService();
         String requestJson = requestType.getRequestJson(serviceToScale);
 

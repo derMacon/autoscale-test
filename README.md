@@ -25,3 +25,8 @@ Project to showcase the general approach of processing an instant payment provid
 - `docker service rm <SERVICE-NAME>`
 - `docker service update --force vossibility_prometheus`
 - `docker service logs vossibility_prometheus`
+
+### Todos
+- timestamps in wrong timezone (proxy service)
+- javadoc proxy service
+- fix indent in node project

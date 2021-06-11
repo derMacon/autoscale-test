@@ -2,6 +2,7 @@ package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.exception.InvalidJsonException;
 import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.model.ScalingInstruction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class TranslationService {
      * @param jsonBody request body comming from the prometheus / alertmanager
      * @return enum member representing request type
      */
-    public RequestType translateRequest(String jsonBody) {
+    public ScalingInstruction translateRequest(String jsonBody) {
         // todo maybe use ObjectMapper to translate to map ???
         log.info("json body: {}", jsonBody);
         String patternStr = ".*" + fieldName + "\":\"(.*?)\",.*";
@@ -42,20 +43,20 @@ public class TranslationService {
         String jsonValue = matcher.group(1);
 
         // todo maybe use streams
-        RequestType request = null;
+        RequestType requestType = null;
         for (RequestType type : RequestType.values()) {
             if (jsonValue.equalsIgnoreCase(type.getRequestName())) {
-                request = type;
+                requestType = type;
             }
         }
 
-        if (request == null) {
+        if (requestType == null) {
             String error = "could not find type for json value: " + jsonValue;
             log.error(error);
             throw new InvalidJsonException(error);
         }
 
-        return request;
+        return new ScalingInstruction(requestType);
     }
 
 }

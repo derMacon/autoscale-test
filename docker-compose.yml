@@ -23,6 +23,8 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     ports:
       - "${PGADMIN_LISTEN_PORT}:5050"
 
@@ -60,6 +62,7 @@ services:
     
   supplier-backend:
     image: supplier-backend
+    build: supplier-backend/
     ports:
       - "${SUPPLIER_BACKEND_PORT}:${SUPPLIER_BACKEND_PORT}"
     restart: unless-stopped
@@ -78,10 +81,10 @@ services:
       - "SPRING_PROFILES_ACTIVE=prod"
 
   supplier-frontend:
-    image: supplier-frontend:latest
+    image: supplier-frontend
+    build: supplier-frontend/
     networks:
       - scaler
-    build: supplier-frontend/
     deploy:
       replicas: 1
     ports:
@@ -112,6 +115,7 @@ services:
   
   scaler-proxy:
     image: scaler-proxy
+    build: scaler-proxy/
     deploy: 
       replicas: 1
     networks:
@@ -178,7 +182,6 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: monitoring_grafana
     restart: unless-stopped
     links:
       - prometheus:prometheus
@@ -195,5 +198,6 @@ networks:
 
 volumes:
   prometheus-data:
+  pgadmin-data:
   history-db:
   script-db:
