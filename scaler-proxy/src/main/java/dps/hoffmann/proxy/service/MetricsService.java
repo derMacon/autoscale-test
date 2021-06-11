@@ -65,9 +65,17 @@ public class MetricsService {
     }
 
     private static int calcAverage(List<Integer> nums) {
+//        return nums.isEmpty()
+//                ? 0
+//                : (int)(nums.stream().mapToInt(e -> e.intValue()).average().getAsDouble());
+
+        int out = 0;
+        for (int curr : nums) {
+            out += curr;
+        }
         return nums.isEmpty()
                 ? 0
-                : (int)(nums.stream().mapToInt(e -> e.intValue()).average().getAsDouble());
+                : out / nums.size();
     }
 
     private static double round(double value, int precision) {

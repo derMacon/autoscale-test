@@ -1,7 +1,7 @@
 route:
   receiver: 'slack'
   group_wait: 1s
-  group_interval: 1s
+  group_interval: 30s
   repeat_interval: 30s
 
 receivers:

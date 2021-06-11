@@ -29,8 +29,7 @@ Project to showcase the general approach of processing an instant payment provid
 - `docker service logs vossibility_prometheus`
 
 ### Todos
-- create powerpoint 
-- calculate average start time
+- average start time seems kind of off
 - timestamps in wrong timezone (proxy service)
 - javadoc proxy service
 - fix indent in node project
