@@ -16,29 +16,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class RequestService {
 
-//    @Autowired
-//    private TranslationService translationService;
-//
-//    @Autowired
-//    private ScaleService scaleService;
-//
-//    @Autowired
-//    private PersistenceService persistenceService;
-//
-//    @Autowired
+    @Autowired
+    private TranslationService translationService;
+
+    @Autowired
+    private ScaleService scaleService;
+
+    @Autowired
+    private PersistenceService persistenceService;
+
     private MeterRegistry meterRegistry;
 
     public RequestService(MeterRegistry meterRegistry) {
 //        meterRegistry.counter("scalingtime.up")
-        meterRegistry.gauge("scalingtime.up", 42);
+//        meterRegistry.gauge("scalingtime.up", 42);
+        meterRegistry.gauge("scalingtime.node.up.small", 42);
+        meterRegistry.gauge("scalingtime.node.up.medium", 56);
+        meterRegistry.gauge("scalingtime.node.up.large", 78);
+        meterRegistry.gauge("scalingtime.node.down.small", 22);
+        meterRegistry.gauge("scalingtime.node.down.medium", 34);
+        meterRegistry.gauge("scalingtime.node.down.large", 32);
     }
 
-//    @Transactional
-//    public void delegate(String jsonBody) {
-//        log.info("delegation endpoint called");
-//        ScalingInstruction instruction = translationService.translateRequest(jsonBody);
-//        log.info("translated request type from json body: {}", instruction);
-//        scaleService.scale(instruction);
-//        persistenceService.save(instruction);
-//    }
+    @Transactional
+    public void delegate(String jsonBody) {
+        log.info("delegation endpoint called");
+        ScalingInstruction instruction = translationService.translateRequest(jsonBody);
+        log.info("translated request type from json body: {}", instruction);
+        scaleService.scale(instruction);
+        persistenceService.save(instruction);
+    }
 }

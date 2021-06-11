@@ -1,7 +1,11 @@
 import { WorkerService } from './WorkerService';
 const stompit = require('stompit');
 
+/**
+ * Service handling all broker communication
+ */
 export class AmqService {
+	
 	private workerService: WorkerService;
 
 	private queueDestination: string; 
