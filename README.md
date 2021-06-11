@@ -1,5 +1,7 @@
 # Instant Payment Demo
 
+![overview](./_docs/slides/overview.png)
+
 Project to showcase the general approach of processing an instant payment provided by the DPS Gmbh. The focus of the project is to monitor the duration it takes for a swarm of containers to start completely. When confronted with multiple unacknowledged messages the project will scale the consumer components appropriate to the number of messages.
 
 ### Components
