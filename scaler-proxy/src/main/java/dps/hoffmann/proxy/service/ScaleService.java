@@ -26,6 +26,9 @@ public class ScaleService {
     private DelegationProperties delegationProperties;
 
     @Autowired
+    private PersistenceService persistenceService;
+
+    @Autowired
     private RestTemplate restTemplate;
 
     public ScaleService(DelegationProperties delegationProperties) {
@@ -49,9 +52,11 @@ public class ScaleService {
         log.info("request api url: {}", apiUrl);
         log.info("request json: {}", requestJson);
 
-        for (int i = 0; i < requestType.getInterval(); i++) {
+        for (int i = 0; i < requestType.getScalingInterval(); i++) {
             sendRequest(requestJson);
         }
+
+        persistenceService.save(instruction);
     }
 
     private void sendRequest(String requestJson) {

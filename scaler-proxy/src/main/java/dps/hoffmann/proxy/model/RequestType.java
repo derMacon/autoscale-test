@@ -37,12 +37,12 @@ public enum RequestType {
             "}";
 
     private final String requestName;
-    private final ScalingDirection dir;
-    private final int interval;
+    private final ScalingDirection scalingDir;
+    private final int scalingInterval;
 
 
     public String getRequestJson(String serviceName) {
-        return String.format(requestJsonFormat, dir.name().toLowerCase(), serviceName);
+        return String.format(requestJsonFormat, scalingDir.name().toLowerCase(), serviceName);
     }
 
 }

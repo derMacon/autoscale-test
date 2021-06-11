@@ -1,10 +1,12 @@
 package dps.hoffmann.proxy.model;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.With;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,10 +18,12 @@ import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@With
 public class ScalingInstruction {
 
     public ScalingInstruction(RequestType requestType) {

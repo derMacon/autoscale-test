@@ -1,7 +1,6 @@
 package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.ScalingInstruction;
-import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,20 +22,18 @@ public class RequestService {
     private ScaleService scaleService;
 
     @Autowired
-    private PersistenceService persistenceService;
+    private MetricsService metricsService;
 
-    private MeterRegistry meterRegistry;
-
-    public RequestService(MeterRegistry meterRegistry) {
-//        meterRegistry.counter("scalingtime.up")
-//        meterRegistry.gauge("scalingtime.up", 42);
-        meterRegistry.gauge("scalingtime.node.up.small", 42);
-        meterRegistry.gauge("scalingtime.node.up.medium", 56);
-        meterRegistry.gauge("scalingtime.node.up.large", 78);
-        meterRegistry.gauge("scalingtime.node.down.small", 22);
-        meterRegistry.gauge("scalingtime.node.down.medium", 34);
-        meterRegistry.gauge("scalingtime.node.down.large", 32);
-    }
+//    private MeterRegistry meterRegistry;
+//
+//    public RequestService(MeterRegistry meterRegistry) {
+//        meterRegistry.gauge("scalingtime.node.up.small", 42);
+//        meterRegistry.gauge("scalingtime.node.up.medium", 56);
+//        meterRegistry.gauge("scalingtime.node.up.large", 78);
+//        meterRegistry.gauge("scalingtime.node.down.small", 22);
+//        meterRegistry.gauge("scalingtime.node.down.medium", 34);
+//        meterRegistry.gauge("scalingtime.node.down.large", 32);
+//    }
 
     @Transactional
     public void delegate(String jsonBody) {
@@ -44,6 +41,7 @@ public class RequestService {
         ScalingInstruction instruction = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", instruction);
         scaleService.scale(instruction);
-        persistenceService.save(instruction);
+        metricsService.updateMetrics();
     }
+
 }

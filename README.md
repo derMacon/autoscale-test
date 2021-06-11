@@ -27,8 +27,11 @@ Project to showcase the general approach of processing an instant payment provid
 - `docker service logs vossibility_prometheus`
 
 ### Todos
+- create powerpoint 
 - calculate average start time
 - timestamps in wrong timezone (proxy service)
 - javadoc proxy service
 - fix indent in node project
 - lint code checks on all project
+- spring backend add randome field requests
+- spring api add option to create waves of requests

@@ -50,6 +50,7 @@ public class DefaultController {
     @Transactional
     @PostMapping("/delegate")
     public void delegate(@RequestBody String jsonBody) {
+        log.info("called delegation endpoint");
         requestService.delegate(jsonBody);
     }
 
