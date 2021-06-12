@@ -8,12 +8,14 @@ export class AmqService {
 	
 	private workerService: WorkerService;
 
-	private queueDestination: string; 
+	private payQueueDestination: string; 
+	private ackQueueDestination: string; 
 	private connectOptions: any;
 
 	constructor(workerService: WorkerService) {
 		this.workerService = workerService;
-		this.queueDestination = process.env.AMQ_QUEUE_NAME!;
+		this.payQueueDestination = process.env.AMQ_PAY_QUEUE_NAME!;
+		this.ackQueueDestination = process.env.AMQ_ACK_QUEUE_NAME!;
 		
 		this.connectOptions = {
 			'host': process.env.AMQ_BROKER_HOSTNAME!,
@@ -37,8 +39,17 @@ export class AmqService {
 				return;
 			}
 
+			const sendHeaders = {
+				'destination': that.ackQueueDestination,
+				'content-type': 'text/plain'
+			};
+			
+			const frame = client.send(sendHeaders);
+			frame.write('acknowledge_startup');
+			frame.end()
+
 			const subscribeHeaders = {
-				'destination': that.queueDestination,
+				'destination': that.payQueueDestination,
 				'ack': 'client-individual'
 			};
 			

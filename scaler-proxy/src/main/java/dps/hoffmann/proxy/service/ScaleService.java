@@ -43,7 +43,6 @@ public class ScaleService {
      * @param instruction holds information about the type of the request,
      *                   will be translated to the correct request
      */
-    @Transactional
     public void scale(ScalingInstruction instruction) {
         RequestType requestType = instruction.getRequestType();
         String serviceToScale = delegationProperties.getService();

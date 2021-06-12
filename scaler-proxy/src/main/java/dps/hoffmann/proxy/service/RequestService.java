@@ -24,24 +24,16 @@ public class RequestService {
     @Autowired
     private MetricsService metricsService;
 
-//    private MeterRegistry meterRegistry;
-//
-//    public RequestService(MeterRegistry meterRegistry) {
-//        meterRegistry.gauge("scalingtime.node.up.small", 42);
-//        meterRegistry.gauge("scalingtime.node.up.medium", 56);
-//        meterRegistry.gauge("scalingtime.node.up.large", 78);
-//        meterRegistry.gauge("scalingtime.node.down.small", 22);
-//        meterRegistry.gauge("scalingtime.node.down.medium", 34);
-//        meterRegistry.gauge("scalingtime.node.down.large", 32);
-//    }
-
-    @Transactional
     public void delegate(String jsonBody) {
         log.info("delegation endpoint called");
         ScalingInstruction instruction = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", instruction);
         scaleService.scale(instruction);
-        metricsService.updateMetrics();
+//        metricsService.updateMetrics();
+    }
+
+    public void acknowledgeScaling() {
+
     }
 
 }
