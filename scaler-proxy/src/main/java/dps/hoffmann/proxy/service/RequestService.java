@@ -39,6 +39,7 @@ public class RequestService {
         log.info("translated request type from json body: {}", instructions);
 
         for (ScalingInstruction instruction : instructions) {
+            instruction.setReceivedRequestTimestamp(now());
             scaleService.scale(instruction);
             unacknowledgedInstructions.add(instruction);
         }
@@ -49,9 +50,13 @@ public class RequestService {
             // todo do something... throw exception
         }
         ScalingInstruction oldestInstruction = unacknowledgedInstructions.poll();
-        oldestInstruction.setScaleAcknowledgementTimestamp(new Timestamp(System.currentTimeMillis()));
+        oldestInstruction.setScaleAcknowledgementTimestamp(now());
         persistenceService.save(oldestInstruction);
         metricsService.updateMetrics();
+    }
+
+    private static Timestamp now() {
+        return new Timestamp(System.currentTimeMillis());
     }
 
 }

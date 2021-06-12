@@ -2,6 +2,7 @@ package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.NodeMetric;
 import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
+import static dps.hoffmann.proxy.model.ScalingDirection.UP;
 
 @Service
 @Slf4j
@@ -30,22 +35,31 @@ public class MetricsService {
      */
     @EventListener(ApplicationReadyEvent.class)
     public void updateMetrics() {
+
+//        this.upCnt = new AtomicInteger(3);
+        this.downCnt = new AtomicInteger(4);
+        meterRegistry.gauge("scale.up", upCnt);
+        meterRegistry.gauge("scale.down", downCnt);
+//        this.meterRegistry = meterRegistry;
+
+
+        log.info("update metrics");
         List<ScalingInstruction> pastInstructions = persistenceService.findAll();
-        Map<RequestType, List<Integer>> allDurations = createEmptyStatsMap();
+        Map<ScalingDirection, List<Integer>> allDurations = createEmptyStatsMap();
         fillDurations(allDurations, pastInstructions);
-        Map<RequestType, Integer> averageDurations = calcAverageDurations(allDurations);
+        Map<ScalingDirection, Integer> averageDurations = calcAverageDurations(allDurations);
         updateGaugeValues(averageDurations);
     }
 
-    private Map<RequestType, List<Integer>> createEmptyStatsMap() {
-        Map<RequestType, List<Integer>> out = new HashMap<>();
-        for (RequestType type : RequestType.values()) {
-            out.put(type, new ArrayList<>());
+    private Map<ScalingDirection, List<Integer>> createEmptyStatsMap() {
+        Map<ScalingDirection, List<Integer>> out = new HashMap<>();
+        for (ScalingDirection dir : ScalingDirection.values()) {
+            out.put(dir, new ArrayList<>());
         }
         return out;
     }
 
-    private void fillDurations(Map<RequestType, List<Integer>> map,
+    private void fillDurations(Map<ScalingDirection, List<Integer>> map,
                                List<ScalingInstruction> instructions) {
         for (ScalingInstruction instruction : instructions) {
 
@@ -56,9 +70,9 @@ public class MetricsService {
         }
     }
 
-    private Map<RequestType, Integer> calcAverageDurations(Map<RequestType, List<Integer>> allDurations) {
-        Map<RequestType, Integer> averageDurations = new HashMap<>();
-        for (Map.Entry<RequestType, List<Integer>> entry : allDurations.entrySet()) {
+    private Map<ScalingDirection, Integer> calcAverageDurations(Map<ScalingDirection, List<Integer>> allDurations) {
+        Map<ScalingDirection, Integer> averageDurations = new HashMap<>();
+        for (Map.Entry<ScalingDirection, List<Integer>> entry : allDurations.entrySet()) {
             averageDurations.put(entry.getKey(), calcAverage(entry.getValue()));
         }
         return averageDurations;
@@ -78,17 +92,40 @@ public class MetricsService {
                 : out / nums.size();
     }
 
-    private static double round(double value, int precision) {
-        int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
+    @Autowired
+    private AtomicInteger upCnt;
+    private AtomicInteger downCnt;
+
+    public MetricsService(MeterRegistry meterRegistry) {
+//        this.upCnt = new AtomicInteger(0);
+//        this.downCnt = new AtomicInteger(0);
+//        meterRegistry.gauge("scale.up", upCnt);
+//        meterRegistry.gauge("scale.down", downCnt);
+//        this.meterRegistry = meterRegistry;
     }
 
-    private void updateGaugeValues(Map<RequestType, Integer> averages) {
-        for (Map.Entry<RequestType, Integer> entry : averages.entrySet()) {
-            String name = NodeMetric.findMetric(entry.getKey()).toMeterRegistryName();
-            int value = entry.getValue();
-            log.info("gauge value: {} -> {}", name, value);
-            meterRegistry.gauge(name, value);
-        }
+    private void updateGaugeValues(Map<ScalingDirection, Integer> averages) {
+
+        int upStartingTime = averages.get(UP).intValue();
+        log.info("up starting time: {}", upStartingTime);
+        int downStoppingTime = 9;
+//        int downStoppingTime = averages.get(DOWN).intValue();
+        log.info("down starting time: {}", downStoppingTime);
+
+        this.upCnt.set(upStartingTime);
+        this.downCnt.set(downStoppingTime);
+//
+//        meterRegistry.gauge("scale_up", upCnt);
+//        meterRegistry.gauge("scale_down", downCnt);
+
+
+
+//        for (Map.Entry<ScalingDirection, Integer> entry : averages.entrySet()) {
+//            String name = entry.getKey().getMetricName();
+//            int value = entry.getValue();
+//            AtomicInteger out = new AtomicInteger(value);
+//            log.info("gauge value: {} -> {}", name, out);
+//            meterRegistry.gauge(name, out);
+//        }
     }
 }

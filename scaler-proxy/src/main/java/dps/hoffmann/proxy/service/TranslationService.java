@@ -54,7 +54,7 @@ public class TranslationService {
         // todo maybe use streams
         RequestType requestType = null;
         for (RequestType type : RequestType.values()) {
-            if (jsonValue.toUpperCase().contains(type.name())) {
+            if (jsonValue.equalsIgnoreCase(type.getRequestName())) {
                 requestType = type;
             }
         }
