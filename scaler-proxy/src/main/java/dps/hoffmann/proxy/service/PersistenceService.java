@@ -18,10 +18,7 @@ public class PersistenceService {
 
     @Transactional
     public ScalingInstruction save(ScalingInstruction instruction) {
-        ScalingInstruction updatedCopy =
-                instruction.withProcessedTimestamp(new Timestamp(System.currentTimeMillis()));
-        scaleInstructionRepository.save(updatedCopy);
-        return updatedCopy;
+        return scaleInstructionRepository.save(instruction);
     }
 
     public List<ScalingInstruction> findAll() {

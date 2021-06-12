@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.properties.DelegationProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,6 @@ public class ScaleService {
     private DelegationProperties delegationProperties;
 
     @Autowired
-    private PersistenceService persistenceService;
-
-    @Autowired
     private RestTemplate restTemplate;
 
     public ScaleService(DelegationProperties delegationProperties) {
@@ -44,21 +42,9 @@ public class ScaleService {
      *                   will be translated to the correct request
      */
     public void scale(ScalingInstruction instruction) {
-        RequestType requestType = instruction.getRequestType();
-        String serviceToScale = delegationProperties.getService();
-        String requestJson = requestType.getRequestJson(serviceToScale);
+        ScalingDirection dir = instruction.getScalingDirection();
+        String requestJson = delegationProperties.getRequestBody(dir);
 
-        log.info("request api url: {}", apiUrl);
-        log.info("request json: {}", requestJson);
-
-        for (int i = 0; i < requestType.getScalingInterval(); i++) {
-            sendRequest(requestJson);
-        }
-
-        persistenceService.save(instruction);
-    }
-
-    private void sendRequest(String requestJson) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

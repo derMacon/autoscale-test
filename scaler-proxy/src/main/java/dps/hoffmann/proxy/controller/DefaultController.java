@@ -53,4 +53,10 @@ public class DefaultController {
         requestService.delegate(jsonBody);
     }
 
+//    @RequestMapping("/acknowledge")
+//    public void acknowledgeScale() {
+//        log.info("acknowledging scaled service");
+//        requestService.acknowledgeScaling();
+//    }
+
 }

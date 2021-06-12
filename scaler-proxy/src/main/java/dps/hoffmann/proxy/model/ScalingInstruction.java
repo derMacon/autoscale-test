@@ -26,17 +26,22 @@ import java.sql.Timestamp;
 @With
 public class ScalingInstruction {
 
-    public ScalingInstruction(RequestType requestType) {
-        this.receivedTimestamp = new Timestamp(System.currentTimeMillis());
-        this.requestType = requestType;
+    // todo
+//    public ScalingInstruction(RequestType requestType) {
+//        this.receivedTimestamp = new Timestamp(System.currentTimeMillis());
+//        this.requestType = requestType;
+//    }
+
+    public ScalingInstruction(ScalingDirection scalingDirection) {
+        this.scalingDirection = scalingDirection;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructionId;
     @Enumerated(EnumType.STRING)
-    private RequestType requestType;
-    private Timestamp receivedTimestamp;
-    private Timestamp processedTimestamp;
+    private ScalingDirection scalingDirection;
+    private Timestamp receivedRequestTimestamp;
+    private Timestamp scaleAcknowledgementTimestamp;
 
 }

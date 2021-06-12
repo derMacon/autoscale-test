@@ -1,5 +1,6 @@
 package dps.hoffmann.proxy.properties;
 
+import dps.hoffmann.proxy.model.ScalingDirection;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ public class DelegationProperties {
 
     private static final String requestJsonFormat = "{" +
             "\"groupLabels\": " +
-            "{\"scale\": \"up\", " +
+            "{\"scale\": \"%s\", " +
             "\"service\": \"%s\"}" +
             "}";
 
@@ -27,7 +28,9 @@ public class DelegationProperties {
     @Value("${delegation.service}")
     private String service;
 
-    public String getRequestBody() {
-        return String.format(requestJsonFormat, service);
+    public String getRequestBody(ScalingDirection scalingDirection) {
+        return String.format(requestJsonFormat,
+                scalingDirection.name().toLowerCase(),
+                service);
     }
 }

@@ -49,10 +49,10 @@ public class MetricsService {
                                List<ScalingInstruction> instructions) {
         for (ScalingInstruction instruction : instructions) {
 
-            int duration = (int) (instruction.getProcessedTimestamp().getTime()
-                    - instruction.getReceivedTimestamp().getTime());
+            int duration = (int) (instruction.getScaleAcknowledgementTimestamp().getTime()
+                    - instruction.getReceivedRequestTimestamp().getTime());
 
-            map.get(instruction.getRequestType()).add(duration);
+            map.get(instruction.getScalingDirection()).add(duration);
         }
     }
 

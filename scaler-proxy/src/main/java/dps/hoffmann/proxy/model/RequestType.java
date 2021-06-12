@@ -3,8 +3,9 @@ package dps.hoffmann.proxy.model;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static dps.hoffmann.proxy.model.RequestType.ScalingDirection.*;
 import static dps.hoffmann.proxy.model.RequestType.ScalingInterval.*;
+import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
+import static dps.hoffmann.proxy.model.ScalingDirection.UP;
 
 /**
  * requests that can be delegated to the scaler service
@@ -20,29 +21,14 @@ public enum RequestType {
     MEDIUM_DOWN_SCALE_REQUEST("tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
     LARGE_DOWN_SCALE_REQUEST("tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT);
 
-    enum ScalingDirection {
-        UP, DOWN;
-    }
-
     interface ScalingInterval {
         int SMALL_SCALE_CNT = 5;
         int MEDIUM_SCALE_CNT = 20;
         int LARGE_SCALE_CNT = 50;
     }
 
-    private static final String requestJsonFormat = "{" +
-            "\"groupLabels\": " +
-            "{\"scale\": \"%s\", " +
-            "\"service\": \"%s\"}" +
-            "}";
-
     private final String requestName;
     private final ScalingDirection scalingDir;
     private final int scalingInterval;
-
-
-    public String getRequestJson(String serviceName) {
-        return String.format(requestJsonFormat, scalingDir.name().toLowerCase(), serviceName);
-    }
 
 }
