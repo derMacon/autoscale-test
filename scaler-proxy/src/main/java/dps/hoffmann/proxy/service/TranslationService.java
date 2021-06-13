@@ -37,7 +37,7 @@ public class TranslationService {
 
     private RequestType parseRequestType(String jsonBody) {
         // todo maybe use ObjectMapper to translate to map ???
-        log.info("json body: {}", jsonBody);
+        log.info("json body");
         String patternStr = ".*" + fieldName + "\":\"(.*?)\",.*";
         Pattern patternObj = Pattern.compile(patternStr);
         Matcher matcher = patternObj.matcher(jsonBody);

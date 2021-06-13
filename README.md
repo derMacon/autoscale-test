@@ -36,3 +36,4 @@ Project to showcase the general approach of processing an instant payment provid
 - lint code checks on all project
 - spring backend add randome field requests
 - spring api add option to create waves of requests
+- visual feedback in ui if benchmark is proceeding

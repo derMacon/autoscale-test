@@ -34,7 +34,7 @@ public class RequestService {
     private Queue<ScalingInstruction> unacknowledgedInstructions = new LinkedBlockingQueue<>();
 
     public void delegate(String jsonBody) {
-        log.info("delegation endpoint called");
+        log.info("delegation endpoint called: {}", jsonBody);
         List<ScalingInstruction> instructions = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", instructions);
 
