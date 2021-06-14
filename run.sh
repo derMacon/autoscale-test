@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'create network'
-docker network create scaler
+docker network create -d overlay scaler
 
 docker-compose build
 
