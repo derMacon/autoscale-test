@@ -16,7 +16,6 @@ public class PersistenceService {
     @Autowired
     private ScaleInstructionRepository scaleInstructionRepository;
 
-    @Transactional
     public ScalingInstruction save(ScalingInstruction instruction) {
         return scaleInstructionRepository.save(instruction);
     }

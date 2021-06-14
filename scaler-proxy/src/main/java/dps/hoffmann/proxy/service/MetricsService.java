@@ -42,6 +42,7 @@ public class MetricsService {
         meterRegistry.gauge("scale.down", gaugeValueRefs[DOWN.ordinal()]);
 
         List<ScalingInstruction> pastInstructions = persistenceService.findAll();
+        log.info("past instructions: ", pastInstructions);
         Map<ScalingDirection, List<Integer>> allDurations = createEmptyStatsMap();
         fillDurations(allDurations, pastInstructions);
         Map<ScalingDirection, Integer> averageDurations = calcAverageDurations(allDurations);
@@ -88,7 +89,7 @@ public class MetricsService {
     private void updateGaugeValues(Map<ScalingDirection, Integer> averages) {
         for (ScalingDirection dir : ScalingDirection.values()) {
             int startingTime = averages.get(dir).intValue();
-            log.info("average starting time: {} -> {}", dir, startingTime);
+            log.info("average duration time: {} -> {}", dir, startingTime);
             gaugeValueRefs[dir.ordinal()].set(startingTime);
         }
     }

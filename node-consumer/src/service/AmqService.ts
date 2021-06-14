@@ -46,6 +46,7 @@ export class AmqService {
 			
 			const frame = client.send(sendHeaders);
 			frame.write('acknowledge_startup');
+			console.log("sending acknowledgement")
 			frame.end()
 
 			const subscribeHeaders = {

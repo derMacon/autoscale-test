@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
+
 /**
  * Service that makes the actual api calls to the scaler api service
  */
@@ -41,8 +43,9 @@ public class ScaleService {
      * @param instruction holds information about the type of the request,
      *                   will be translated to the correct request
      */
-    public void scale(ScalingInstruction instruction) {
+    public void sendScaleRequest(ScalingInstruction instruction) {
         ScalingDirection dir = instruction.getScalingDirection();
+
         String requestJson = delegationProperties.getRequestBody(dir);
 
         try {

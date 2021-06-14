@@ -1,10 +1,23 @@
 groups:
   - name: scaleAlert
     rules:
+    # todo maybe use the correct queue query (see grafana setup)
       - alert: tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount > 10 and org_apache_activemq_Broker_TotalConsumerCount < 3
+        expr: org_apache_activemq_Broker_TotalMessageCount > 10 and org_apache_activemq_Broker_TotalMessageCount < 30 and org_apache_activemq_Broker_TotalConsumerCount < 3
         # expr: up{instance="localhost:9090",job="services"} < 3 
+        for: 0m 
+      - alert: tooFewConsumers_mediumOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount > 29 and org_apache_activemq_Broker_TotalMessageCount < 100 and org_apache_activemq_Broker_TotalConsumerCount < 10
+        for: 0m 
+      - alert: tooFewConsumers_largeOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount > 99 and org_apache_activemq_Broker_TotalConsumerCount < 15
         for: 0m 
       - alert: tooManyConsumers_smallOverhead
         expr: org_apache_activemq_Broker_TotalMessageCount < 11 and org_apache_activemq_Broker_TotalConsumerCount > 2
+        for: 0m 
+      - alert: tooManyConsumers_mediumOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount < 30 and org_apache_activemq_Broker_TotalConsumerCount > 9
+        for: 0m 
+      - alert: tooManyConsumers_largeOverhead
+        expr: org_apache_activemq_Broker_TotalMessageCount < 100 and org_apache_activemq_Broker_TotalConsumerCount > 14
         for: 0m 

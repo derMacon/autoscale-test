@@ -23,8 +23,8 @@ public enum RequestType {
 
     interface ScalingInterval {
         int SMALL_SCALE_CNT = 5;
-        int MEDIUM_SCALE_CNT = 20;
-        int LARGE_SCALE_CNT = 50;
+        int MEDIUM_SCALE_CNT = 10;
+        int LARGE_SCALE_CNT = 15;
     }
 
     private final String requestName;

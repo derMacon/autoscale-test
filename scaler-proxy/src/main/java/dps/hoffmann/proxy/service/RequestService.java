@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static dps.hoffmann.proxy.model.ScalingDirection.UP;
 
 /**
  * Wrapper that serves as an entry point for the controller to work with all other services. It is
@@ -31,7 +34,10 @@ public class RequestService {
     @Autowired
     private PersistenceService persistenceService;
 
-    private Queue<ScalingInstruction> unacknowledgedInstructions = new LinkedBlockingQueue<>();
+    @Autowired
+    private List<ScalingInstruction> unacknowledgedInstructions;
+
+    private int cnt = 0;
 
     public void delegate(String jsonBody) {
         log.info("delegation endpoint called: {}", jsonBody);
@@ -39,20 +45,29 @@ public class RequestService {
         log.info("translated request type from json body: {}", instructions);
 
         for (ScalingInstruction instruction : instructions) {
+            log.info("scale instruction: {}", instruction);
+            scaleService.sendScaleRequest(instruction);
             instruction.setReceivedRequestTimestamp(now());
-            scaleService.scale(instruction);
-            unacknowledgedInstructions.add(instruction);
+            if (instruction.getScalingDirection() == UP) {
+                unacknowledgedInstructions.add(instruction);
+            }
         }
+
+        log.info("unacknowledged msg at delegate: {}", unacknowledgedInstructions);
     }
 
     public void acknowledgeScaling() {
+        log.info("ack cnt: {}", cnt++);
         if (unacknowledgedInstructions.isEmpty()) {
             // todo do something... throw exception
+            log.info("no unacknowledged instructions");
+        } else {
+            ScalingInstruction oldestInstruction = unacknowledgedInstructions.remove(0);
+            oldestInstruction.setScaleAcknowledgementTimestamp(now());
+            log.info("oldest instr: {}", oldestInstruction);
+            persistenceService.save(oldestInstruction);
+            metricsService.updateMetrics();
         }
-        ScalingInstruction oldestInstruction = unacknowledgedInstructions.poll();
-        oldestInstruction.setScaleAcknowledgementTimestamp(now());
-        persistenceService.save(oldestInstruction);
-        metricsService.updateMetrics();
     }
 
     private static Timestamp now() {
