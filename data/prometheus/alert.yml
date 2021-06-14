@@ -3,21 +3,21 @@ groups:
     rules:
     # todo maybe use the correct queue query (see grafana setup)
       - alert: tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount > 10 and org_apache_activemq_Broker_TotalMessageCount < 30 and org_apache_activemq_Broker_TotalConsumerCount < 3
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 3
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: tooFewConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount > 29 and org_apache_activemq_Broker_TotalMessageCount < 100 and org_apache_activemq_Broker_TotalConsumerCount < 10
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 29 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10
         for: 0m 
       - alert: tooFewConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount > 99 and org_apache_activemq_Broker_TotalConsumerCount < 15
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 99 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 15
         for: 0m 
       - alert: tooManyConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount < 11 and org_apache_activemq_Broker_TotalConsumerCount > 2
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 11 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 2
         for: 0m 
       - alert: tooManyConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount < 30 and org_apache_activemq_Broker_TotalConsumerCount > 9
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 9
         for: 0m 
       - alert: tooManyConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_TotalMessageCount < 100 and org_apache_activemq_Broker_TotalConsumerCount > 14
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="paymentqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 14
         for: 0m 
