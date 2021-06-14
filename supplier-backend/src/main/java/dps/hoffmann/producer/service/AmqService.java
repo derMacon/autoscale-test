@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 @Service
 @Slf4j
@@ -55,15 +56,18 @@ public class AmqService {
         return true;
     }
 
-    public Consumer<PaymentMessage> getConsumer(boolean sessionIsTransacted) {
+    public BiConsumer<PaymentMessage, Supplier<String>> getConsumer(boolean sessionIsTransacted) {
         return sessionIsTransacted
-                ? (message -> sendObjPaymentQueueMessage(transactedJmsTemplate, message))
-                : (message -> sendObjPaymentQueueMessage(nonTransactedJmsTemplate, message));
+                ? (message, destGen) -> sendObjPaymentQueueMessage(
+                        transactedJmsTemplate, message, destGen)
+                : (message, destGen) -> sendObjPaymentQueueMessage(
+                        nonTransactedJmsTemplate, message, destGen);
     }
 
     private void sendObjPaymentQueueMessage(
             JmsTemplate jmsTemplate,
-            PaymentMessage wrapper
+            PaymentMessage wrapper,
+            Supplier<String> destGen
     ) {
         String convertedJson = "";
         try {
@@ -74,7 +78,7 @@ public class AmqService {
 
 
         final String message = convertedJson;
-        String destination = activemqProperties.getQueue();
+        String destination = destGen.get();
         log.info("dest: {}", destination);
         jmsTemplate.send(destination, new MessageCreator() {
             @Override

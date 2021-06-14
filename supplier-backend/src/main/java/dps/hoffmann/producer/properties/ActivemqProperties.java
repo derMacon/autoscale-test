@@ -11,5 +11,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(ignoreUnknownFields = false, prefix = "amq.broker")
 public class ActivemqProperties {
     private String url;
-    private String queue;
+    private String nodequeue;
+    private String springqueue;
 }

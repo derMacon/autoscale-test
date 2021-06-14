@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -38,8 +40,13 @@ public class BenchmarkingController {
             produces = APPLICATION_JSON_VALUE)
     public void startBenchmark(@RequestBody String jsonBody) throws JsonProcessingException, InterruptedException {
         log.info("new benchmark request: {}", jsonBody);
-        BatchInstruction req = mapper.readValue(jsonBody, BatchInstruction.class);
+        BatchInstruction req = mapper.readValue(jsonBody, BatchInstruction.class)
+                .withReceived(now());
         bulkMessengerService.benchmark(req);
+    }
+
+    private static Timestamp now() {
+        return new Timestamp(System.currentTimeMillis());
     }
 
 }

@@ -1,5 +1,6 @@
 package dps.hoffmann.producer.controller;
 
+import dps.hoffmann.producer.service.DestinationGenerator;
 import dps.hoffmann.producer.service.PaymentGenerator;
 import dps.hoffmann.producer.service.XPathGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class FetchInitController {
     @Autowired
     private XPathGenerator xPathGenerator;
 
+    @Autowired
+    private DestinationGenerator destinationGenerator;
+
     @RequestMapping("/health")
     public boolean health() {
         log.info("this componennt is healthy");
@@ -36,7 +40,7 @@ public class FetchInitController {
     @RequestMapping("/payment")
     public List<String> getPaymentOptions() {
         log.info("fetch payment instructions");
-        return paymentGenerator.getInstructionDisplayNames();
+        return paymentGenerator.getDisplayName();
     }
 
     /**
@@ -45,8 +49,18 @@ public class FetchInitController {
      */
     @RequestMapping("/path")
     public List<String> getPathOptions() {
-        log.info("fetch paths");
-        return xPathGenerator.getPathOptions();
+        log.info("fetch path options");
+        return xPathGenerator.getDisplayName();
+    }
+
+    /**
+     * Displays the backend destination options
+     * @return backend destination options
+     */
+    @RequestMapping("/backend")
+    public List<String> getbackendOptions() {
+        log.info("fetch backend options");
+        return destinationGenerator.getDisplayName();
     }
 
 }

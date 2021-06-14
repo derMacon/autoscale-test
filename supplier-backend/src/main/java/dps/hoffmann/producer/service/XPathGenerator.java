@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 @Service
-public class XPathGenerator {
+public class XPathGenerator implements InstructionGenerator {
 
     private static final String RANDOMIZED_KEY_IDENTIFIER = "Randomized";
 
@@ -20,13 +20,15 @@ public class XPathGenerator {
     private Map<String, String> xPaths;
 
 
-    public List<String> getPathOptions() {
+    @Override
+    public List<String> getDisplayName() {
         List<String> out = new ArrayList<>(xPaths.keySet());
         out.add(RANDOMIZED_KEY_IDENTIFIER);
         return out;
     }
 
-    public Supplier<String> getXPathSupplier(BatchInstruction request) {
+    @Override
+    public Supplier<String> getSupplier(BatchInstruction request) {
 
         if (request.getPathOption().equals(RANDOMIZED_KEY_IDENTIFIER)) {
 
