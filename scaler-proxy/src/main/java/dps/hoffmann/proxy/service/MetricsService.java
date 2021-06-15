@@ -3,6 +3,7 @@ package dps.hoffmann.proxy.service;
 import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -36,8 +37,7 @@ public class MetricsService {
      */
     @EventListener(ApplicationReadyEvent.class)
     public void updateMetrics() {
-        meterRegistry.gauge("scale.up", gaugeValueRefs[UP.ordinal()]);
-        meterRegistry.gauge("scale.down", gaugeValueRefs[DOWN.ordinal()]);
+        initGauge();
 
         List<ScalingInstruction> pastInstructions = persistenceService.findAll();
         log.info("past instructions: ", pastInstructions);
@@ -45,6 +45,13 @@ public class MetricsService {
         fillDurationsWithPastInstr(allDurations, pastInstructions);
         Map<LogicalService, Integer> averageDurations = calcAverageDurations(allDurations);
         updateGaugeValues(averageDurations);
+    }
+
+    private void initGauge() {
+        for (LogicalService service : LogicalService.values()) {
+            String gaugeKey = "scale.up." + service.name().toLowerCase();
+            meterRegistry.gauge(gaugeKey, gaugeValueRefs[service.ordinal()]);
+        }
     }
 
     private Map<LogicalService, List<Integer>> createEmptyStatsMap() {
