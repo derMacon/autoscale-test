@@ -37,6 +37,7 @@ public class RequestService {
     @Autowired
     private List<ScalingInstruction> unacknowledgedInstructions;
 
+    // todo delete counter -> only for debugging purposes
     private int cnt = 0;
 
     public void delegate(String jsonBody) {
@@ -65,6 +66,7 @@ public class RequestService {
             ScalingInstruction oldestInstruction = unacknowledgedInstructions.remove(0);
             oldestInstruction.setScaleAcknowledgementTimestamp(now());
             log.info("oldest instr: {}", oldestInstruction);
+            log.info("unack lst: {}", unacknowledgedInstructions);
             persistenceService.save(oldestInstruction);
             metricsService.updateMetrics();
         }

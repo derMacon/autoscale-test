@@ -1,7 +1,6 @@
 package dps.hoffmann.proxy.service;
 
-import dps.hoffmann.proxy.model.NodeMetric;
-import dps.hoffmann.proxy.model.RequestType;
+import dps.hoffmann.proxy.model.RequestMapper;
 import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -43,21 +42,21 @@ public class MetricsService {
 
         List<ScalingInstruction> pastInstructions = persistenceService.findAll();
         log.info("past instructions: ", pastInstructions);
-        Map<ScalingDirection, List<Integer>> allDurations = createEmptyStatsMap();
+        Map<RequestMapper.InstructionType, List<Integer>> allDurations = createEmptyStatsMap();
         fillDurations(allDurations, pastInstructions);
         Map<ScalingDirection, Integer> averageDurations = calcAverageDurations(allDurations);
         updateGaugeValues(averageDurations);
     }
 
-    private Map<ScalingDirection, List<Integer>> createEmptyStatsMap() {
-        Map<ScalingDirection, List<Integer>> out = new HashMap<>();
-        for (ScalingDirection dir : ScalingDirection.values()) {
-            out.put(dir, new ArrayList<>());
+    private Map<RequestMapper.InstructionType, List<Integer>> createEmptyStatsMap() {
+        Map<RequestMapper.InstructionType, List<Integer>> out = new HashMap<>();
+        for (RequestMapper.InstructionType instr : RequestMapper.InstructionType.values()) {
+            out.put(instr, new ArrayList<>());
         }
         return out;
     }
 
-    private void fillDurations(Map<ScalingDirection, List<Integer>> map,
+    private void fillDurations(Map<RequestMapper.InstructionType, List<Integer>> map,
                                List<ScalingInstruction> instructions) {
         for (ScalingInstruction instruction : instructions) {
 

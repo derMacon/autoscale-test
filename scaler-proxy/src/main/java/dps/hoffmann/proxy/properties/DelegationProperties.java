@@ -1,7 +1,9 @@
 package dps.hoffmann.proxy.properties;
 
-import dps.hoffmann.proxy.model.ScalingDirection;
+import dps.hoffmann.proxy.model.RequestMapper;
+import dps.hoffmann.proxy.model.ScalingInstruction;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 public class DelegationProperties {
+
+//    @Autowired
+//    private RequestMapper requestMapper;
 
     private static final String requestJsonFormat = "{" +
             "\"groupLabels\": " +
@@ -25,12 +30,9 @@ public class DelegationProperties {
     @Value("${delegation.endpoint}")
     private String endpoint;
 
-    @Value("${delegation.service}")
-    private String service;
-
-    public String getRequestBody(ScalingDirection scalingDirection) {
+    public String getRequestBody(ScalingInstruction instruction) {
         return String.format(requestJsonFormat,
-                scalingDirection.name().toLowerCase(),
-                service);
+                instruction.getScalingDirection().name().toLowerCase(),
+                instruction.getServiceName());
     }
 }

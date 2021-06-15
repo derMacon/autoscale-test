@@ -1,6 +1,5 @@
 package dps.hoffmann.proxy.service;
 
-import dps.hoffmann.proxy.model.RequestType;
 import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.properties.DelegationProperties;
@@ -10,10 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
 
 /**
  * Service that makes the actual api calls to the scaler api service
@@ -44,9 +40,7 @@ public class ScaleService {
      *                   will be translated to the correct request
      */
     public void sendScaleRequest(ScalingInstruction instruction) {
-        ScalingDirection dir = instruction.getScalingDirection();
-
-        String requestJson = delegationProperties.getRequestBody(dir);
+        String requestJson = delegationProperties.getRequestBody(instruction);
 
         try {
             HttpHeaders headers = new HttpHeaders();

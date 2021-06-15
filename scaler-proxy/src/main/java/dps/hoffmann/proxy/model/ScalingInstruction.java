@@ -16,6 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
+/**
+ * Object only used to persist data and to send data to actual scaler service
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,19 +29,15 @@ import java.sql.Timestamp;
 @With
 public class ScalingInstruction {
 
-    // todo
-//    public ScalingInstruction(RequestType requestType) {
-//        this.receivedTimestamp = new Timestamp(System.currentTimeMillis());
-//        this.requestType = requestType;
-//    }
-
-    public ScalingInstruction(ScalingDirection scalingDirection) {
+    public ScalingInstruction(String serviceName, ScalingDirection scalingDirection) {
+        this.serviceName = serviceName;
         this.scalingDirection = scalingDirection;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructionId;
+    private String serviceName;
     @Enumerated(EnumType.STRING)
     private ScalingDirection scalingDirection;
     private Timestamp receivedRequestTimestamp;
