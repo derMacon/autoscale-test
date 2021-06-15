@@ -49,6 +49,21 @@ services:
       - POSTGRES_DB=${SUPPLIER_DATABASE_NAME}
     volumes:
       - history-db:/var/lib/postgresql/data
+    restart: unless-stoppe
+
+  spring-db:
+    image: postgres:13-alpine
+    container_name: spring-db
+    ports:
+      - "${SPRING_DATABASE_PORT}:${SPRING_DATABASE_PORT}"
+    command: -p ${SPRING_DATABASE_PORT}
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=${SPRING_USER_NAME}
+      - POSTGRES_PASSWORD=${SPRING_USER_PASSWORD}
+      - POSTGRES_DB=spring-db
+    volumes:
+      - spring-db:/var/lib/postgresql/data
     restart: unless-stopped
     
   supplier-backend:
@@ -107,3 +122,4 @@ services:
 volumes:
   script-db:
   history-db:
+  spring-db:

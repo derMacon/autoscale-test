@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose -f docker-compose_dev.yml up -d history-db pgadmin activemq
+docker-compose -f docker-compose_dev.yml up -d history-db pgadmin activemq spring-db
