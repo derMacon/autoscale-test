@@ -57,7 +57,7 @@ services:
       - POSTGRES_DB=${SPRING_DATABASE_NAME}
     volumes:
       - spring-db:/var/lib/postgresql/data
-    restart: unless-stoppe
+    restart: unless-stopped
 
   history-db:
     image: postgres:13-alpine
@@ -128,7 +128,7 @@ services:
       - PG_USER_PASSWORD=${SCRIPT_USER_PASSWORD}
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
       - AMQ_PAY_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
-      - AMQ_ACK_QUEUE_NAME=${AMQ_ACK_QUEUE_NAME}
+      - AMQ_ACK_QUEUE_NAME=${AMQ_NODE_ACK_QUEUE}
   
   scaler-proxy:
     image: scaler-proxy
@@ -150,6 +150,8 @@ services:
       - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
       - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
       - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
+      - AMQ_NODE_ACK_QUEUE=${AMQ_NODE_ACK_QUEUE}
+      - AMQ_SPRING_ACK_QUEUE=${AMQ_SPRING_ACK_QUEUE}
   
   scaler:
     image: thomasjpfan/docker-scaler:${TAG:-master}

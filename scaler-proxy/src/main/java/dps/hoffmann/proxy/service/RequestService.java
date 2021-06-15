@@ -1,5 +1,6 @@
 package dps.hoffmann.proxy.service;
 
+import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,20 +61,43 @@ public class RequestService {
         log.info("unacknowledged msg after delegate: {}", unacknowledgedInstructions);
     }
 
-    public void acknowledgeScaling() {
+
+    public void acknowledgeNodeJsScaling() {
+        acknowledgeScaling(LogicalService.NODE);
+    }
+
+    public void acknowledgeSpringScaling() {
+        acknowledgeScaling(LogicalService.SPRING);
+    }
+
+    private void acknowledgeScaling(LogicalService acknowledgingService) {
         log.info("ack cnt: {}", cnt++);
         if (unacknowledgedInstructions.isEmpty()) {
             // todo do something... throw exception
             log.info("no unacknowledged instructions");
         } else {
-            ScalingInstruction oldestInstruction = unacknowledgedInstructions.remove(0);
-            oldestInstruction.setScaleAcknowledgementTimestamp(now());
+            ScalingInstruction oldestInstruction = getOldestMsgForService(acknowledgingService)
+                    .withScaleAcknowledgementTimestamp(now());
+
             log.info("oldest instr: {}", oldestInstruction);
             log.info("unack lst: {}", unacknowledgedInstructions);
+
             persistenceService.save(oldestInstruction);
             metricsService.updateMetrics();
         }
     }
+
+    private ScalingInstruction getOldestMsgForService(LogicalService service) {
+        for (ScalingInstruction instr : unacknowledgedInstructions) {
+            if (instr.getLogicalServiceName() == service) {
+                unacknowledgedInstructions.remove(instr);
+                return instr;
+            }
+        }
+        // todo
+        return null;
+    }
+
 
     private static Timestamp now() {
         return new Timestamp(System.currentTimeMillis());

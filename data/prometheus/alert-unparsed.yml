@@ -26,7 +26,6 @@ groups:
     rules:
       - alert: spring_tooFewConsumers_smallOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} >= ${AMQ_SMALL_UNACK_CNT} and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} < ${AMQ_MEDIUM_UNACK_CNT} and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} < ${AMQ_SMALL_CONSUMER_CNT}
-        # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: spring_tooFewConsumers_mediumOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} >= ${AMQ_MEDIUM_UNACK_CNT} and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} < ${AMQ_LARGE_UNACK_CNT} and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="${AMQ_SPRING_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} < ${AMQ_MEDIUM_CONSUMER_CNT}
