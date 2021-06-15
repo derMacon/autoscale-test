@@ -11,7 +11,7 @@
     </parent>
     <groupId>dps.hoffmann</groupId>
     <artifactId>spring-consumer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>latest</version>
     <name>spring-consumer</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -43,6 +43,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>spring-consumer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

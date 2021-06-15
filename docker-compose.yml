@@ -47,6 +47,8 @@ services:
   spring-db:
     image: postgres:13-alpine
     container_name: spring-db
+    networks:
+      - scaler
     ports:
       - "${SPRING_DATABASE_PORT}:${SPRING_DATABASE_PORT}"
     command: -p ${SPRING_DATABASE_PORT}
@@ -129,6 +131,26 @@ services:
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
       - AMQ_PAY_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
       - AMQ_ACK_QUEUE_NAME=${AMQ_NODE_ACK_QUEUE}
+
+  spring-consumer:
+    image: spring-consumer
+    build: spring-consumer/
+    ports:
+      - "${SPRING_SERVER_PORT}:${SPRING_SERVER_PORT}"
+    restart: unless-stopped
+    networks:
+      - scaler
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - DATABASE_HOST=spring-db
+      - DATABASE_USER=${SPRING_USER_NAME}
+      - DATABASE_PASSWORD=${SPRING_USER_PASSWORD}
+      - DATABASE_NAME=${SPRING_DATABASE_NAME}
+      - DATABASE_PORT=${SPRING_DATABASE_PORT}
+      - AMQ_SPRING_QUEUE_NAME=${AMQ_SPRING_QUEUE_NAME}
+      - AMQ_BROKER_HOSTNAME=activemq
+      - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
+      - SERVER_PORT=${SPRING_SERVER_PORT}
   
   scaler-proxy:
     image: scaler-proxy

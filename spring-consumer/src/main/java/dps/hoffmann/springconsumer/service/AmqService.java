@@ -20,7 +20,7 @@ public class AmqService {
     // todo maybe make this transactional???
     public void onMessage(Message message) throws JMSException {
         log.info("new message");
-
+        workerService.work(message.toString());
         message.acknowledge();
     }
 
