@@ -39,16 +39,22 @@ public class RequestService {
 
     public void delegate(String jsonBody) {
         log.info("delegation endpoint called: {}", jsonBody);
+
+        if (!unacknowledgedInstructions.isEmpty()) {
+            log.info("unacknowledged instr not empty when delegation called: {}",
+                    unacknowledgedInstructions);
+        }
+
         List<ScalingInstruction> instructions = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", instructions);
 
         for (ScalingInstruction instruction : instructions) {
             log.info("scale instruction: {}", instruction);
-            scaleService.sendScaleRequest(instruction);
             instruction.setReceivedRequestTimestamp(now());
             if (instruction.getScalingDirection() == UP) {
                 unacknowledgedInstructions.add(instruction);
             }
+            scaleService.sendScaleRequest(instruction);
         }
 
         log.info("unacknowledged msg after delegate: {}", unacknowledgedInstructions);

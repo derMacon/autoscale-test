@@ -3,7 +3,7 @@ groups:
     rules:
     # todo maybe use the correct queue query (see grafana setup)
       - alert: node_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} > 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 3
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} > 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 5
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: node_tooFewConsumers_mediumOverhead
@@ -25,7 +25,7 @@ groups:
   - name: springScaleAlert
     rules:
       - alert: spring_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 3
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} > 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 5
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: spring_tooFewConsumers_mediumOverhead
