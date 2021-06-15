@@ -1,6 +1,5 @@
 package dps.hoffmann.proxy.service;
 
-import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.properties.DelegationProperties;
 import lombok.extern.slf4j.Slf4j;

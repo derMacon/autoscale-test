@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dps.hoffmann.proxy.model.RequestMapper.InstructionType.ScalingInterval.*;
-import static dps.hoffmann.proxy.model.RequestMapper.InstructionType.ServiceName.*;
 import static dps.hoffmann.proxy.model.ScalingDirection.*;
+import static dps.hoffmann.proxy.model.ScalingInterval.*;
+import static dps.hoffmann.proxy.model.LogicalService.*;
 
 @Component
 public class RequestMapper {
 
-    private Map<InstructionType.ServiceName, String> serviceNameMapping;
+    private Map<LogicalService, String> serviceNameMapping;
 
-    private Map<InstructionType.ScalingInterval, Integer> scalingIntervalMapping;
+    private Map<ScalingInterval, Integer> scalingIntervalMapping;
 
     public RequestMapper(
             // service names
@@ -60,15 +60,8 @@ public class RequestMapper {
         SPRING_MEDIUM_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
         SPRING_LARGE_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT);
 
-        enum ScalingInterval {
-            SMALL_SCALE_CNT, MEDIUM_SCALE_CNT, LARGE_SCALE_CNT
-        }
 
-        enum ServiceName {
-            NODE, SPRING
-        }
-
-        private final ServiceName service;
+        private final LogicalService logicalService;
         private final String requestName;
         private final ScalingDirection scalingDir;
         private final ScalingInterval scalingInterval;
@@ -80,7 +73,7 @@ public class RequestMapper {
     }
 
     public String getServiceName(InstructionType instructionType) {
-        return this.serviceNameMapping.get(instructionType.service);
+        return this.serviceNameMapping.get(instructionType.logicalService);
     }
 
 

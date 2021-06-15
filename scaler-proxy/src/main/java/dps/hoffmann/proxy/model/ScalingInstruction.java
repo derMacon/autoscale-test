@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,17 +28,15 @@ import java.sql.Timestamp;
 @ToString
 @EqualsAndHashCode
 @With
+@Builder
 public class ScalingInstruction {
-
-    public ScalingInstruction(String serviceName, ScalingDirection scalingDirection) {
-        this.serviceName = serviceName;
-        this.scalingDirection = scalingDirection;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructionId;
-    private String serviceName;
+    private String swarmServiceName;
+    @Enumerated(EnumType.STRING)
+    private LogicalService logicalServiceName;
     @Enumerated(EnumType.STRING)
     private ScalingDirection scalingDirection;
     private Timestamp receivedRequestTimestamp;

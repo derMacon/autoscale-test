@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static dps.hoffmann.proxy.model.ScalingDirection.UP;
 
@@ -54,7 +51,7 @@ public class RequestService {
             }
         }
 
-        log.info("unacknowledged msg at delegate: {}", unacknowledgedInstructions);
+        log.info("unacknowledged msg after delegate: {}", unacknowledgedInstructions);
     }
 
     public void acknowledgeScaling() {

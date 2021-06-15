@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.exception.InvalidJsonException;
+import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.RequestMapper;
 import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
@@ -76,11 +77,19 @@ public class TranslationService {
         List<ScalingInstruction> out = new ArrayList<>();
 
         int scalingInterval = requestMapper.getScalingInterval(instructionType);
+        LogicalService logicalServiceName = instructionType.getLogicalService();
         String swarmServiceName = requestMapper.getServiceName(instructionType);
         ScalingDirection scalingDirection = instructionType.getScalingDir();
 
         for (int i = 0; i < scalingInterval; i++) {
-            out.add(new ScalingInstruction(swarmServiceName, scalingDirection));
+
+            ScalingInstruction instr = ScalingInstruction.builder()
+                    .scalingDirection(scalingDirection)
+                    .logicalServiceName(logicalServiceName)
+                    .swarmServiceName(swarmServiceName)
+                    .build();
+
+            out.add(instr);
         }
 
         return out;

@@ -1,7 +1,6 @@
 package dps.hoffmann.proxy.service;
 
-import dps.hoffmann.proxy.model.RequestMapper;
-import dps.hoffmann.proxy.model.ScalingDirection;
+import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
@@ -42,34 +41,34 @@ public class MetricsService {
 
         List<ScalingInstruction> pastInstructions = persistenceService.findAll();
         log.info("past instructions: ", pastInstructions);
-        Map<RequestMapper.InstructionType, List<Integer>> allDurations = createEmptyStatsMap();
-        fillDurations(allDurations, pastInstructions);
-        Map<ScalingDirection, Integer> averageDurations = calcAverageDurations(allDurations);
+        Map<LogicalService, List<Integer>> allDurations = createEmptyStatsMap();
+        fillDurationsWithPastInstr(allDurations, pastInstructions);
+        Map<LogicalService, Integer> averageDurations = calcAverageDurations(allDurations);
         updateGaugeValues(averageDurations);
     }
 
-    private Map<RequestMapper.InstructionType, List<Integer>> createEmptyStatsMap() {
-        Map<RequestMapper.InstructionType, List<Integer>> out = new HashMap<>();
-        for (RequestMapper.InstructionType instr : RequestMapper.InstructionType.values()) {
-            out.put(instr, new ArrayList<>());
+    private Map<LogicalService, List<Integer>> createEmptyStatsMap() {
+        Map<LogicalService, List<Integer>> out = new HashMap<>();
+        for (LogicalService service : LogicalService.values()) {
+            out.put(service, new ArrayList<>());
         }
         return out;
     }
 
-    private void fillDurations(Map<RequestMapper.InstructionType, List<Integer>> map,
-                               List<ScalingInstruction> instructions) {
+    private void fillDurationsWithPastInstr(Map<LogicalService, List<Integer>> map,
+                                            List<ScalingInstruction> instructions) {
         for (ScalingInstruction instruction : instructions) {
 
             int duration = (int) (instruction.getScaleAcknowledgementTimestamp().getTime()
                     - instruction.getReceivedRequestTimestamp().getTime());
 
-            map.get(instruction.getScalingDirection()).add(duration);
+            map.get(instruction.getLogicalServiceName()).add(duration);
         }
     }
 
-    private Map<ScalingDirection, Integer> calcAverageDurations(Map<ScalingDirection, List<Integer>> allDurations) {
-        Map<ScalingDirection, Integer> averageDurations = new HashMap<>();
-        for (Map.Entry<ScalingDirection, List<Integer>> entry : allDurations.entrySet()) {
+    private Map<LogicalService, Integer> calcAverageDurations(Map<LogicalService, List<Integer>> allDurations) {
+        Map<LogicalService, Integer> averageDurations = new HashMap<>();
+        for (Map.Entry<LogicalService, List<Integer>> entry : allDurations.entrySet()) {
             averageDurations.put(entry.getKey(), calcAverage(entry.getValue()));
         }
         return averageDurations;
@@ -85,11 +84,11 @@ public class MetricsService {
                 : out / nums.size();
     }
 
-    private void updateGaugeValues(Map<ScalingDirection, Integer> averages) {
-        for (ScalingDirection dir : ScalingDirection.values()) {
-            int startingTime = averages.get(dir).intValue();
-            log.info("average duration time: {} -> {}", dir, startingTime);
-            gaugeValueRefs[dir.ordinal()].set(startingTime);
+    private void updateGaugeValues(Map<LogicalService, Integer> averages) {
+        for (LogicalService service : LogicalService.values()) {
+            int startingTime = averages.get(service).intValue();
+            log.info("average duration time: {} -> {}", service, startingTime);
+            gaugeValueRefs[service.ordinal()].set(startingTime);
         }
     }
 }
