@@ -6,7 +6,7 @@ public class Main {
         Map<String, String> env = System.getenv();
         System.out.println("test: " + env);
 
-        
+
 
 
     }
