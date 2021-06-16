@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.instruction.ScalingInstruction;
+import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.repository.BatchInstructionRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class PersistenceService {
     private BatchInstructionRespository batchInstructionRespository;
 
 
-    public ScalingInstruction save(ScalingInstruction userRequest) {
+    public ParsedInstruction save(ParsedInstruction userRequest) {
         return this.batchInstructionRespository.save(userRequest);
     }
 

@@ -24,11 +24,11 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 @With
 @Builder
-public class ScalingInstruction implements Instruction {
+public class ParsedInstruction implements Instruction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int batchId;
+    private int messageId;
     private String destination;
     private String pathOption;
     private String paymentOption;

@@ -5,7 +5,6 @@ import dps.hoffmann.producer.model.instruction.BatchVisitor;
 import dps.hoffmann.producer.model.instruction.Instruction;
 import dps.hoffmann.producer.model.instruction.InstructionName;
 import dps.hoffmann.producer.model.instruction.LogicalServiceName;
-import dps.hoffmann.producer.model.instruction.ScalingInstruction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @Slf4j
 public class RequestParserService {
 
-    private static final String BATCH_REGEX_FORMAT = "%s\\{(.*)\\}";
-
     private static final String TEMP_DELIMITER = "_";
-
-
-
     private static final String BATCH_DELIMITER = ";";
 
     @Autowired
@@ -38,7 +30,6 @@ public class RequestParserService {
         );
 
         List<Instruction> instructions = parseTxtMsg(textMessage);
-        System.out.println();
         for (Instruction instruction : instructions) {
             instruction.accept(visitor);
         }
@@ -60,6 +51,7 @@ public class RequestParserService {
     }
 
     private List<Instruction> parseBatch(String txtMsg) {
+        log.info("parsing batch: {}", txtMsg);
         List<Instruction> out = null;
 
         for (LogicalServiceName serviceName : LogicalServiceName.values()) {

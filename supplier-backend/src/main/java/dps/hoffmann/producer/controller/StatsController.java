@@ -38,7 +38,7 @@ public class StatsController {
 
     @RequestMapping("/version")
     public String version() {
-        String msg = "version: " + 1;
+        String msg = "version: " + 2;
         log.info(msg);
         return msg;
     }

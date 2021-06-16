@@ -2,7 +2,7 @@ package dps.hoffmann.producer.utils;
 
 import dps.hoffmann.producer.model.instruction.Instruction;
 import dps.hoffmann.producer.model.instruction.LogicalServiceName;
-import dps.hoffmann.producer.model.instruction.ScalingInstruction;
+import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.model.instruction.WaitInstruction;
 
 import static dps.hoffmann.producer.service.PaymentGenerator.RANDOMIZE_REQUEST_INSTRUCTION;
@@ -12,7 +12,7 @@ public class InstructionFactory {
 
     public static Instruction createScalingInstruction(LogicalServiceName serviceName,
                                                        Integer[] args) {
-        return ScalingInstruction.builder()
+        return ParsedInstruction.builder()
                 .destination(serviceName.getQueueDestination())
                 .messageCnt(args[0])
                 .duration(args[1])

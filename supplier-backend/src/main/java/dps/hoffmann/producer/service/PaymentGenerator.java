@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.instruction.ScalingInstruction;
+import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class PaymentGenerator implements InstructionGenerator  {
     }
 
     @Override
-    public Supplier<String> getSupplier(ScalingInstruction request) {
+    public Supplier<String> getSupplier(ParsedInstruction request) {
 
         if (request.getPaymentOption().equalsIgnoreCase(RANDOMIZE_REQUEST_INSTRUCTION)) {
             // todo make random

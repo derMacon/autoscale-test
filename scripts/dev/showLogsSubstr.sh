@@ -2,4 +2,4 @@
 
 TMP="$(docker ps | grep "$1" | grep -Eo '^[^ ]+')"
 echo $TMP
-docker logs $TMP -f
+docker logs $TMP

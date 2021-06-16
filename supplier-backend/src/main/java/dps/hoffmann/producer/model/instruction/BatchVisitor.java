@@ -10,14 +10,14 @@ import static java.lang.Thread.sleep;
 @RequiredArgsConstructor
 public class BatchVisitor {
 
-    private final Consumer<ScalingInstruction> scaler;
+    private final Consumer<ParsedInstruction> scaler;
 
     @SneakyThrows
     public void accept(WaitInstruction instruction) {
         sleep(instruction.getWaitTime());
     }
 
-    public void accept(ScalingInstruction instruction) {
+    public void accept(ParsedInstruction instruction) {
         scaler.accept(instruction);
     }
 }

@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.instruction.ScalingInstruction;
+import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.model.PaymentMessage;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -33,32 +33,33 @@ public class BenchmarkService {
 
     @SneakyThrows
     @Transactional
-    public void benchmark(ScalingInstruction scalingInstruction) {
-        scalingInstruction.setReceived(now());
-        log.info("bench request: {}", scalingInstruction);
+    public void benchmark(ParsedInstruction parsedInstruction) {
+        parsedInstruction.setReceived(now());
+        log.info("bench request: {}", parsedInstruction);
 
         // set batch id by saving it to db and reloading instance
-        scalingInstruction = persistenceService.save(scalingInstruction);
-        int batchId = scalingInstruction.getBatchId();
+        parsedInstruction = persistenceService.save(parsedInstruction);
+        int batchId = parsedInstruction.getMessageId();
 
-        boolean sessionIsTransacted = sessionIsTransacted(scalingInstruction);
+        boolean sessionIsTransacted = sessionIsTransacted(parsedInstruction);
         log.info("session transacted: {}", sessionIsTransacted);
 
-        Supplier<String> paymentSupplier = paymentGenerator.getSupplier(scalingInstruction);
-        Supplier<String> xPathSupplier = xPathGenerator.getSupplier(scalingInstruction);
-        Supplier<String> destinationSupplier = destinationGenerator.getSupplier(scalingInstruction);
+        Supplier<String> paymentSupplier = paymentGenerator.getSupplier(parsedInstruction);
+        Supplier<String> xPathSupplier = xPathGenerator.getSupplier(parsedInstruction);
+        Supplier<String> destinationSupplier = destinationGenerator.getSupplier(parsedInstruction);
         BiConsumer<PaymentMessage, Supplier<String>> amqConsumer =
                 amqService.getConsumer(sessionIsTransacted);
 
 
         int durationMillis = 0;
         if (!sessionIsTransacted) {
-            durationMillis = scalingInstruction.getDuration() * 1000
-                    / (scalingInstruction.getMessageCnt() - 1);
+            durationMillis = parsedInstruction.getDuration() * 1000
+                    / (parsedInstruction.getMessageCnt() - 1);
         }
 
+        log.info("scaling instruction: {}", parsedInstruction);
 
-        for (int i = 0; i < scalingInstruction.getMessageCnt(); i++) {
+        for (int i = 0; i < parsedInstruction.getMessageCnt(); i++) {
 
             PaymentMessage payment = PaymentMessage.builder()
                     .batchId(batchId)
@@ -83,7 +84,7 @@ public class BenchmarkService {
      * @param request data object holding relevant information
      * @return true if all messages should be send in one transaction
      */
-    private boolean sessionIsTransacted(ScalingInstruction request) {
+    private boolean sessionIsTransacted(ParsedInstruction request) {
         return request.getMessageCnt() <= 1 || request.getDuration() <= 0;
     }
 
