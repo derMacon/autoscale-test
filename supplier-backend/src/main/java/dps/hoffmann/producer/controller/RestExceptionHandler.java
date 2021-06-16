@@ -1,7 +1,7 @@
 package dps.hoffmann.producer.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import dps.hoffmann.producer.model.ApiError;
+import dps.hoffmann.producer.model.error.ApiError;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;

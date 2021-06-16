@@ -49,7 +49,7 @@ services:
       - POSTGRES_DB=${SUPPLIER_DATABASE_NAME}
     volumes:
       - history-db:/var/lib/postgresql/data
-    restart: unless-stoppe
+    restart: unless-stopped
 
   spring-db:
     image: postgres:13-alpine

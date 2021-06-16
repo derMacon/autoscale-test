@@ -21,7 +21,6 @@ groups:
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="${AMQ_NODE_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} >= ${AMQ_MEDIUM_UNACK_CNT} and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="${AMQ_NODE_QUEUE_NAME}", destinationType="Queue", instance="activemq:8080", job="services"} >= ${AMQ_LARGE_CONSUMER_CNT}
         for: 0m 
 
-# todo do spring alert rules
   - name: springScaleAlert
     rules:
       - alert: spring_tooFewConsumers_smallOverhead

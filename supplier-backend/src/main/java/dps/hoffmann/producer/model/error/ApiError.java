@@ -1,4 +1,4 @@
-package dps.hoffmann.producer.model;
+package dps.hoffmann.producer.model.error;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.BatchInstruction;
+import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,8 @@ import static dps.hoffmann.producer.utils.ResourceUtils.readResource;
 @Service
 public class PaymentGenerator implements InstructionGenerator  {
 
-    private static final String RANDOMIZE_REQUEST_INSTRUCTION = "Randomize messages";
-    private static final String USE_STANDARD_REQUEST_INSTRUCTION = "Use standard request";
+    public static final String RANDOMIZE_REQUEST_INSTRUCTION = "Randomize messages";
+    public static final String USE_STANDARD_REQUEST_INSTRUCTION = "Use standard request";
 
     @Value("${payment.xmlpath}")
     private String xmlPath;
@@ -28,7 +28,7 @@ public class PaymentGenerator implements InstructionGenerator  {
     }
 
     @Override
-    public Supplier<String> getSupplier(BatchInstruction request) {
+    public Supplier<String> getSupplier(ParsedInstruction request) {
 
         if (request.getPaymentOption().equalsIgnoreCase(RANDOMIZE_REQUEST_INSTRUCTION)) {
             // todo make random
