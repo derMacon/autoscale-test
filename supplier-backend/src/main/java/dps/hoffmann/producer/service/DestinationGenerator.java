@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.BatchInstruction;
+import dps.hoffmann.producer.model.instruction.ScalingInstruction;
 import dps.hoffmann.producer.properties.ActivemqProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class DestinationGenerator implements InstructionGenerator {
     }
 
     @Override
-    public Supplier<String> getSupplier(BatchInstruction request) {
+    public Supplier<String> getSupplier(ScalingInstruction request) {
         return () -> request.getDestination();
     }
 

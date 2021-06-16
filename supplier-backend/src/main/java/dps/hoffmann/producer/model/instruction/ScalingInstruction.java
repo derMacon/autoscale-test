@@ -1,6 +1,7 @@
-package dps.hoffmann.producer.model;
+package dps.hoffmann.producer.model.instruction;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ import java.sql.Timestamp;
 @ToString
 @EqualsAndHashCode
 @With
-public class BatchInstruction {
+@Builder
+public class ScalingInstruction implements Instruction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +36,9 @@ public class BatchInstruction {
     private int duration;
     private Timestamp received;
 
+
+    @Override
+    public void accept(BatchVisitor visitor) {
+        visitor.accept(this);
+    }
 }

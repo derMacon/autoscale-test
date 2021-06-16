@@ -1,6 +1,6 @@
 package dps.hoffmann.producer.service;
 
-import dps.hoffmann.producer.model.BatchInstruction;
+import dps.hoffmann.producer.model.instruction.ScalingInstruction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 @Service
 public class XPathGenerator implements InstructionGenerator {
 
-    private static final String RANDOMIZED_KEY_IDENTIFIER = "Randomized";
+    public static final String RANDOMIZED_KEY_IDENTIFIER = "Randomized";
 
 
     @Value("#{${payment.xpaths}}")
@@ -28,7 +28,7 @@ public class XPathGenerator implements InstructionGenerator {
     }
 
     @Override
-    public Supplier<String> getSupplier(BatchInstruction request) {
+    public Supplier<String> getSupplier(ScalingInstruction request) {
 
         if (request.getPathOption().equals(RANDOMIZED_KEY_IDENTIFIER)) {
 

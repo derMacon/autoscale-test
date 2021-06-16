@@ -1,6 +1,6 @@
 SET timezone = 'Europe/Paris';
 
-create table if not exists batch_instruction
+create table if not exists scaling_instruction
 (
     batch_id serial primary key,
     destination varchar(300) not null,
