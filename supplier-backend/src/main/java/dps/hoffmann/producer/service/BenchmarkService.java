@@ -53,7 +53,7 @@ public class BenchmarkService {
 
         int durationMillis = 0;
         if (!sessionIsTransacted) {
-            durationMillis = parsedInstruction.getDuration() * 1000
+            durationMillis = parsedInstruction.getDuration()
                     / (parsedInstruction.getMessageCnt() - 1);
         }
 

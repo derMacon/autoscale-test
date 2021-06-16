@@ -14,11 +14,17 @@ sendRequest() {
 	export $(cat .env | xargs)
 	URL="http://$API_HOST:$API_PORT/api/v1/parser/benchmark"
 
+	if [ ! -f "$1" ]; then
+		echo 'file does not exist'
+		usage
+		exit 1;
+	fi
+
 	REQUEST="$( cat $1 )"
 
-  printf "  sending benchmark request to
-  - url: $URL
-  - req: $REQUEST
+  printf "  sending benchmark request
+	- url: $URL
+	- req: $REQUEST
   To view the metrics visit the grafan client on the host machine (port 3000)" 
 
 	curl -X POST -H "Content-Type: text/plain" --data "$REQUEST" $URL

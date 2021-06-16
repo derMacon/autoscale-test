@@ -5,6 +5,7 @@ import dps.hoffmann.producer.model.instruction.BatchVisitor;
 import dps.hoffmann.producer.model.instruction.Instruction;
 import dps.hoffmann.producer.model.instruction.InstructionName;
 import dps.hoffmann.producer.model.instruction.LogicalServiceName;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 @Service
 @Slf4j
@@ -24,7 +26,13 @@ public class RequestParserService {
     @Autowired
     private BenchmarkService benchmarkService;
 
+    @Autowired
+    private Semaphore semaphore;
+
+    @SneakyThrows
     public void runRequest(String textMessage) {
+        semaphore.acquire();
+
         BatchVisitor visitor = new BatchVisitor(
                 (scalingInstr) -> benchmarkService.benchmark(scalingInstr)
         );
@@ -33,6 +41,8 @@ public class RequestParserService {
         for (Instruction instruction : instructions) {
             instruction.accept(visitor);
         }
+
+        semaphore.release();
     }
 
     private List<Instruction> parseTxtMsg(String textMsg) throws InvalidParserRequestException {

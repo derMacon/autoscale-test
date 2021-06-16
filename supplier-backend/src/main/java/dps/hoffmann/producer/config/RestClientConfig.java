@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.Semaphore;
+
 @Configuration
 public class RestClientConfig {
 
@@ -18,6 +20,11 @@ public class RestClientConfig {
         MappingJackson2HttpMessageConverter m = new MappingJackson2HttpMessageConverter();
         m.setObjectMapper(new ObjectMapper());
         return m;
+    }
+
+    @Bean
+    public Semaphore parseEndpointSemaphore() {
+        return new Semaphore(1);
     }
 
 }

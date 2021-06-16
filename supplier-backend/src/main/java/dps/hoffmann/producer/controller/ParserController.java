@@ -26,7 +26,7 @@ public class ParserController {
             consumes = TEXT_PLAIN_VALUE)
     public void parseBenchmark(@RequestBody String textValue) {
         log.info("new benchmark request to parse: {}", textValue);
-        parserService.runRequest(textValue);
+        new Thread(() -> parserService.runRequest(textValue)).start();
     }
 
 }
