@@ -22,10 +22,11 @@ sendRequest() {
 
 	REQUEST="$( cat $1 )"
 
-  printf "  sending benchmark request
-	- url: $URL
-	- req: $REQUEST
-  To view the metrics visit the grafan client on the host machine (port 3000)" 
+  printf "\
+    sending benchmark request
+      - url: $URL
+      - req: $REQUEST
+    To view the metrics visit the grafan client on the host machine (port 3000)" 
 
 	curl -X POST -H "Content-Type: text/plain" --data "$REQUEST" $URL
 }
