@@ -4,6 +4,13 @@ Project to showcase the general approach of processing an instant payment provid
 
 ![overview](./_docs/slides/overview.png)
 
+## Run Application
+When the benchmark tests starts up the following stages have to be executed
+1. Create the images 
+2. Start stack
+3. Create traffic
+The first two steps can be automatically started by calling the [./clean-build-run.sh](./clean-build-run.sh) script. To generate traffic execute the [./generate-traffic.sh](./generate-traffic.sh) script. If you want to create custom requests, take a look at the [request-scripts](./request-scripts) directory where multiple examples are mentioned and another script [curl-benchmark.sh](./request-scripts/curl-benchmark.sh) can be used for specific requests.
+
 ## Components
 ### Stack
 - **supplier-frontend**: React frontend displaying a form where the user can input the benchmark request details
