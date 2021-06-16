@@ -3,7 +3,8 @@
 echo 'create network'
 docker network create -d overlay scaler
 
-docker-compose build
+echo 'build images'
+docker-compose -f stack/docker-compose.yml build
 
-./parseStackConfig.sh
+./start-stack-services.sh
 
