@@ -1,5 +1,6 @@
 package dps.hoffmann.proxy.config;
 
+import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingDirection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +12,9 @@ public class GaugeConfig {
 
     @Bean
     public AtomicInteger[] upStartingTime() {
-        ScalingDirection[] dirs = ScalingDirection.values();
-        AtomicInteger[] values = new AtomicInteger[dirs.length];
-        for (ScalingDirection curr : dirs) {
+        LogicalService[] services = LogicalService.values();
+        AtomicInteger[] values = new AtomicInteger[services.length];
+        for (LogicalService curr : services) {
             values[curr.ordinal()] = new AtomicInteger(0);
         }
         return values;

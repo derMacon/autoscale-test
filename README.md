@@ -38,3 +38,5 @@ Project to showcase the general approach of processing an instant payment provid
 - spring api add option to create waves of requests
 - visual feedback in ui if benchmark is proceeding
 - deploy on company server
+- rename entry point in proxy (still says testapp in title)
+- set all ports in docker-compose to read from .env

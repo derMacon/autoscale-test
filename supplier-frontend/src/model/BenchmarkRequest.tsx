@@ -41,6 +41,7 @@ export class BenchmarkRequest {
 
 	pathOption: string = "";
 	paymentOption: string = "";
+	destination: string = "";
 	messageCnt: number = 1;
 	duration: number = 0;
 }

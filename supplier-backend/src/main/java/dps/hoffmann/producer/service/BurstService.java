@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -25,6 +26,9 @@ public class BurstService {
     private XPathGenerator xPathGenerator;
 
     @Autowired
+    private DestinationGenerator destinationGenerator;
+
+    @Autowired
     private PersistenceService persistenceService;
 
     @Transactional
@@ -38,9 +42,11 @@ public class BurstService {
         boolean sessionIsTransacted = sessionIsTransacted(batchInstruction);
         log.info("session transacted: {}", sessionIsTransacted);
 
-        Supplier<String> paymentSupplier = paymentGenerator.getPaymentSupplier(batchInstruction);
-        Supplier<String> xPathSupplier = xPathGenerator.getXPathSupplier(batchInstruction);
-        Consumer<PaymentMessage> amqConsumer = amqService.getConsumer(sessionIsTransacted);
+        Supplier<String> paymentSupplier = paymentGenerator.getSupplier(batchInstruction);
+        Supplier<String> xPathSupplier = xPathGenerator.getSupplier(batchInstruction);
+        Supplier<String> destinationSupplier = destinationGenerator.getSupplier(batchInstruction);
+        BiConsumer<PaymentMessage, Supplier<String>> amqConsumer =
+                amqService.getConsumer(sessionIsTransacted);
 
 
         int durationMillis = 0;
@@ -59,7 +65,7 @@ public class BurstService {
                     .sentTimestamp(new Timestamp(System.currentTimeMillis()))
                     .build();
 
-            amqConsumer.accept(payment);
+            amqConsumer.accept(payment, destinationSupplier);
 
             Thread.sleep(durationMillis);
         }

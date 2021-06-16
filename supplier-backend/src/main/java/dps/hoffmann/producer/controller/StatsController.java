@@ -36,4 +36,11 @@ public class StatsController {
         return new ResponseEntity<>(status);
     }
 
+    @RequestMapping("/version")
+    public String version() {
+        String msg = "version: " + 1;
+        log.info(msg);
+        return msg;
+    }
+
 }

@@ -16,11 +16,19 @@ public class QueueConsumerService {
     private RequestService requestService;
 
 
-    @JmsListener(destination = "${amq.queue.acknowledgement}")
+    @JmsListener(destination = "${amq.queue.node.acknowledgement}")
     // todo maybe make this transactional???
-    public void onMessage(Message message) throws JMSException {
+    public void onNodeJsMessage(Message message) throws JMSException {
         log.info("new message");
-        requestService.acknowledgeScaling();
+        requestService.acknowledgeNodeJsScaling();
+        message.acknowledge();
+    }
+
+    @JmsListener(destination = "${amq.queue.spring.acknowledgement}")
+    // todo maybe make this transactional???
+    public void onSpringMessage(Message message) throws JMSException {
+        log.info("new message");
+        requestService.acknowledgeSpringScaling();
         message.acknowledge();
     }
 

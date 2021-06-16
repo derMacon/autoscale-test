@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
+/**
+ * Object only used to persist data and to send data to actual scaler service
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,21 +28,15 @@ import java.sql.Timestamp;
 @ToString
 @EqualsAndHashCode
 @With
+@Builder
 public class ScalingInstruction {
-
-    // todo
-//    public ScalingInstruction(RequestType requestType) {
-//        this.receivedTimestamp = new Timestamp(System.currentTimeMillis());
-//        this.requestType = requestType;
-//    }
-
-    public ScalingInstruction(ScalingDirection scalingDirection) {
-        this.scalingDirection = scalingDirection;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructionId;
+    private String swarmServiceName;
+    @Enumerated(EnumType.STRING)
+    private LogicalService logicalServiceName;
     @Enumerated(EnumType.STRING)
     private ScalingDirection scalingDirection;
     private Timestamp receivedRequestTimestamp;

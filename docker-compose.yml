@@ -44,6 +44,23 @@ services:
       - script-db:/var/lib/postgresql/data
     restart: unless-stopped
 
+  spring-db:
+    image: postgres:13-alpine
+    container_name: spring-db
+    networks:
+      - scaler
+    ports:
+      - "${SPRING_DATABASE_PORT}:${SPRING_DATABASE_PORT}"
+    command: -p ${SPRING_DATABASE_PORT}
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=${SPRING_USER_NAME}
+      - POSTGRES_PASSWORD=${SPRING_USER_PASSWORD}
+      - POSTGRES_DB=${SPRING_DATABASE_NAME}
+    volumes:
+      - spring-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
   history-db:
     image: postgres:13-alpine
     ports:
@@ -74,7 +91,8 @@ services:
       - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
       - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
       - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
-      - AMQ_QUEUE_NAME=${AMQ_PAY_QUEUE_NAME}
+      - AMQ_NODE_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
+      - AMQ_SPRING_QUEUE_NAME=${AMQ_SPRING_QUEUE_NAME}
       - AMQ_BROKER_HOSTNAME=activemq
       - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
       - SERVER_PORT=${SUPPLIER_BACKEND_PORT}
@@ -111,8 +129,28 @@ services:
       - PG_USER_NAME=${SCRIPT_USER_NAME}
       - PG_USER_PASSWORD=${SCRIPT_USER_PASSWORD}
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
-      - AMQ_PAY_QUEUE_NAME=${AMQ_PAY_QUEUE_NAME}
-      - AMQ_ACK_QUEUE_NAME=${AMQ_ACK_QUEUE_NAME}
+      - AMQ_PAY_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
+      - AMQ_ACK_QUEUE_NAME=${AMQ_NODE_ACK_QUEUE}
+
+  spring-consumer:
+    image: spring-consumer
+    build: spring-consumer/
+    ports:
+      - "${SPRING_SERVER_PORT}:${SPRING_SERVER_PORT}"
+    restart: unless-stopped
+    networks:
+      - scaler
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - DATABASE_HOST=spring-db
+      - DATABASE_USER=${SPRING_USER_NAME}
+      - DATABASE_PASSWORD=${SPRING_USER_PASSWORD}
+      - DATABASE_NAME=${SPRING_DATABASE_NAME}
+      - DATABASE_PORT=${SPRING_DATABASE_PORT}
+      - AMQ_SPRING_QUEUE_NAME=${AMQ_SPRING_QUEUE_NAME}
+      - AMQ_BROKER_HOSTNAME=activemq
+      - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
+      - SERVER_PORT=${SPRING_SERVER_PORT}
   
   scaler-proxy:
     image: scaler-proxy
@@ -125,11 +163,17 @@ services:
       - "9245:9245"
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"
+      - DELEGATION_HOSTNAME=scaler
+      - AMQ_SMALL_CONSUMER_CNT=${AMQ_SMALL_CONSUMER_CNT}
+      - AMQ_MEDIUM_CONSUMER_CNT=${AMQ_MEDIUM_CONSUMER_CNT}
+      - AMQ_LARGE_CONSUMER_CNT=${AMQ_LARGE_CONSUMER_CNT}
       - DATABASE_HOST=history-db
       - DATABASE_USER=${SUPPLIER_USER_NAME}
       - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
       - DATABASE_NAME=${SUPPLIER_DATABASE_NAME}
       - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
+      - AMQ_NODE_ACK_QUEUE=${AMQ_NODE_ACK_QUEUE}
+      - AMQ_SPRING_ACK_QUEUE=${AMQ_SPRING_ACK_QUEUE}
   
   scaler:
     image: thomasjpfan/docker-scaler:${TAG:-master}
@@ -202,3 +246,4 @@ volumes:
   pgadmin-data:
   history-db:
   script-db:
+  spring-db:
