@@ -62,22 +62,23 @@ public class RequestService {
     }
 
 
-    public void acknowledgeNodeJsScaling() {
-        acknowledgeScaling(LogicalService.NODE);
+    public void acknowledgeNodeJsScaling(String containerId) {
+        acknowledgeScaling(containerId, LogicalService.NODE);
     }
 
-    public void acknowledgeSpringScaling() {
-        acknowledgeScaling(LogicalService.SPRING);
+    public void acknowledgeSpringScaling(String containerId) {
+        acknowledgeScaling(containerId, LogicalService.SPRING);
     }
 
-    private void acknowledgeScaling(LogicalService acknowledgingService) {
+    private void acknowledgeScaling(String containerId, LogicalService acknowledgingService) {
         log.info("ack cnt: {}", cnt++);
         if (unacknowledgedInstructions.isEmpty()) {
             // todo do something... throw exception
             log.info("no unacknowledged instructions");
         } else {
             ScalingInstruction oldestInstruction = getOldestMsgForService(acknowledgingService)
-                    .withScaleAcknowledgementTimestamp(now());
+                    .withScaleAcknowledgementTimestamp(now())
+                    .withContainerId(containerId);
 
             log.info("oldest instr: {}", oldestInstruction);
             log.info("unack lst: {}", unacknowledgedInstructions);

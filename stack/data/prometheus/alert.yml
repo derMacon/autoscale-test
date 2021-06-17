@@ -2,7 +2,7 @@ groups:
   - name: nodeScaleAlert
     rules:
       - alert: node_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 5
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 2
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: node_tooFewConsumers_mediumOverhead
@@ -12,7 +12,7 @@ groups:
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 15
         for: 0m 
       - alert: node_tooManyConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 5
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 2
         for: 0m 
       - alert: node_tooManyConsumers_mediumOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10
@@ -24,7 +24,7 @@ groups:
   - name: springScaleAlert
     rules:
       - alert: spring_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 5
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 2
         for: 0m 
       - alert: spring_tooFewConsumers_mediumOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10
@@ -33,7 +33,7 @@ groups:
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 15
         for: 0m 
       - alert: spring_tooManyConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 5
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 2
         for: 0m 
       - alert: spring_tooManyConsumers_mediumOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10

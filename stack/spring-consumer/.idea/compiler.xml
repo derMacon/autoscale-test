@@ -2,20 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="spring-consumer" />
+        <module name="scaleproxy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="spring-consumer" target="11" />
+      <module name="scaleproxy" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="spring-consumer" options="-parameters" />
+      <module name="scaleproxy" options="-parameters" />
     </option>
   </component>
 </project>

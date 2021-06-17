@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
+
 /**
  * Service that makes the actual api calls to the scaler api service
  */
@@ -40,6 +42,8 @@ public class ScaleService {
      */
     public void sendScaleRequest(ScalingInstruction instruction) {
         String requestJson = delegationProperties.getRequestBody(instruction);
+
+        log.info("request json: {}", requestJson);
 
         try {
             HttpHeaders headers = new HttpHeaders();

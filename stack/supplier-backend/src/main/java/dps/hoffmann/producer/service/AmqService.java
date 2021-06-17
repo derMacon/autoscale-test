@@ -15,8 +15,10 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -38,7 +40,7 @@ public class AmqService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private List<String> queriedDestinations = new LinkedList<>();
+    private Set<String> queriedDestinations = new HashSet<>();
 
 
     public boolean isUp() {
@@ -89,7 +91,11 @@ public class AmqService {
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage(message);
+                Message m = session.createTextMessage(message);
+                // for some reason prio needs to be 5 otherwise only the
+                // first replica processes the messages
+                m.setJMSPriority(5);
+                return m;
             }
         });
     }
