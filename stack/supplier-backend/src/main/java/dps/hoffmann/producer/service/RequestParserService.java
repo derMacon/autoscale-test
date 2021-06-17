@@ -32,29 +32,33 @@ public class RequestParserService {
     @SneakyThrows
     public void runRequest(String textMessage) {
         semaphore.acquire();
+        log.info("new txt msg: {}", textMessage);
 
         BatchVisitor visitor = new BatchVisitor(
                 (scalingInstr) -> benchmarkService.benchmark(scalingInstr)
         );
 
-        List<Instruction> instructions = parseTxtMsg(textMessage);
-        for (Instruction instruction : instructions) {
-            instruction.accept(visitor);
+        List<List<Instruction>> batches = parseTxtMsg(textMessage);
+        for (List<Instruction> batch : batches) {
+            for (Instruction instruction : batch) {
+                instruction.accept(visitor);
+            }
+            benchmarkService.waitTillQueuesEmpty();
         }
 
         semaphore.release();
     }
 
-    private List<Instruction> parseTxtMsg(String textMsg) throws InvalidParserRequestException {
+    private List<List<Instruction>> parseTxtMsg(String textMsg) throws InvalidParserRequestException {
         if (textMsg == null || textMsg.isBlank() || textMsg.isEmpty()) {
             throw new InvalidParserRequestException("msg null or blank");
         }
 
         textMsg = textMsg.replaceAll("\n|\r|\t| |" + TEMP_DELIMITER, "");
 
-        List<Instruction> instr = new ArrayList<>();
+        List<List<Instruction>> instr = new ArrayList<>();
         for (String curr : textMsg.split(BATCH_DELIMITER)) {
-            instr.addAll(parseBatch(curr));
+            instr.add(parseBatch(curr));
         }
 
         return instr;

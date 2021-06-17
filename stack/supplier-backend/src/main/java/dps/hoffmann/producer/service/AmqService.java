@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -34,6 +37,8 @@ public class AmqService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    private List<String> queriedDestinations = new LinkedList<>();
 
 
     public boolean isUp() {
@@ -79,6 +84,7 @@ public class AmqService {
 
         final String message = convertedJson;
         String destination = destGen.get();
+        queriedDestinations.add(destination);
         log.info("dest: {}", destination);
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
@@ -87,6 +93,40 @@ public class AmqService {
             }
         });
     }
+
+    public void waitUntilAllQueuesEmpty() throws InterruptedException {
+        log.info("waiting for empty queues, scraping: {}", queriedDestinations);
+        int sum;
+        do {
+            sum = 0;
+            for (String currDest : this.queriedDestinations) {
+                sum += countPendingMessages(currDest);
+                log.trace("currdest - {} / sum - {}", currDest, sum);
+            }
+            if (sum > 0) {
+                Thread.sleep(500);
+            }
+        } while(sum > 0);
+
+        this.queriedDestinations.clear();
+        log.info("finished waiting");
+    }
+
+    /**
+     * https://stackoverflow.com/questions/13603949/count-number-of-messages-in-a-jms-queue
+     * @param destination
+     * @return
+     */
+    private int countPendingMessages(String destination) {
+        // to an Integer because the response of .browse may be null
+        Integer totalPendingMessages = this.nonTransactedJmsTemplate.browse(
+                destination,
+                (session, browser) -> Collections.list(browser.getEnumeration()).size()
+        );
+
+        return totalPendingMessages == null ? 0 : totalPendingMessages;
+    }
+
 
 
 //    public void sendXsdFormatTopic(SpecificationWrapper wrapper) {

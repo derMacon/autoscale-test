@@ -74,6 +74,11 @@ public class BenchmarkService {
         }
     }
 
+    @SneakyThrows
+    public void waitTillQueuesEmpty() {
+        this.amqService.waitUntilAllQueuesEmpty();
+    }
+
     private static Timestamp now() {
         return new Timestamp(System.currentTimeMillis());
     }
