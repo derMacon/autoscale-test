@@ -17,21 +17,24 @@ import javax.jms.Session;
 @Slf4j
 public class StartupAckService {
 
-    private static final String DEFAULT_ACK_MSG = "spring_acknowledge";
-
     @Value("${amq.ack.name}")
     private String destination;
 
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    @Autowired
+    private String uuid;
+
+
     @EventListener(ApplicationReadyEvent.class)
     public void handleContextRefresh() {
         log.info("application started - acknowledge startup to scaler proxy");
+        log.info("uuid: {}", uuid);
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage(DEFAULT_ACK_MSG);
+                return session.createTextMessage(uuid);
             }
         });
     }

@@ -29,7 +29,7 @@ public class FetchInitController {
 
     @RequestMapping("/health")
     public boolean health() {
-        log.info("this componennt is healthy");
+        log.info("this component is healthy");
         return true;
     }
 
