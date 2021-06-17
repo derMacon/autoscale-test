@@ -11,5 +11,5 @@ printf "\
 
 for file in $(find ./request-scripts -name '*.benchmark'); do
   echo "send request: $file"
-  ./curl-benchmark.sh $file
+  ./request-scripts/curl-benchmark.sh $file
 done
