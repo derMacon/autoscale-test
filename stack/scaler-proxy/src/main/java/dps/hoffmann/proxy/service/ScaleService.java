@@ -41,9 +41,9 @@ public class ScaleService {
      *                   will be translated to the correct request
      */
     public void sendScaleRequest(ScalingInstruction instruction) {
-        if (instruction.getScalingDirection() == DOWN) {
-            return;
-        }
+//        if (instruction.getScalingDirection() == DOWN) {
+//            return;
+//        }
         String requestJson = delegationProperties.getRequestBody(instruction);
 
         log.info("request json: {}", requestJson);

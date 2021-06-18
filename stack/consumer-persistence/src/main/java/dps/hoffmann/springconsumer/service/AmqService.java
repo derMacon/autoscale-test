@@ -17,7 +17,12 @@ public class AmqService {
     @Autowired
     private WorkerService workerService;
 
-
+    /**
+     * 
+     * @param message
+     * @throws JMSException
+     * @throws JsonProcessingException
+     */
     @JmsListener(destination = "${amq.persistence.queue}")
     // todo maybe make this transactional???
     public void onMessage(Message message) throws JMSException, JsonProcessingException {

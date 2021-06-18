@@ -50,15 +50,15 @@ public class RequestMapper {
         NODE_MEDIUM_UP_SCALE_REQUEST(NODE, "node_tooFewConsumers_mediumOverhead", UP, MEDIUM_SCALE_CNT),
         NODE_LARGE_UP_SCALE_REQUEST(NODE, "node_tooFewConsumers_largeOverhead", UP, LARGE_SCALE_CNT),
         NODE_SMALL_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_smallOverhead", DOWN, SMALL_SCALE_CNT),
-        NODE_MEDIUM_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
-        NODE_LARGE_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT),
+        NODE_MEDIUM_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_mediumOverhead", DOWN, DIFF_MEDIUM_SMALL),
+        NODE_LARGE_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_largeOverhead", DOWN, DIFF_LARGE_MEDIUM),
 
         SPRING_SMALL_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_smallOverhead", UP, SMALL_SCALE_CNT),
         SPRING_MEDIUM_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_mediumOverhead", UP, MEDIUM_SCALE_CNT),
         SPRING_LARGE_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_largeOverhead", UP, LARGE_SCALE_CNT),
         SPRING_SMALL_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_smallOverhead", DOWN, SMALL_SCALE_CNT),
-        SPRING_MEDIUM_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
-        SPRING_LARGE_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT);
+        SPRING_MEDIUM_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_mediumOverhead", DOWN, DIFF_MEDIUM_SMALL),
+        SPRING_LARGE_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_largeOverhead", DOWN, DIFF_LARGE_MEDIUM);
 
 
         private final LogicalService logicalService;
