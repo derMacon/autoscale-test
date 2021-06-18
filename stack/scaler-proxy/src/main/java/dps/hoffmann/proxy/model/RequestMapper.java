@@ -36,6 +36,8 @@ public class RequestMapper {
         scalingIntervalMapping.put(SMALL_SCALE_CNT, smallInterval);
         scalingIntervalMapping.put(MEDIUM_SCALE_CNT, mediumInterval);
         scalingIntervalMapping.put(LARGE_SCALE_CNT, largeInterval);
+        scalingIntervalMapping.put(DIFF_LARGE_MEDIUM, largeInterval - mediumInterval);
+        scalingIntervalMapping.put(DIFF_MEDIUM_SMALL, mediumInterval - smallInterval);
     }
 
 
