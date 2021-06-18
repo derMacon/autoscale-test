@@ -9,13 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.With;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.sql.Timestamp;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -26,10 +21,8 @@ import java.sql.Timestamp;
 @Builder
 public class Payment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int paymentId;
     private String containerId;
+    private LogicalServiceName serviceName;
     private String extractedElement;
     private Timestamp sentTimestamp;
     private Timestamp receivedTimestamp;

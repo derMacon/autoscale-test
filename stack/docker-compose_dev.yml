@@ -36,6 +36,21 @@ services:
       - script-db:/var/lib/postgresql/data
     restart: unless-stopped
 
+  consumer-db:
+    image: postgres:13-alpine
+    container_name: consumer-db
+    ports:
+      - "9292:9292"
+    command: -p 9292
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=consumer-db
+    volumes:
+      - consumer-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
   history-db:
     image: postgres:13-alpine
     container_name: history-db
@@ -123,3 +138,4 @@ volumes:
   script-db:
   history-db:
   spring-db:
+  consumer-db:
