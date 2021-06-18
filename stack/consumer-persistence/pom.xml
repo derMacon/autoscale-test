@@ -10,9 +10,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dps.hoffmann</groupId>
-    <artifactId>spring-consumer</artifactId>
+    <artifactId>consumer-persistence</artifactId>
     <version>latest</version>
-    <name>spring-consumer</name>
+    <name>consumer-persistence</name>
     <description>Proxy delegating api calls to docker scaler api</description>
     <properties>
         <java.version>11</java.version>
@@ -57,7 +57,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-consumer</finalName>
+        <finalName>consumer-persistence</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

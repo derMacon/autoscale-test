@@ -61,6 +61,23 @@ services:
       - spring-db:/var/lib/postgresql/data
     restart: unless-stopped
 
+  consumer-db:
+    image: postgres:13-alpine
+    container_name: consumer-db
+    ports:
+      - "${CONSUMER_DATABASE_PORT}:${CONSUMER_DATABASE_PORT}"
+    command: -p ${CONSUMER_DATABASE_PORT}
+    networks:
+      - scaler
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=consumer-db
+    volumes:
+      - consumer-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
   history-db:
     image: postgres:13-alpine
     ports:
@@ -76,6 +93,27 @@ services:
     volumes:
       - history-db:/var/lib/postgresql/data
     restart: unless-stopped
+    
+  consumer-persistence:
+    image: consumer-persistence
+    build: consumer-persistence/
+    ports:
+      - "${CONSUMER_PERSISTENCE_SERVER_PORT}:${CONSUMER_PERSISTENCE_SERVER_PORT}"
+    restart: unless-stopped
+    networks:
+      - scaler
+    environment:
+      - DATABASE_HOST=consumer-db
+      - DATABASE_USER=${CONSUMER_USER_NAME}
+      - DATABASE_PASSWORD=${CONSUMER_USER_PASSWORD}
+      - DATABASE_NAME=${CONSUMER_DATABASE_NAME}
+      - DATABASE_PORT=${CONSUMER_DATABASE_PORT}
+      - AMQ_NODE_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
+      - AMQ_CONSUMER_PERSISTENCE_QUEUE=${AMQ_CONSUMER_PERSISTENCE_QUEUE}
+      - AMQ_BROKER_HOSTNAME=activemq
+      - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
+      - SERVER_PORT=${CONSUMER_PERSISTENCE_SERVER_PORT}
+      - "SPRING_PROFILES_ACTIVE=prod"
     
   supplier-backend:
     image: supplier-backend
@@ -250,3 +288,4 @@ volumes:
   history-db:
   script-db:
   spring-db:
+  consumer-db:

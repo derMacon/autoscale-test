@@ -5,6 +5,6 @@ COPY pom.xml /usr/src/app
 RUN mvn -f /usr/src/app/pom.xml clean package -DskipTests
 
 FROM gcr.io/distroless/java
-COPY --from=build /usr/src/app/target/spring-consumer.jar /usr/app/spring-consumer.jar
+COPY --from=build /usr/src/app/target/consumer-persistence.jar /usr/app/consumer-persistence.jar
 EXPOSE 7143
-ENTRYPOINT ["java","-jar","/usr/app/spring-consumer.jar"]
+ENTRYPOINT ["java","-jar","/usr/app/consumer-persistence.jar"]
