@@ -1,6 +1,7 @@
-package dps.hoffmann.producer.service;
+package dps.hoffmann.producer.service.generator;
 
 import dps.hoffmann.producer.model.instruction.ParsedInstruction;
+import dps.hoffmann.producer.service.InstructionGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,12 @@ import java.util.function.Supplier;
 
 import static dps.hoffmann.producer.utils.ResourceUtils.readResource;
 
+/**
+ * Generates the field which should be extracted by translating a parsed instruction to a
+ * supplier giving out the information
+ */
 @Service
-public class PaymentGenerator implements InstructionGenerator  {
+public class PaymentGenerator implements InstructionGenerator {
 
     public static final String RANDOMIZE_REQUEST_INSTRUCTION = "Randomize messages";
     public static final String USE_STANDARD_REQUEST_INSTRUCTION = "Use standard request";

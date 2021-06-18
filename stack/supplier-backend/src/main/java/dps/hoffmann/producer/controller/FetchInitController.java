@@ -1,8 +1,8 @@
 package dps.hoffmann.producer.controller;
 
-import dps.hoffmann.producer.service.DestinationGenerator;
-import dps.hoffmann.producer.service.PaymentGenerator;
-import dps.hoffmann.producer.service.XPathGenerator;
+import dps.hoffmann.producer.service.generator.DestinationGenerator;
+import dps.hoffmann.producer.service.generator.PaymentGenerator;
+import dps.hoffmann.producer.service.generator.XPathGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

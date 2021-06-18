@@ -1,6 +1,7 @@
-package dps.hoffmann.producer.service;
+package dps.hoffmann.producer.service.generator;
 
 import dps.hoffmann.producer.model.instruction.ParsedInstruction;
+import dps.hoffmann.producer.service.InstructionGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * Instruction Generator for the field name that should be extracted
+ */
 @Service
 public class XPathGenerator implements InstructionGenerator {
 

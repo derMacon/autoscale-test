@@ -16,6 +16,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
+/**
+ * Takes in a user request provided by the api endpoint, generates the parsed instruction out of
+ * the dataset and starts a benchmark test
+ */
 @Service
 @Slf4j
 public class RequestParserService {
@@ -29,6 +33,12 @@ public class RequestParserService {
     @Autowired
     private Semaphore semaphore;
 
+    /**
+     * Runs a benchmark test for the given user input. By putting it inside a critical section
+     * (semaphores) the benchmark requests will be executed after one another.
+     *
+     * @param textMessage user input following the specified grammar
+     */
     @SneakyThrows
     public void runRequest(String textMessage) {
         semaphore.acquire();

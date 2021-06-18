@@ -2,6 +2,9 @@ package dps.hoffmann.producer.service;
 
 import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.model.PaymentMessage;
+import dps.hoffmann.producer.service.generator.DestinationGenerator;
+import dps.hoffmann.producer.service.generator.PaymentGenerator;
+import dps.hoffmann.producer.service.generator.XPathGenerator;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,9 @@ import java.sql.Timestamp;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+/**
+ * Service performing benchmark tests for parsed instructions
+ */
 @Service
 @Slf4j
 public class BenchmarkService {
@@ -31,6 +37,12 @@ public class BenchmarkService {
     @Autowired
     private PersistenceService persistenceService;
 
+    /**
+     * Benchmark a parsed instruction. The object mainly holds fields with the various options a
+     * user can select. Those option are translated into supplier instances giving the needed
+     * information for the actual send process to the queue.
+     * @param parsedInstruction parsed user input
+     */
     @SneakyThrows
     @Transactional
     public void benchmark(ParsedInstruction parsedInstruction) {
@@ -74,11 +86,18 @@ public class BenchmarkService {
         }
     }
 
+    /**
+     * Waits until the queues which were queried in the amq service are empty.
+     */
     @SneakyThrows
     public void waitTillQueuesEmpty() {
         this.amqService.waitUntilAllQueuesEmpty();
     }
 
+    /**
+     * Generates the current time as Timestamp
+     * @return
+     */
     private static Timestamp now() {
         return new Timestamp(System.currentTimeMillis());
     }

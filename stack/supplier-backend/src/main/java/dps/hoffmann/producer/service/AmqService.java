@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dps.hoffmann.producer.model.PaymentMessage;
 import dps.hoffmann.producer.properties.ActivemqProperties;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,9 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+/**
+ * Service handling all communication with the activemq broker queues
+ */
 @Service
 @Slf4j
 public class AmqService {
@@ -43,6 +47,10 @@ public class AmqService {
     private Set<String> queriedDestinations = new HashSet<>();
 
 
+    /**
+     * Gives an update on the status of the connection
+     * @return
+     */
     public boolean isUp() {
         var connection = transactedJmsTemplate.getConnectionFactory();
         try {
@@ -63,6 +71,14 @@ public class AmqService {
         return true;
     }
 
+    /**
+     * Creates a consumer that takes in a payment message and generates a supplier for the
+     * destinations of the specified. Useful when the user wants to create a batch that holds
+     * different kinds of destination, e.g. he wants randomize the destination.
+     * @param sessionIsTransacted flag determining if all messages should be send in one
+     *                            transaction or if it is spread over time
+     * @return consumer generating a destination supplier
+     */
     public BiConsumer<PaymentMessage, Supplier<String>> getConsumer(boolean sessionIsTransacted) {
         return sessionIsTransacted
                 ? (message, destGen) -> sendObjPaymentQueueMessage(
@@ -71,14 +87,20 @@ public class AmqService {
                         nonTransactedJmsTemplate, message, destGen);
     }
 
+    /**
+     * The actual sending process of a single message to the broker
+     * @param jmsTemplate dao for broker communication
+     * @param paymentMsg payment message holding all relevant information for the consumer
+     * @param destGen queue destination supplier
+     */
     private void sendObjPaymentQueueMessage(
             JmsTemplate jmsTemplate,
-            PaymentMessage wrapper,
+            PaymentMessage paymentMsg,
             Supplier<String> destGen
     ) {
         String convertedJson = "";
         try {
-            convertedJson = objectMapper.writeValueAsString(wrapper);
+            convertedJson = objectMapper.writeValueAsString(paymentMsg);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -100,7 +122,11 @@ public class AmqService {
         });
     }
 
-    public void waitUntilAllQueuesEmpty() throws InterruptedException {
+    /**
+     * Waits until all previously queried queues are empty
+     */
+    @SneakyThrows
+    public void waitUntilAllQueuesEmpty() {
         log.info("waiting for empty queues, scraping: {}", queriedDestinations);
         int sum;
         do {
@@ -119,9 +145,12 @@ public class AmqService {
     }
 
     /**
-     * https://stackoverflow.com/questions/13603949/count-number-of-messages-in-a-jms-queue
-     * @param destination
-     * @return
+     * Counts pending messages in a given queue
+     *
+     * src: https://stackoverflow.com/questions/13603949/count-number-of-messages-in-a-jms-queue
+     *
+     * @param destination queue name
+     * @return number of messages in queue
      */
     private int countPendingMessages(String destination) {
         // to an Integer because the response of .browse may be null
@@ -133,8 +162,7 @@ public class AmqService {
         return totalPendingMessages == null ? 0 : totalPendingMessages;
     }
 
-
-
+    // todo delete this
 //    public void sendXsdFormatTopic(SpecificationWrapper wrapper) {
 //        log.info("xsd format: ", wrapper);
 //        this.jmsTopicTemplate.send(this.activemqProperties.getTopic(), new MessageCreator() {

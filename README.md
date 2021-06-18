@@ -51,6 +51,8 @@ The first two steps can be automatically started by calling the [./clean-build-r
 - `docker service logs vossibility_prometheus`
 
 ### Todos
+- check if benchmarks are being executed after one another
+- isUp method in supplier backend may cause problems db connection pool
 - create readme for request scripts
 - create grammar example file for request scripts
 - timestamps in wrong timezone (proxy service)
