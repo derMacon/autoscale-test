@@ -1,5 +1,6 @@
 package dps.hoffmann.proxy.model;
 
+import dps.hoffmann.proxy.properties.ScalingProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,24 +21,21 @@ public class RequestMapper {
     private Map<ScalingInterval, Integer> scalingIntervalMapping;
 
     public RequestMapper(
-            // service names
-            @Value("${delegation.nodeservice}") String nodeServiceName,
-            @Value("${delegation.springservice}") String springServiceName,
-            // scaling intervals
-            @Value("${scaling.interval.small}") Integer smallInterval,
-            @Value("${scaling.interval.medium}") Integer mediumInterval,
-            @Value("${scaling.interval.large}") Integer largeInterval
+        ScalingProperties scalingProperties,
+        @Value("${delegation.nodeservice}") String nodeServiceName,
+        @Value("${delegation.springservice}") String springServiceName
     ) {
         serviceNameMapping = new HashMap<>();
         serviceNameMapping.put(NODE, nodeServiceName);
         serviceNameMapping.put(SPRING, springServiceName);
 
         scalingIntervalMapping = new HashMap<>();
-        scalingIntervalMapping.put(SMALL_SCALE_CNT, smallInterval);
-        scalingIntervalMapping.put(MEDIUM_SCALE_CNT, mediumInterval);
-        scalingIntervalMapping.put(LARGE_SCALE_CNT, largeInterval);
-//        scalingIntervalMapping.put(DIFF_LARGE_MEDIUM, largeInterval - mediumInterval);
-//        scalingIntervalMapping.put(DIFF_MEDIUM_SMALL, mediumInterval - smallInterval);
+        scalingIntervalMapping.put(DIFF_CL0_CL1, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL0_CL2, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL1_CL2, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL0_CL3, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL1_CL3, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL2_CL3, scalingProperties.getCl0());
     }
 
 
@@ -48,20 +46,21 @@ public class RequestMapper {
     @Getter
     public enum InstructionType {
 
-        NODE_SMALL_UP_SCALE_REQUEST(NODE, "node_tooFewConsumers_smallOverhead", UP, SMALL_SCALE_CNT),
-        NODE_MEDIUM_UP_SCALE_REQUEST(NODE, "node_tooFewConsumers_mediumOverhead", UP, MEDIUM_SCALE_CNT),
-        NODE_LARGE_UP_SCALE_REQUEST(NODE, "node_tooFewConsumers_largeOverhead", UP, LARGE_SCALE_CNT),
-        NODE_SMALL_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_smallOverhead", DOWN, SMALL_SCALE_CNT),
-        NODE_MEDIUM_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
-        NODE_LARGE_DOWN_SCALE_REQUEST(NODE, "node_tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT),
+        SPRING_QL1_CL0(SPRING, "ql1_cl0", UP, DIFF_CL0_CL1),
+        SPRING_QL2_CL0(SPRING, "ql2_cl0", UP, DIFF_CL0_CL2),
+        SPRING_QL3_CL0(SPRING, "ql3_cl0", UP, DIFF_CL0_CL3),
 
-        SPRING_SMALL_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_smallOverhead", UP, SMALL_SCALE_CNT),
-        SPRING_MEDIUM_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_mediumOverhead", UP, MEDIUM_SCALE_CNT),
-        SPRING_LARGE_UP_SCALE_REQUEST(SPRING, "spring_tooFewConsumers_largeOverhead", UP, LARGE_SCALE_CNT),
-        SPRING_SMALL_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_smallOverhead", DOWN, SMALL_SCALE_CNT),
-        SPRING_MEDIUM_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_mediumOverhead", DOWN, MEDIUM_SCALE_CNT),
-        SPRING_LARGE_DOWN_SCALE_REQUEST(SPRING, "spring_tooManyConsumers_largeOverhead", DOWN, LARGE_SCALE_CNT);
+        SPRING_QL0_CL1(SPRING, "ql0_cl1", DOWN, DIFF_CL0_CL1),
+        SPRING_QL2_CL1(SPRING, "ql2_cl1", UP, DIFF_CL1_CL2),
+        SPRING_QL3_CL1(SPRING, "ql3_cl1", UP, DIFF_CL1_CL3),
 
+        SPRING_QL0_CL2(SPRING, "ql0_cl2", DOWN, DIFF_CL0_CL2),
+        SPRING_QL1_CL2(SPRING, "ql1_cl2", DOWN, DIFF_CL1_CL2),
+        SPRING_QL3_CL2(SPRING, "ql3_cl2", UP, DIFF_CL2_CL3),
+
+        SPRING_QL0_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL0_CL3),
+        SPRING_QL1_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL1_CL3),
+        SPRING_QL2_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL2_CL3);
 
         private final LogicalService logicalService;
         private final String requestName;

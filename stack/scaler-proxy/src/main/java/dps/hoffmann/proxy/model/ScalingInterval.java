@@ -1,6 +1,10 @@
 package dps.hoffmann.proxy.model;
 
 public enum ScalingInterval {
-    SMALL_SCALE_CNT, MEDIUM_SCALE_CNT, LARGE_SCALE_CNT
-//    DIFF_LARGE_MEDIUM, DIFF_MEDIUM_SMALL
+    DIFF_CL0_CL1,
+    DIFF_CL0_CL2,
+    DIFF_CL0_CL3,
+    DIFF_CL1_CL2,
+    DIFF_CL1_CL3,
+    DIFF_CL2_CL3
 }
