@@ -44,6 +44,7 @@ public class RequestService {
         if (!unacknowledgedInstructions.isEmpty()) {
             log.info("unacknowledged instr not empty when delegation called: {}",
                     unacknowledgedInstructions);
+            return;
         }
 
         List<ScalingInstruction> instructions = translationService.translateRequest(jsonBody);

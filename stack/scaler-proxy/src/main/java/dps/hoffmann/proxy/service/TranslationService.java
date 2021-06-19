@@ -37,6 +37,7 @@ public class TranslationService {
      */
     public List<ScalingInstruction> translateRequest(String jsonBody) {
         RequestMapper.InstructionType requestMapper = parseRequestType(jsonBody);
+        log.info("found type for json value: {}", requestMapper);
         return createInstructions(requestMapper);
     }
 
@@ -54,6 +55,7 @@ public class TranslationService {
         }
 
         String jsonValue = matcher.group(1);
+        log.info("parsed translation instruction: {}", jsonValue);
 
 
         // todo maybe use streams
@@ -77,6 +79,7 @@ public class TranslationService {
         List<ScalingInstruction> out = new ArrayList<>();
 
         int scalingInterval = requestMapper.getScalingInterval(instructionType);
+        log.info("scaling interval: {}", scalingInterval);
         LogicalService logicalServiceName = instructionType.getLogicalService();
         String swarmServiceName = requestMapper.getServiceName(instructionType);
         ScalingDirection scalingDirection = instructionType.getScalingDir();

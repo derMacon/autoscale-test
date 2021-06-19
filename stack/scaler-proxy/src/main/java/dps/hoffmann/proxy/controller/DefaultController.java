@@ -20,7 +20,7 @@ public class DefaultController {
 
     @RequestMapping("/version")
     public String version() {
-        String msg = "version: " + 2;
+        String msg = "version: " + 3;
         log.info(msg);
         return msg;
     }
