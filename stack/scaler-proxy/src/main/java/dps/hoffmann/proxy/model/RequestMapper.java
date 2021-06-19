@@ -60,8 +60,8 @@ public class RequestMapper {
         SPRING_QL3_CL2(SPRING, "ql3_cl2", UP, DIFF_CL2_CL3),
 
         SPRING_QL0_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL0_CL3),
-        SPRING_QL1_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL1_CL3),
-        SPRING_QL2_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL2_CL3);
+        SPRING_QL1_CL3(SPRING, "ql1_cl3", DOWN, DIFF_CL1_CL3),
+        SPRING_QL2_CL3(SPRING, "ql2_cl3", DOWN, DIFF_CL2_CL3);
 
         private final LogicalService logicalService;
         private final String requestName;
