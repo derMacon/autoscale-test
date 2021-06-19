@@ -30,14 +30,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${qb1}
+          } <= ${ql1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${qb0}
+          } > ${ql0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
