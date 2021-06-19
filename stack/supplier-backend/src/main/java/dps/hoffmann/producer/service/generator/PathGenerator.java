@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * Instruction Generator for the field name that should be extracted
  */
 @Service
-public class XPathGenerator implements InstructionGenerator {
+public class PathGenerator implements InstructionGenerator {
 
     public static final String RANDOMIZED_KEY_IDENTIFIER = "Randomized";
 

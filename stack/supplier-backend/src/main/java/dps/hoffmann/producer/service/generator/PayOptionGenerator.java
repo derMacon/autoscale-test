@@ -16,7 +16,7 @@ import static dps.hoffmann.producer.utils.ResourceUtils.readResource;
  * supplier giving out the information
  */
 @Service
-public class PaymentGenerator implements InstructionGenerator {
+public class PayOptionGenerator implements InstructionGenerator {
 
     public static final String RANDOMIZE_REQUEST_INSTRUCTION = "Randomize messages";
     public static final String USE_STANDARD_REQUEST_INSTRUCTION = "Use standard request";

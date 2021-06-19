@@ -5,8 +5,8 @@ import dps.hoffmann.producer.model.instruction.LogicalServiceName;
 import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.model.instruction.WaitInstruction;
 
-import static dps.hoffmann.producer.service.generator.PaymentGenerator.RANDOMIZE_REQUEST_INSTRUCTION;
-import static dps.hoffmann.producer.service.generator.XPathGenerator.RANDOMIZED_KEY_IDENTIFIER;
+import static dps.hoffmann.producer.service.generator.PayOptionGenerator.RANDOMIZE_REQUEST_INSTRUCTION;
+import static dps.hoffmann.producer.service.generator.PathGenerator.RANDOMIZED_KEY_IDENTIFIER;
 
 public class InstructionFactory {
 

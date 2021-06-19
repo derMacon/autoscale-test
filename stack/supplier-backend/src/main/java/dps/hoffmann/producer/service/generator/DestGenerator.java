@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * Generates a queue destination supplier (by name)
  */
 @Service
-public class DestinationGenerator implements InstructionGenerator {
+public class DestGenerator implements InstructionGenerator {
 
     @Autowired
     private ActivemqProperties amqProperties;

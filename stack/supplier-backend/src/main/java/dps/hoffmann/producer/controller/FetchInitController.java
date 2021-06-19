@@ -1,8 +1,8 @@
 package dps.hoffmann.producer.controller;
 
-import dps.hoffmann.producer.service.generator.DestinationGenerator;
-import dps.hoffmann.producer.service.generator.PaymentGenerator;
-import dps.hoffmann.producer.service.generator.XPathGenerator;
+import dps.hoffmann.producer.service.generator.DestGenerator;
+import dps.hoffmann.producer.service.generator.PayOptionGenerator;
+import dps.hoffmann.producer.service.generator.PathGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,13 @@ import java.util.List;
 public class FetchInitController {
 
     @Autowired
-    private PaymentGenerator paymentGenerator;
+    private PayOptionGenerator payOptionGenerator;
 
     @Autowired
-    private XPathGenerator xPathGenerator;
+    private PathGenerator pathGenerator;
 
     @Autowired
-    private DestinationGenerator destinationGenerator;
+    private DestGenerator destGenerator;
 
     @RequestMapping("/health")
     public boolean health() {
@@ -40,7 +40,7 @@ public class FetchInitController {
     @RequestMapping("/payment")
     public List<String> getPaymentOptions() {
         log.info("fetch payment instructions");
-        return paymentGenerator.getDisplayName();
+        return payOptionGenerator.getDisplayName();
     }
 
     /**
@@ -50,7 +50,7 @@ public class FetchInitController {
     @RequestMapping("/path")
     public List<String> getPathOptions() {
         log.info("fetch path options");
-        return xPathGenerator.getDisplayName();
+        return pathGenerator.getDisplayName();
     }
 
     /**
@@ -60,7 +60,7 @@ public class FetchInitController {
     @RequestMapping("/backend")
     public List<String> getbackendOptions() {
         log.info("fetch backend options");
-        return destinationGenerator.getDisplayName();
+        return destGenerator.getDisplayName();
     }
 
 }

@@ -2,42 +2,368 @@ groups:
   - name: nodeScaleAlert
     rules:
       - alert: node_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 2
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 2
         # expr: up{instance="localhost:9090",job="services"} < 3 
         for: 0m 
       - alert: node_tooFewConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 10
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < (10 + 2)
         for: 0m 
       - alert: node_tooFewConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 15
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < (15 + 10 + 2)
+        for: 0m 
+      - alert: node_tooManyConsumers_largeOverhead
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= (15 + 10 + 2)
+        for: 0m 
+      - alert: node_tooManyConsumers_mediumOverhead
+        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= (10 + 2)
         for: 0m 
       - alert: node_tooManyConsumers_smallOverhead
         expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 2
         for: 0m 
-      - alert: node_tooManyConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10
-        for: 0m 
-      - alert: node_tooManyConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="nodequeue", destinationType="Queue", instance="activemq:8080", job="services"} >= 15
-        for: 0m 
 
   - name: springScaleAlert
     rules:
-      - alert: spring_tooFewConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 2
+      - alert: ql1_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
         for: 0m 
-      - alert: spring_tooFewConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10
+      - alert: ql2_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
         for: 0m 
-      - alert: spring_tooFewConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 100 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 15
+      - alert: ql3_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
         for: 0m 
-      - alert: spring_tooManyConsumers_smallOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 10 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 2
+      - alert: ql0_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
         for: 0m 
-      - alert: spring_tooManyConsumers_mediumOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10 and org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} < 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 10
+      - alert: ql2_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
         for: 0m 
-      - alert: spring_tooManyConsumers_largeOverhead
-        expr: org_apache_activemq_Broker_QueueSize{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 30 and org_apache_activemq_Broker_ConsumerCount{brokerName="localhost", destinationName="springqueue", destinationType="Queue", instance="activemq:8080", job="services"} >= 15
+      - alert: ql3_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
+        for: 0m 
+      - alert: ql0_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m 
+      - alert: ql1_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m 
+      - alert: ql3_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m  
+      - alert: ql0_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+        for: 0m 
+      - alert: ql1_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+        for: 0m 
+      - alert: ql2_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="springqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="springqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
         for: 0m 

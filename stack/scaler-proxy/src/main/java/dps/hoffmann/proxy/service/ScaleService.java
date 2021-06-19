@@ -48,16 +48,16 @@ public class ScaleService {
         String requestJson = delegationProperties.getRequestBody(instruction);
         log.info("request json: {}", requestJson);
 
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
-            String answer = restTemplate.postForObject(apiUrl, entity, String.class);
-            log.info("scaler api answer: {}", answer);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//            HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+//            String answer = restTemplate.postForObject(apiUrl, entity, String.class);
+//            log.info("scaler api answer: {}", answer);
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

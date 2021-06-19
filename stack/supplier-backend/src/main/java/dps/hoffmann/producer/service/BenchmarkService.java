@@ -2,9 +2,9 @@ package dps.hoffmann.producer.service;
 
 import dps.hoffmann.producer.model.instruction.ParsedInstruction;
 import dps.hoffmann.producer.model.PaymentMessage;
-import dps.hoffmann.producer.service.generator.DestinationGenerator;
-import dps.hoffmann.producer.service.generator.PaymentGenerator;
-import dps.hoffmann.producer.service.generator.XPathGenerator;
+import dps.hoffmann.producer.service.generator.DestGenerator;
+import dps.hoffmann.producer.service.generator.PayOptionGenerator;
+import dps.hoffmann.producer.service.generator.PathGenerator;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ public class BenchmarkService {
     private AmqService amqService;
 
     @Autowired
-    private PaymentGenerator paymentGenerator;
+    private PayOptionGenerator payOptionGenerator;
 
     @Autowired
-    private XPathGenerator xPathGenerator;
+    private PathGenerator pathGenerator;
 
     @Autowired
-    private DestinationGenerator destinationGenerator;
+    private DestGenerator destGenerator;
 
     @Autowired
     private PersistenceService persistenceService;
@@ -56,9 +56,9 @@ public class BenchmarkService {
         boolean sessionIsTransacted = sessionIsTransacted(parsedInstruction);
         log.info("session transacted: {}", sessionIsTransacted);
 
-        Supplier<String> paymentSupplier = paymentGenerator.getSupplier(parsedInstruction);
-        Supplier<String> xPathSupplier = xPathGenerator.getSupplier(parsedInstruction);
-        Supplier<String> destinationSupplier = destinationGenerator.getSupplier(parsedInstruction);
+        Supplier<String> paymentSupplier = payOptionGenerator.getSupplier(parsedInstruction);
+        Supplier<String> xPathSupplier = pathGenerator.getSupplier(parsedInstruction);
+        Supplier<String> destinationSupplier = destGenerator.getSupplier(parsedInstruction);
         BiConsumer<PaymentMessage, Supplier<String>> amqConsumer =
                 amqService.getConsumer(sessionIsTransacted);
 
