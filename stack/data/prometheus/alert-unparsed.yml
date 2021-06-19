@@ -23,8 +23,15 @@ groups:
 
   - name: springScaleAlert
     rules:
-      - alert: spring_tooFewConsumers_smallOverhead
+      - alert: ql1_cl0
         expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > ${ql0}
+          and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
@@ -32,12 +39,46 @@ groups:
            instance="activemq:8080", job="services"
           } <= ${ql1}
           and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
+        for: 0m 
+      - alert: ql2_cl0
+        expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${ql1}
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= ${ql2}
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
+        for: 0m 
+      - alert: ql3_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > ${ql2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
