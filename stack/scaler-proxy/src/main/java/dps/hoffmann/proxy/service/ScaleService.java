@@ -48,7 +48,6 @@ public class ScaleService {
         String requestJson = delegationProperties.getRequestBody(instruction);
         log.info("request json: {}", requestJson);
 
-        /**
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,7 +58,6 @@ public class ScaleService {
         } catch(Exception e) {
             e.printStackTrace();
         }
-         **/
     }
 
 }

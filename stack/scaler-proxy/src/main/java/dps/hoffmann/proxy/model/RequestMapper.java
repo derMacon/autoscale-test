@@ -12,6 +12,7 @@ import java.util.Map;
 import static dps.hoffmann.proxy.model.ScalingDirection.*;
 import static dps.hoffmann.proxy.model.ScalingInterval.*;
 import static dps.hoffmann.proxy.model.LogicalService.*;
+import static java.lang.Math.abs;
 
 @Component
 public class RequestMapper {
@@ -30,12 +31,12 @@ public class RequestMapper {
         serviceNameMapping.put(SPRING, springServiceName);
 
         scalingIntervalMapping = new HashMap<>();
-        scalingIntervalMapping.put(DIFF_CL0_CL1, scalingProperties.getCl0());
-        scalingIntervalMapping.put(DIFF_CL0_CL2, scalingProperties.getCl0());
-        scalingIntervalMapping.put(DIFF_CL1_CL2, scalingProperties.getCl0());
-        scalingIntervalMapping.put(DIFF_CL0_CL3, scalingProperties.getCl0());
-        scalingIntervalMapping.put(DIFF_CL1_CL3, scalingProperties.getCl0());
-        scalingIntervalMapping.put(DIFF_CL2_CL3, scalingProperties.getCl0());
+        scalingIntervalMapping.put(DIFF_CL0_CL1, abs(scalingProperties.getCl0() - scalingProperties.getCl1()));
+        scalingIntervalMapping.put(DIFF_CL0_CL2, abs(scalingProperties.getCl0() - scalingProperties.getCl2()));
+        scalingIntervalMapping.put(DIFF_CL1_CL2, abs(scalingProperties.getCl1() - scalingProperties.getCl2()));
+        scalingIntervalMapping.put(DIFF_CL0_CL3, abs(scalingProperties.getCl0() - scalingProperties.getCl3()));
+        scalingIntervalMapping.put(DIFF_CL1_CL3, abs(scalingProperties.getCl1() - scalingProperties.getCl3()));
+        scalingIntervalMapping.put(DIFF_CL2_CL3, abs(scalingProperties.getCl2() - scalingProperties.getCl3()));
     }
 
 
