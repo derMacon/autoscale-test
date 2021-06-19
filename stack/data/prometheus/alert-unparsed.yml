@@ -186,12 +186,11 @@ groups:
            instance="activemq:8080", job="services"
           } >= 0
           and 
-          org_apache_activemq_Broker_ConsumerCount{
-           brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
-           destinationType="Queue",
-           instance="activemq:8080", 
-           job="services"
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
           } <= ${ql0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
@@ -219,12 +218,11 @@ groups:
            instance="activemq:8080", job="services"
           } > ${ql0}
           and 
-          org_apache_activemq_Broker_ConsumerCount{
-           brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
-           destinationType="Queue",
-           instance="activemq:8080", 
-           job="services"
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
           } <= ${ql1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
@@ -254,7 +252,7 @@ groups:
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
+           destinationName="springqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -277,12 +275,11 @@ groups:
            instance="activemq:8080", job="services"
           } >= 0
           and 
-          org_apache_activemq_Broker_ConsumerCount{
-           brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
-           destinationType="Queue",
-           instance="activemq:8080", 
-           job="services"
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
           } <= ${ql0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
@@ -310,12 +307,11 @@ groups:
            instance="activemq:8080", job="services"
           } > ${ql0}
           and 
-          org_apache_activemq_Broker_ConsumerCount{
-           brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
-           destinationType="Queue",
-           instance="activemq:8080", 
-           job="services"
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
           } <= ${ql1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
@@ -343,12 +339,11 @@ groups:
            instance="activemq:8080", job="services"
           } > ${ql1}
           and 
-          org_apache_activemq_Broker_ConsumerCount{
-           brokerName="localhost",
-           destinationName="${AMQ_SPRING_QUEUE_NAME}", 
-           destinationType="Queue",
-           instance="activemq:8080", 
-           job="services"
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="${AMQ_SPRING_QUEUE_NAME}",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
           } <= ${ql2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
