@@ -13,7 +13,7 @@
     <artifactId>spring-consumer</artifactId>
     <version>latest</version>
     <name>spring-consumer</name>
-    <description>Proxy delegating api calls to docker scaler api</description>
+    <description>Spring consumer for payment information</description>
     <properties>
         <java.version>11</java.version>
     </properties>

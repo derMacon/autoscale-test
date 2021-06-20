@@ -10,6 +10,7 @@ public class PaymentUtils {
     public static Payment createRandomPayment(String containerId) {
         return Payment.builder()
                 .containerId(containerId)
+                .batchId(42)
                 .serviceName(LogicalServiceName.SPRING)
                 .extractedElement("test extracted elem 1")
                 .sentTimestamp(now())

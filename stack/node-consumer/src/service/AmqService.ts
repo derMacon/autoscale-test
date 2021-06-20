@@ -21,7 +21,7 @@ export class AmqService {
 		this.dbQueueDestination = process.env.AMQ_CONSUMER_PERSISTENCE_QUEUE!
 		
 		this.connectOptions = {
-			'host': 'activemq',
+			'host': process.env.AMQ_BROKER_HOSTNAME!,
 			'port': +process.env.AMQ_STOMP_PORT!,
 			'connectHeaders':{
 				'host': '/',

@@ -15,7 +15,6 @@ public class AmqService {
     @Autowired
     private WorkerService workerService;
 
-
     @JmsListener(destination = "${amq.queue.name}")
     // todo maybe make this transactional???
     public void onMessage(Message message) throws JMSException {

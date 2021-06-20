@@ -34,6 +34,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paymentId;
+    private int batchId;
     @Enumerated(EnumType.STRING)
     private LogicalServiceName serviceName;
     private String containerId;

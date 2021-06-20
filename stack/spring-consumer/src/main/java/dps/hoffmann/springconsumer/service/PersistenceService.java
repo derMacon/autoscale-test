@@ -38,6 +38,7 @@ public class PersistenceService {
                 Message m = session.createTextMessage(msg);
                 // for some reason prio needs to be 5 otherwise only the
                 // first replica processes the messages
+                //  -> the prefetch size of the broker was the problem...
                 m.setJMSPriority(5);
                 return m;
             }

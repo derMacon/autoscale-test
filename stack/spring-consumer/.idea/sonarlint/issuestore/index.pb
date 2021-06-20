@@ -14,3 +14,5 @@ Gsrc/main/java/dps/hoffmann/springconsumer/model/LogicalServiceName.java,3\f\3f
 Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
 q
 Asrc/main/java/dps/hoffmann/springconsumer/service/AmqService.java,e\1\e14c7a180bd1b55debd08c42288b1da0365fe765
+q
+Asrc/main/java/dps/hoffmann/springconsumer/utils/PaymentUtils.java,9\9\99e37991d2172c598880e6f09850548369e79db7

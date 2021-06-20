@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 public class Payment {
 
     private String containerId;
+    private int batchId;
     private LogicalServiceName serviceName;
     private String extractedElement;
     private Timestamp sentTimestamp;
