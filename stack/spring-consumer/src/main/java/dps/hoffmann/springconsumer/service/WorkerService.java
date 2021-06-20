@@ -1,10 +1,11 @@
 package dps.hoffmann.springconsumer.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dps.hoffmann.springconsumer.model.InputPaymentMsg;
+import dps.hoffmann.springconsumer.model.OutputPaymentMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static dps.hoffmann.springconsumer.utils.PaymentUtils.createRandomPayment;
 
 @Service
 @Slf4j
@@ -14,13 +15,18 @@ public class WorkerService {
     private PersistenceService persistenceService;
 
     @Autowired
-    private String containerId;
+    private ObjectMapper objectMapper;
 
+    @Autowired
+    private ExtractionService extractionService;
 
     public void work(String msgBody) {
         log.info("msgbody: {}", msgBody);
+        // todo error handling
 
-        persistenceService.save(createRandomPayment(containerId));
+        InputPaymentMsg inputMessage = objectMapper.convertValue(msgBody, InputPaymentMsg.class);
+        OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
+        persistenceService.save(outputMessage);
 
         try {
             Thread.sleep(3000);

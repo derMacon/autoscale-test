@@ -1,14 +1,14 @@
 package dps.hoffmann.springconsumer.utils;
 
 import dps.hoffmann.springconsumer.model.LogicalServiceName;
-import dps.hoffmann.springconsumer.model.Payment;
+import dps.hoffmann.springconsumer.model.OutputPaymentMsg;
 
 import java.sql.Timestamp;
 
 public class PaymentUtils {
 
-    public static Payment createRandomPayment(String containerId) {
-        return Payment.builder()
+    public static OutputPaymentMsg createRandomPayment(String containerId) {
+        return OutputPaymentMsg.builder()
                 .containerId(containerId)
                 .batchId(42)
                 .serviceName(LogicalServiceName.SPRING)

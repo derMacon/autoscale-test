@@ -1,7 +1,7 @@
 package dps.hoffmann.springconsumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dps.hoffmann.springconsumer.model.Payment;
+import dps.hoffmann.springconsumer.model.OutputPaymentMsg;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,12 @@ public class PersistenceService {
     private ObjectMapper objectMapper;
 
     @SneakyThrows
-    public void save(Payment payment) {
-        String msg = objectMapper.writeValueAsString(payment);
+    public void save(OutputPaymentMsg outputPaymentMsg) {
+        if (outputPaymentMsg == null) {
+            return;
+        }
+
+        String msg = objectMapper.writeValueAsString(outputPaymentMsg);
         log.info("json: {}", msg);
 
         jmsTemplate.send(persistenceQueue, new MessageCreator() {

@@ -13,7 +13,7 @@
     <artifactId>spring-consumer</artifactId>
     <version>latest</version>
     <name>spring-consumer</name>
-    <description>Spring consumer for payment information</description>
+    <description>Spring consumer for outputPaymentMsg information</description>
     <properties>
         <java.version>11</java.version>
     </properties>

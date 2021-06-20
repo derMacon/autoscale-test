@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 @With
 @Builder
-public class Payment {
+public class OutputPaymentMsg {
 
     private String containerId;
     private int batchId;

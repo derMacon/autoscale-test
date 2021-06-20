@@ -105,7 +105,6 @@ public class AmqService {
             e.printStackTrace();
         }
 
-
         final String message = convertedJson;
         String destination = destGen.get();
         queriedDestinations.add(destination);
