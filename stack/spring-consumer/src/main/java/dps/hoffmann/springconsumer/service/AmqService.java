@@ -1,6 +1,7 @@
 package dps.hoffmann.springconsumer.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.activemq.command.ActiveMQTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class AmqService {
     // todo maybe make this transactional???
     public void onMessage(Message message) throws JMSException {
         log.info("new message");
-        workerService.work(message.toString());
+        workerService.work(((ActiveMQTextMessage) message).getText());
         message.acknowledge();
     }
 

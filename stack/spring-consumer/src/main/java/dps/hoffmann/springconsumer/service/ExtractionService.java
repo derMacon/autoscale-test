@@ -2,11 +2,13 @@ package dps.hoffmann.springconsumer.service;
 
 import dps.hoffmann.springconsumer.model.InputPaymentMsg;
 import dps.hoffmann.springconsumer.model.OutputPaymentMsg;
+import dps.hoffmann.springconsumer.utils.ResourceUtils;
 import dps.hoffmann.springconsumer.utils.XmlUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import static dps.hoffmann.springconsumer.utils.PaymentUtils.now;
+import static dps.hoffmann.springconsumer.utils.XmlUtils.extractElem;
 
 @Service
 public class ExtractionService {
@@ -15,13 +17,15 @@ public class ExtractionService {
     private String xsdPath;
 
     public OutputPaymentMsg createPayment(InputPaymentMsg inputMessage) {
-        if (XmlUtils.isValidXMLSchema(xsdPath, inputMessage.getContent())) {
+        if (!XmlUtils.validateAgainstXSD(inputMessage.getContent(), xsdPath)) {
             return null;
         }
-        OutputPaymentMsg outputPaymentMsg = new OutputPaymentMsg(inputMessage);
-        // todo
 
-        return outputPaymentMsg.withProcessedTimestamp(now());
+        String extractedElem = extractElem(inputMessage.getXpath(), inputMessage.getContent());
+
+        return new OutputPaymentMsg(inputMessage)
+                .withProcessedTimestamp(now())
+                .withExtractedElement(extractedElem);
     }
 
 }
