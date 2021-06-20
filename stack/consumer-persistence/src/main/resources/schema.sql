@@ -3,6 +3,7 @@ SET timezone = 'Europe/Paris';
 create table if not exists payment
 (
     payment_id serial primary key,
+    batch_id serial,
     service_name varchar(100) not null,
     container_id varchar(100) not null,
     extracted_element text not null,

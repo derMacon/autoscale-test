@@ -23,5 +23,4 @@ public class PersistenceService {
         return this.batchInstructionRespository.save(parsedInstruction);
     }
 
-
 }

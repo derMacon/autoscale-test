@@ -47,21 +47,37 @@ public class RequestMapper {
     @Getter
     public enum InstructionType {
 
-        SPRING_QL1_CL0(SPRING, "ql1_cl0", UP, DIFF_CL0_CL1),
-        SPRING_QL2_CL0(SPRING, "ql2_cl0", UP, DIFF_CL0_CL2),
-        SPRING_QL3_CL0(SPRING, "ql3_cl0", UP, DIFF_CL0_CL3),
+        SPRING_QL1_CL0(SPRING, "spring_ql1_cl0", UP, DIFF_CL0_CL1),
+        SPRING_QL2_CL0(SPRING, "spring_ql2_cl0", UP, DIFF_CL0_CL2),
+        SPRING_QL3_CL0(SPRING, "spring_ql3_cl0", UP, DIFF_CL0_CL3),
 
-        SPRING_QL0_CL1(SPRING, "ql0_cl1", DOWN, DIFF_CL0_CL1),
-        SPRING_QL2_CL1(SPRING, "ql2_cl1", UP, DIFF_CL1_CL2),
-        SPRING_QL3_CL1(SPRING, "ql3_cl1", UP, DIFF_CL1_CL3),
+        SPRING_QL0_CL1(SPRING, "spring_ql0_cl1", DOWN, DIFF_CL0_CL1),
+        SPRING_QL2_CL1(SPRING, "spring_ql2_cl1", UP, DIFF_CL1_CL2),
+        SPRING_QL3_CL1(SPRING, "spring_ql3_cl1", UP, DIFF_CL1_CL3),
 
-        SPRING_QL0_CL2(SPRING, "ql0_cl2", DOWN, DIFF_CL0_CL2),
-        SPRING_QL1_CL2(SPRING, "ql1_cl2", DOWN, DIFF_CL1_CL2),
-        SPRING_QL3_CL2(SPRING, "ql3_cl2", UP, DIFF_CL2_CL3),
+        SPRING_QL0_CL2(SPRING, "spring_ql0_cl2", DOWN, DIFF_CL0_CL2),
+        SPRING_QL1_CL2(SPRING, "spring_ql1_cl2", DOWN, DIFF_CL1_CL2),
+        SPRING_QL3_CL2(SPRING, "spring_ql3_cl2", UP, DIFF_CL2_CL3),
 
-        SPRING_QL0_CL3(SPRING, "ql0_cl3", DOWN, DIFF_CL0_CL3),
-        SPRING_QL1_CL3(SPRING, "ql1_cl3", DOWN, DIFF_CL1_CL3),
-        SPRING_QL2_CL3(SPRING, "ql2_cl3", DOWN, DIFF_CL2_CL3);
+        SPRING_QL0_CL3(SPRING, "spring_ql0_cl3", DOWN, DIFF_CL0_CL3),
+        SPRING_QL1_CL3(SPRING, "spring_ql1_cl3", DOWN, DIFF_CL1_CL3),
+        SPRING_QL2_CL3(SPRING, "spring_ql2_cl3", DOWN, DIFF_CL2_CL3),
+
+        NODE_QL1_CL0(NODE, "node_ql1_cl0", UP, DIFF_CL0_CL1),
+        NODE_QL2_CL0(NODE, "node_ql2_cl0", UP, DIFF_CL0_CL2),
+        NODE_QL3_CL0(NODE, "node_ql3_cl0", UP, DIFF_CL0_CL3),
+
+        NODE_QL0_CL1(NODE, "node_ql0_cl1", DOWN, DIFF_CL0_CL1),
+        NODE_QL2_CL1(NODE, "node_ql2_cl1", UP, DIFF_CL1_CL2),
+        NODE_QL3_CL1(NODE, "node_ql3_cl1", UP, DIFF_CL1_CL3),
+
+        NODE_QL0_CL2(NODE, "node_ql0_cl2", DOWN, DIFF_CL0_CL2),
+        NODE_QL1_CL2(NODE, "node_ql1_cl2", DOWN, DIFF_CL1_CL2),
+        NODE_QL3_CL2(NODE, "node_ql3_cl2", UP, DIFF_CL2_CL3),
+
+        NODE_QL0_CL3(NODE, "node_ql0_cl3", DOWN, DIFF_CL0_CL3),
+        NODE_QL1_CL3(NODE, "node_ql1_cl3", DOWN, DIFF_CL1_CL3),
+        NODE_QL2_CL3(NODE, "node_ql2_cl3", DOWN, DIFF_CL2_CL3);
 
         private final LogicalService logicalService;
         private final String requestName;

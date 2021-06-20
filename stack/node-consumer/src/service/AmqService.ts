@@ -1,4 +1,5 @@
 import { WorkerService } from './WorkerService';
+import { ResultWrapper } from "../model/ResultWrapper";
 const stompit = require('stompit');
 
 /**
@@ -10,16 +11,18 @@ export class AmqService {
 
 	private payQueueDestination: string; 
 	private ackQueueDestination: string; 
+	private dbQueueDestination: string;
 	private connectOptions: any;
 
 	constructor(workerService: WorkerService) {
 		this.workerService = workerService;
-		this.payQueueDestination = process.env.AMQ_PAY_QUEUE_NAME!;
-		this.ackQueueDestination = process.env.AMQ_ACK_QUEUE_NAME!;
+		this.payQueueDestination = process.env.AMQ_NODE_QUEUE_NAME!;
+		this.ackQueueDestination = process.env.AMQ_NODE_ACK_QUEUE!;
+		this.dbQueueDestination = process.env.AMQ_CONSUMER_PERSISTENCE_QUEUE!
 		
 		this.connectOptions = {
 			'host': process.env.AMQ_BROKER_HOSTNAME!,
-			'port': +process.env.AMQ_BROKER_PORT!,
+			'port': +process.env.AMQ_STOMP_PORT!,
 			'connectHeaders':{
 				'host': '/',
 				'login': process.env.AMQ_USER_NAME,
@@ -29,36 +32,32 @@ export class AmqService {
 		}
 	}
 
-	connectBroker() {
+	connectBroker(containerId: string) {
 		const that = this;
+
+		console.log("connection options: ", this.connectOptions);
 
 		stompit.connect(this.connectOptions, function(error: any, client: any) {
 			if (error) {
 				console.log(' - amq connection error: ' + error.message);
-				setTimeout(() => that.connectBroker(), 1000)
+				setTimeout(() => that.connectBroker(containerId), 1000)
 				return;
 			}
-
-			const sendHeaders = {
-				'destination': that.ackQueueDestination,
-				'content-type': 'text/plain'
-			};
 			
-			const frame = client.send(sendHeaders);
-			frame.write('acknowledge_startup');
-			console.log("sending acknowledgement")
-			frame.end()
+			that.sendAcknowledgement(client, that.ackQueueDestination, containerId);
+
 
 			const subscribeHeaders = {
 				'destination': that.payQueueDestination,
-				'ack': 'client-individual'
+				'ack': 'client-individual',
+				'activemq.prefetchSize': 1
 			};
-			
+
 			client.subscribe(subscribeHeaders, function(error: any, message: any) {
 				
 				if (error) {
 					console.log('subscribe error ' + error.message);
-					setTimeout(() => that.connectBroker(), 1000)
+					setTimeout(() => that.connectBroker(containerId), 1000)
 					return;
 				}
 				
@@ -70,16 +69,48 @@ export class AmqService {
 
 				console.log("new message received");
 				
-				that.workerService.work(body);
-				that.wait(3000)
+				let result: ResultWrapper | undefined = that.workerService.work(body);
+				if (result != undefined) {
+					const sendHeaders = {
+						'destination': that.dbQueueDestination,
+						'content-type': 'text/plain'
+					};
+					
+					const frame = client.send(sendHeaders);
+					let json: string = JSON.stringify(result);
+					frame.write(json);
+					console.log(" -> sending msg to persistence queue")
+					frame.end()
+				} else {
+					console.log("result undefined")
+				}
+
+				AmqService.wait(3000)
 				client.ack(message);
 				// client.disconnect();
 				});
+
 			});
+
 		});
 	}
 
-	wait(ms: any){
+	sendAcknowledgement(client: any, ackQueueDestination: string, containerId: string) {
+		const sendHeaders = {
+			'destination': ackQueueDestination,
+			'content-type': 'text/plain'
+		};
+
+		console.log("send headers: ", sendHeaders)
+		console.log("containerId: ", containerId)
+
+		const frame = client.send(sendHeaders);
+		frame.write(containerId);
+		console.log("sending acknowledgement")
+		frame.end()
+	}
+
+	static wait(ms: any){
 		var start = new Date().getTime();
 		var end = start;
 		while(end < start + ms) {

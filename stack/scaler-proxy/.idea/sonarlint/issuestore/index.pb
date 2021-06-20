@@ -30,3 +30,7 @@ k
 ;src/main/java/dps/hoffmann/proxy/model/ScalingInterval.java,4\0\400f99ad9daf90c9c0edd3cb67f87d974dc5c575
 i
 9src/main/java/dps/hoffmann/proxy/model/RequestMapper.java,8\3\837ff3e67669105a115093e136d2e4a4ba681347
+a
+1src/main/java/dps/hoffmann/proxy/model/Tupel.java,5\d\5de0a84c6d15be4c620d3e42c49629410d42c8c3
+r
+Bsrc/main/java/dps/hoffmann/proxy/properties/ScalingProperties.java,a\e\aec0d84579639339891bfb56fe37f14433d474ac
