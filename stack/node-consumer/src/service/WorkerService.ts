@@ -1,8 +1,6 @@
-// import { Payment } from "../model/PaymentMessage";
 import { ResultWrapper } from "../model/ResultWrapper";
 import { ElementExtractor } from "../utils/ElementExtractor";
 import { XsdChecker } from "../utils/XsdChecker";
-import { PersistenceService } from './PersistenceService';
 import { PaymentMessage } from '../model/PaymentMessage';
 
 export class WorkerService {
@@ -10,19 +8,24 @@ export class WorkerService {
 	constructor(
 		private xsdChecker: XsdChecker,
 		private elemExtractor: ElementExtractor,
-		private dbConnector: PersistenceService
+		private _containerId: string
 	) {}
 
-	work(msgBody: string): void {
+
+	get containerId(): string {
+		return this.containerId;
+	}
+
+	work(msgBody: string): ResultWrapper | undefined {
 		let payment: PaymentMessage | undefined = undefined;
 		try {
 			payment = JSON.parse(msgBody);
 		} catch(e: any) {
 			console.log('input is not valid json, message will be taken out of the queue regardless')
-			return;
+			return undefined;
 		}
 
-		let result: ResultWrapper = new ResultWrapper(payment!);
+		let result: ResultWrapper | undefined = undefined;
 
 		console.log(`batch ${payment!.batchId} - new payment`)
 
@@ -31,13 +34,17 @@ export class WorkerService {
 
 			let extractedElement: string = this.elemExtractor.extract(payment!);
 
+			result = new ResultWrapper(payment!);
 			result.appendProcessedTimestamp(new Date())
+					.appendContainerId(this._containerId)
 					.appendExtractedElem(extractedElement);
 
-			this.dbConnector.saveResult(result);
 		} else {
 			console.log(" -> xsd checker: invalid xml");
 		}
+
+		return result;
 	}
+
 
 }
