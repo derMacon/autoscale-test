@@ -15,6 +15,12 @@ public class AmqService {
     @Autowired
     private WorkerService workerService;
 
+    /**
+     * Listener taking in pushed messages to the input message queue
+     * @param message Message pushed to the queue, will be converted internally in the worker
+     *                service
+     * @throws JMSException Exception thrown, if something went wrong with the message handling
+     */
     @JmsListener(destination = "${amq.queue.name}")
     // todo maybe make this transactional???
     public void onMessage(Message message) throws JMSException {

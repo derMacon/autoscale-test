@@ -7,6 +7,15 @@ import java.sql.Timestamp;
 
 public class PaymentUtils {
 
+    private PaymentUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * Creates a templating output payment message for testing purposes
+     * @param containerId identifier of the container
+     * @return new output instance
+     */
     public static OutputPaymentMsg createRandomPayment(String containerId) {
         return OutputPaymentMsg.builder()
                 .containerId(containerId)
@@ -20,6 +29,10 @@ public class PaymentUtils {
                 .build();
     }
 
+    /**
+     * Creates a timestamp with the current system time
+     * @return new timestamp instance
+     */
     public static Timestamp now() {
         return new Timestamp(System.currentTimeMillis());
     }

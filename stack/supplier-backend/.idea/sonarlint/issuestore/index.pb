@@ -25,3 +25,5 @@ w
 Gsrc/main/java/dps/hoffmann/producer/controller/FetchInitController.java,2\6\261383172f6dbedb20c30d776420da6efbabfaa6
 x
 Hsrc/main/java/dps/hoffmann/producer/service/generator/PathGenerator.java,0\9\096449b00464f82ffd43270c6dbc67c477d9d37b
+m
+=src/main/java/dps/hoffmann/producer/model/PaymentMessage.java,0\a\0a6dc0b19dafe18baf3deea39fd4b08d08b9ee39

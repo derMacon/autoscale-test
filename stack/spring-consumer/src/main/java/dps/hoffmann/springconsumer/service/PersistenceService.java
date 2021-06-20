@@ -14,6 +14,12 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
+/**
+ * Service pushing messages to the appropriate persistence queue
+ * Useful to put the logic into its own service to encapsulate the the output queue and to make
+ * it possible to exchange the logic for a different queue managing system or writting directly
+ * into the database
+ */
 @Service
 @Slf4j
 public class PersistenceService {
@@ -27,6 +33,11 @@ public class PersistenceService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Pushes a given generated message to the persistence queue so that the message will be
+     * saved to a database as soon as a service is available and has an open connection.
+     * @param outputPaymentMsg
+     */
     @SneakyThrows
     public void save(OutputPaymentMsg outputPaymentMsg) {
         if (outputPaymentMsg == null) {

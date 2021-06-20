@@ -5,6 +5,9 @@ import lombok.Value;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * Messages provided by the input payment queue
+ */
 @Value
 public class InputPaymentMsg implements Serializable {
 
