@@ -78,8 +78,10 @@ export class AmqService {
 					const frame = client.send(sendHeaders);
 					let json: string = JSON.stringify(result);
 					frame.write(json);
-					console.log("sending acknowledgement")
+					console.log(" -> sending msg to persistence queue")
 					frame.end()
+				} else {
+					console.log("result undefined")
 				}
 
 				AmqService.wait(3000)

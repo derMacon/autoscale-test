@@ -166,6 +166,7 @@ services:
       - AMQ_USER_PASS=${AMQ_USER_PASS}
       - AMQ_NODE_QUEUE_NAME=${AMQ_NODE_QUEUE_NAME}
       - AMQ_NODE_ACK_QUEUE=${AMQ_NODE_ACK_QUEUE}
+      - AMQ_CONSUMER_PERSISTENCE_QUEUE=${AMQ_CONSUMER_PERSISTENCE_QUEUE}
 
   spring-consumer:
     image: spring-consumer
