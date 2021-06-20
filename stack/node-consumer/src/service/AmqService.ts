@@ -49,7 +49,8 @@ export class AmqService {
 
 			const subscribeHeaders = {
 				'destination': that.payQueueDestination,
-				'ack': 'client-individual'
+				'ack': 'client-individual',
+				'activemq.prefetchSize': 1
 			};
 
 			client.subscribe(subscribeHeaders, function(error: any, message: any) {
