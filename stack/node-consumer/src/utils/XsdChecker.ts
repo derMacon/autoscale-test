@@ -25,8 +25,6 @@ export class XsdChecker {
 		}
 
 		return xmlDoc.validate(parseXmlString(this.xsdSpecification));
-
-		// return true;
 	}
 
 }
