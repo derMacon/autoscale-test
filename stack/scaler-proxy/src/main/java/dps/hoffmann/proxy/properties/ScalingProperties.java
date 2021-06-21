@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(ignoreUnknownFields = false, prefix = "scaling")
 public class ScalingProperties {
-    private int ql0;
-    private int ql1;
-    private int ql2;
-    private int cl0;
-    private int cl1;
-    private int cl2;
-    private int cl3;
+    private int qb0;
+    private int qb1;
+    private int qb2;
+    private int cb0;
+    private int cb1;
+    private int cb2;
+    private int cb3;
 }

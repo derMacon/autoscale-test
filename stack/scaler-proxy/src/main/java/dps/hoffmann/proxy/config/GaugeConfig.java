@@ -20,7 +20,7 @@ public class GaugeConfig {
         return values;
     }
 
-//    @Bean("overall-average")
+//    @Bean("specific-average")
 //    public AtomicInteger[] specificAverages() {
 //        LogicalService[] services = LogicalService.values();
 //        AtomicInteger[] values = new AtomicInteger[services.length];
