@@ -28,22 +28,6 @@ services:
     ports:
       - "${PGADMIN_LISTEN_PORT}:5050"
 
-  script-db:
-    image: postgres:13-alpine
-    ports:
-      - "${SCRIPT_DATABASE_PORT}:${SCRIPT_DATABASE_PORT}"
-    command: -p ${SCRIPT_DATABASE_PORT}
-    networks:
-      - scaler
-    environment:
-      - DEBUG=false
-      - POSTGRES_USER=${SCRIPT_USER_NAME}
-      - POSTGRES_PASSWORD=${SCRIPT_USER_PASSWORD}
-      - POSTGRES_DB=${SCRIPT_DATABASE_NAME}
-    volumes:
-      - script-db:/var/lib/postgresql/data
-    restart: unless-stopped
-
   consumer-db:
     image: postgres:13-alpine
     container_name: consumer-db
