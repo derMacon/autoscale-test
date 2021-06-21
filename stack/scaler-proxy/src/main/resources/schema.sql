@@ -3,7 +3,7 @@ SET timezone = 'Europe/Paris';
 create table if not exists scaling_instruction
 (
     instruction_id serial primary key,
-    scaling_batch_id serial,
+    scaling_batch_id varchar(100) not null,
     logical_service_name varchar(100) not null,
     container_id varchar(100) not null,
     swarm_service_name varchar(100) not null,
