@@ -35,7 +35,7 @@ public class MetricsService {
     private AtomicInteger[] overallAvGaugeRefs;
 
     @Autowired
-    @Qualifier("overall-average")
+    @Qualifier("specific-average")
     private AtomicInteger[] specificAvGaugeRefs;
 
     /**
@@ -102,7 +102,8 @@ public class MetricsService {
 
         // specific
         for (LogicalService service : LogicalService.values()) {
-            for (int cc = 0; cc < this.specificAvGaugeRefs.length; cc++) {
+            int entriesPerService = specificAvGaugeRefs.length / LogicalService.values().length;
+            for (int cc = 0; cc < entriesPerService; cc++) {
                 String gaugeKey = String.format("startup.%s.cc%d",
                         service.name().toLowerCase(), cc);
                 int idx = getSpecificGaugeIdx(service, cc);
@@ -112,7 +113,8 @@ public class MetricsService {
     }
 
     private int getSpecificGaugeIdx(LogicalService service, int containerCnt) {
-        return service.ordinal() * specificAvGaugeRefs.length + containerCnt;
+        int entriesPerService = specificAvGaugeRefs.length / LogicalService.values().length;
+        return service.ordinal() * entriesPerService + containerCnt;
     }
 
     private Map<LogicalService, List<Integer>> createOverallStatsMap(List<ScalingInstruction> instructions) {
