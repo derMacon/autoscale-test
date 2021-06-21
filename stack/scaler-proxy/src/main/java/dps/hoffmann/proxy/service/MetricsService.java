@@ -103,7 +103,7 @@ public class MetricsService {
         // specific
         for (LogicalService service : LogicalService.values()) {
             int entriesPerService = specificAvGaugeRefs.length / LogicalService.values().length;
-            for (int cc = 0; cc < entriesPerService; cc++) {
+            for (int cc = 1; cc <= entriesPerService; cc++) {
                 String gaugeKey = String.format("startup.%s.cc%d",
                         service.name().toLowerCase(), cc);
                 int idx = getSpecificGaugeIdx(service, cc);
@@ -114,7 +114,7 @@ public class MetricsService {
 
     private int getSpecificGaugeIdx(LogicalService service, int containerCnt) {
         int entriesPerService = specificAvGaugeRefs.length / LogicalService.values().length;
-        return service.ordinal() * entriesPerService + containerCnt;
+        return service.ordinal() * entriesPerService + containerCnt - 1;
     }
 
     private Map<LogicalService, List<Integer>> createOverallStatsMap(List<ScalingInstruction> instructions) {
