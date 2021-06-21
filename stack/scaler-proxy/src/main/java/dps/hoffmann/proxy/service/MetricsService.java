@@ -6,6 +6,7 @@ import dps.hoffmann.proxy.model.Tupel;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class MetricsService {
     private PersistenceService persistenceService;
 
     @Autowired
+    @Qualifier("overall-average")
     private AtomicInteger[] gaugeValueRefs;
 
     /**

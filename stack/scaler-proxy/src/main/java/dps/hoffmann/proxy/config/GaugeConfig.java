@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Configuration
 public class GaugeConfig {
 
-    @Bean
-    public AtomicInteger[] upStartingTime() {
+    @Bean("overall-average")
+    public AtomicInteger[] overallAverages() {
         LogicalService[] services = LogicalService.values();
         AtomicInteger[] values = new AtomicInteger[services.length];
         for (LogicalService curr : services) {
@@ -20,4 +20,13 @@ public class GaugeConfig {
         return values;
     }
 
+//    @Bean("overall-average")
+//    public AtomicInteger[] specificAverages() {
+//        LogicalService[] services = LogicalService.values();
+//        AtomicInteger[] values = new AtomicInteger[services.length];
+//        for (LogicalService curr : services) {
+//            values[curr.ordinal()] = new AtomicInteger(0);
+//        }
+//        return values;
+//    }
 }
