@@ -34,6 +34,7 @@ public class ScalingInstruction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructionId;
+    private String scalingBatchId;
     private String containerId;
     private String swarmServiceName;
     @Enumerated(EnumType.STRING)

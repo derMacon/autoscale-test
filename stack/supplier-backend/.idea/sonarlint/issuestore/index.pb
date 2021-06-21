@@ -27,3 +27,5 @@ x
 Hsrc/main/java/dps/hoffmann/producer/service/generator/PathGenerator.java,0\9\096449b00464f82ffd43270c6dbc67c477d9d37b
 m
 =src/main/java/dps/hoffmann/producer/model/PaymentMessage.java,0\a\0a6dc0b19dafe18baf3deea39fd4b08d08b9ee39
+l
+<src/main/java/dps/hoffmann/producer/utils/ResourceUtils.java,7\7\77fce00e6c72b99319a5c2894f577dd7c7d3eec0

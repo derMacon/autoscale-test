@@ -6,6 +6,7 @@ import dps.hoffmann.proxy.model.RequestMapper;
 import dps.hoffmann.proxy.model.ScalingDirection;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 public class TranslationService {
+
+    private static final int BATCH_INSTRUCTION_ID_LEN = 10;
 
     @Value("${translation.fieldname}")
     private String fieldName;
@@ -83,10 +86,12 @@ public class TranslationService {
         LogicalService logicalServiceName = instructionType.getLogicalService();
         String swarmServiceName = requestMapper.getServiceName(instructionType);
         ScalingDirection scalingDirection = instructionType.getScalingDir();
+        String scalingBatchId = RandomStringUtils.randomAlphabetic(BATCH_INSTRUCTION_ID_LEN);
 
         for (int i = 0; i < scalingInterval; i++) {
 
             ScalingInstruction instr = ScalingInstruction.builder()
+                    .scalingBatchId(scalingBatchId)
                     .scalingDirection(scalingDirection)
                     .logicalServiceName(logicalServiceName)
                     .swarmServiceName(swarmServiceName)

@@ -16,8 +16,6 @@ q
 Asrc/main/java/dps/hoffmann/springconsumer/utils/PaymentUtils.java,9\9\99e37991d2172c598880e6f09850548369e79db7
 x
 Hsrc/main/java/dps/hoffmann/springconsumer/service/StartupAckService.java,8\7\87132f85f348a9a7340002f4ba6bafc36b02f3eb
-o
-?src/main/java/dps/hoffmann/springconsumer/utils/XsdChecker.java,8\3\833c331fa145e4294d11e2fcf7277140b05a363c
 t
 Dsrc/main/java/dps/hoffmann/springconsumer/model/InputPaymentMsg.java,2\9\299467a435a832d0e1d16bfddf2e4195c6fd3b23
 s
