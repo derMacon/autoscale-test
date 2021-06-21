@@ -32,7 +32,11 @@ public class MetricsService {
 
     @Autowired
     @Qualifier("overall-average")
-    private AtomicInteger[] gaugeValueRefs;
+    private AtomicInteger[] overallAvGaugeRefs;
+
+    @Autowired
+    @Qualifier("overall-average")
+    private AtomicInteger[] specificAvGaugeRefs;
 
     /**
      * Updates the metrics that will be scraped by evaluating the values in the database
@@ -89,13 +93,26 @@ public class MetricsService {
         return out;
     }
 
-
-
     private void initGauge() {
+        // overall
         for (LogicalService service : LogicalService.values()) {
             String gaugeKey = "scale.up." + service.name().toLowerCase();
-            meterRegistry.gauge(gaugeKey, gaugeValueRefs[service.ordinal()]);
+            meterRegistry.gauge(gaugeKey, overallAvGaugeRefs[service.ordinal()]);
         }
+
+        // specific
+        for (LogicalService service : LogicalService.values()) {
+            for (int cc = 0; cc < this.specificAvGaugeRefs.length; cc++) {
+                String gaugeKey = String.format("startup.%s.cc%d",
+                        service.name().toLowerCase(), cc);
+                int idx = getSpecificGaugeIdx(service, cc);
+                meterRegistry.gauge(gaugeKey, specificAvGaugeRefs[idx]);
+            }
+        }
+    }
+
+    private int getSpecificGaugeIdx(LogicalService service, int containerCnt) {
+        return service.ordinal() * specificAvGaugeRefs.length + containerCnt;
     }
 
     private Map<LogicalService, List<Integer>> createOverallStatsMap(List<ScalingInstruction> instructions) {
@@ -133,13 +150,21 @@ public class MetricsService {
         for (LogicalService service : LogicalService.values()) {
             int startingTime = averages.get(service).intValue();
             log.info("average duration time: {} -> {}", service, startingTime);
-            gaugeValueRefs[service.ordinal()].set(startingTime);
+            overallAvGaugeRefs[service.ordinal()].set(startingTime);
         }
     }
 
     private void updateSpecificGaugeValues(Map<Tupel<LogicalService, Integer>, Integer> averages) {
         for (Map.Entry<Tupel<LogicalService, Integer>, Integer> entry : averages.entrySet()) {
-            log.info("specific average time: {} -> {}", entry.getKey(), entry.getValue());
+            Tupel<LogicalService, Integer> tupel = entry.getKey();
+            int idx = getSpecificGaugeIdx(tupel.getFst(), tupel.getSnd());
+
+            log.info("specific average time: {} -> {}; put into arr at pos {}",
+                    entry.getKey(),
+                    entry.getValue(),
+                    idx);
+
+            specificAvGaugeRefs[idx].set(entry.getValue());
         }
     }
 }

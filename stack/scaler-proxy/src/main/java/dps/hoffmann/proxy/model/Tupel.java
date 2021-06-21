@@ -8,6 +8,6 @@ import lombok.Value;
 @EqualsAndHashCode
 @ToString
 public class Tupel<E, T> {
-    private final E e;
-    private final T t;
+    private final E fst;
+    private final T snd;
 }

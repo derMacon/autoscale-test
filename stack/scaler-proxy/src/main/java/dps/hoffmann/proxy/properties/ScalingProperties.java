@@ -17,4 +17,8 @@ public class ScalingProperties {
     private int cb1;
     private int cb2;
     private int cb3;
+
+    public int getHighestContainerBound() {
+        return cb3;
+    }
 }
