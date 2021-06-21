@@ -38,8 +38,7 @@ public class RequestService {
     // todo delete counter -> only for debugging purposes
     private int cnt = 0;
 
-    public void delegate(String jsonBody) {
-        log.info("delegation endpoint called: {}", jsonBody);
+    public void delegate(List<ScalingInstruction> instructions) {
 
         if (!unacknowledgedInstructions.isEmpty()) {
             log.info("unacknowledged instr not empty when delegation called: {}",
@@ -47,7 +46,6 @@ public class RequestService {
             return;
         }
 
-        List<ScalingInstruction> instructions = translationService.translateRequest(jsonBody);
         log.info("translated request type from json body: {}", instructions);
 
         for (ScalingInstruction instruction : instructions) {

@@ -91,8 +91,11 @@ public class RequestMapper {
     }
 
     public String getServiceName(InstructionType instructionType) {
-        return this.serviceNameMapping.get(instructionType.logicalService);
+        return getServiceName(instructionType.logicalService);
     }
 
+    public String getServiceName(LogicalService logicalService) {
+        return this.serviceNameMapping.get(logicalService);
+    }
 
 }

@@ -115,6 +115,20 @@ services:
       - AMQ_BROKER_PORT=${AMQ_STOMP_PORT}
       - AMQ_QUEUE_NAME=${AMQ_QUEUE_NAME}
 
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD="admin"
+      - GF_SECURITY_ADMIN_USER="admin"
+
+
 volumes:
   script-db:
   history-db:

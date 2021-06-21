@@ -33,6 +33,7 @@ public class ScaleService {
                 delegationProperties.getHostname(),
                 delegationProperties.getPort(),
                 delegationProperties.getEndpoint());
+        log.info("api url: {}", apiUrl);
     }
 
     /**

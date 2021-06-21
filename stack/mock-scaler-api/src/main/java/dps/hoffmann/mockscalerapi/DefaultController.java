@@ -22,8 +22,9 @@ public class DefaultController {
     }
 
     @RequestMapping("/v1/scale-service")
-    public void scale() {
+    public String scale() {
         log.info("user called scale func");
+        return "mock api return value";
     }
 
 }
