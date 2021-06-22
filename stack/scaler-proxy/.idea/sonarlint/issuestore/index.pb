@@ -34,3 +34,15 @@ a
 1src/main/java/dps/hoffmann/proxy/model/Tupel.java,5\d\5de0a84c6d15be4c620d3e42c49629410d42c8c3
 r
 Bsrc/main/java/dps/hoffmann/proxy/properties/ScalingProperties.java,a\e\aec0d84579639339891bfb56fe37f14433d474ac
+g
+7src/main/java/dps/hoffmann/proxy/config/HttpConfig.java,c\5\c57aad8a80b9ad388ea5b854d24f4d1862180877
+j
+:src/main/java/dps/hoffmann/proxy/utils/TimestampUtils.java,3\7\371a46896a256e4601bed6e2feec1924978f1ca6
+u
+Esrc/main/java/dps/hoffmann/proxy/controller/DelegationController.java,8\5\85249d153a42ed727935f8c1d553e940b3b9efb3
+h
+8src/main/java/dps/hoffmann/proxy/config/GaugeConfig.java,d\9\d9df7be1222ba31fd95153f8f5e2278dfbbe5efb
+q
+Asrc/main/java/dps/hoffmann/proxy/config/ScalingConfiguration.java,0\4\0415d61c2f27d20a2a304408eb068f4c0d12bea3
+r
+Bsrc/main/java/dps/hoffmann/proxy/config/ActiveMqConfiguration.java,7\1\710a24082d761c321f9cce3e7c73bbfcdca06cce

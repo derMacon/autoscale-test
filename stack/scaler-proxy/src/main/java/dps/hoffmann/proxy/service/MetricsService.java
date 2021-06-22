@@ -157,6 +157,10 @@ public class MetricsService {
     }
 
     private void updateSpecificGaugeValues(Map<Tupel<LogicalService, Integer>, Integer> averages) {
+        for (AtomicInteger specificRef : specificAvGaugeRefs) {
+            specificRef.set(0);
+        }
+
         for (Map.Entry<Tupel<LogicalService, Integer>, Integer> entry : averages.entrySet()) {
             Tupel<LogicalService, Integer> tupel = entry.getKey();
             int idx = getSpecificGaugeIdx(tupel.getFst(), tupel.getSnd());

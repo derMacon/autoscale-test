@@ -60,3 +60,4 @@ The first two steps can be automatically started by calling the [./clean-build-r
 - lint code checks on all project
 - rename entry point in proxy (still says testapp in title)
 - set all ports in docker-compose to read from .env
+- when inserting into specific bound bm, lower tiers also get influenced
