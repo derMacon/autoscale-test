@@ -1,19 +1,19 @@
-deployment-publicsector
+computer
     description: Computer
     product: VMware7,1
     vendor: VMware, Inc.
     version: None
-    serial: VMware-42 2c c3 30 9d 84 4d 2a-41 e4 eb 1f 11 45 ec ef
+    serial: [REMOVED]
     width: 64 bits
     capabilities: smbios-2.7 dmi-2.7 smp vsyscall32
-    configuration: administrator_password=enabled boot=normal frontpanel_password=unknown keyboard_password=unknown power-on_password=disabled uuid=30c32c42-849d-2a4d-41e4-eb1f1145ecef
+    configuration: administrator_password=enabled boot=normal frontpanel_password=unknown keyboard_password=unknown power-on_password=disabled uuid=[REMOVED]
   *-core
        description: Motherboard
        product: 440BX Desktop Reference Platform
        vendor: Intel Corporation
        physical id: 0
        version: None
-       serial: None
+       serial: [REMOVED]
      *-firmware
           description: BIOS
           vendor: VMware, Inc.
@@ -103,7 +103,7 @@ deployment-publicsector
              product: VMW-16384MB
              vendor: VMware Virtual RAM
              physical id: 0
-             serial: 00000001
+             serial: [REMOVED]
              slot: RAM slot #0
              size: 16GiB
              width: 64 bits
@@ -803,7 +803,7 @@ deployment-publicsector
                       logical name: /dev/sda1
                       logical name: /boot/efi
                       version: FAT32
-                      serial: 1865-94a1
+                      serial: [REMOVED]
                       size: 598MiB
                       capacity: 599MiB
                       capabilities: boot fat initialized
@@ -814,7 +814,7 @@ deployment-publicsector
                       bus info: scsi@0:0.0.0,2
                       logical name: /dev/sda2
                       logical name: /boot
-                      serial: cd3b148e-3b8e-4608-9069-0aceaf77a2d6
+                      serial: [REMOVED]
                       capacity: 1023MiB
                       configuration: mount.fstype=xfs mount.options=rw,seclabel,relatime,attr2,inode64,logbufs=8,logbsize=32k,noquota state=mounted
                  *-volume:2
@@ -823,7 +823,7 @@ deployment-publicsector
                       physical id: 3
                       bus info: scsi@0:0.0.0,3
                       logical name: /dev/sda3
-                      serial: Pf4Rqn-8e47-D3iB-qkBW-vhTd-jxhN-mswfey
+                      serial: [REMOVED]
                       size: 148GiB
                       capabilities: multi lvm2
         *-pci:3
@@ -930,13 +930,13 @@ deployment-publicsector
                 bus info: pci@0000:0b:00.0
                 logical name: ens192
                 version: 01
-                serial: 00:50:56:ac:ae:45
+                serial: [REMOVED]
                 size: 10Gbit/s
                 capacity: 10Gbit/s
                 width: 32 bits
                 clock: 33MHz
                 capabilities: pm pciexpress msi msix bus_master cap_list rom ethernet physical logical tp 1000bt-fd 10000bt-fd
-                configuration: autonegotiation=off broadcast=yes driver=vmxnet3 driverversion=1.5.0.0-k-NAPI duplex=full ip=10.21.2.221 latency=0 link=yes multicast=yes port=twisted pair speed=10Gbit/s
+                configuration: autonegotiation=off broadcast=yes driver=vmxnet3 driverversion=1.5.0.0-k-NAPI duplex=full ip=[REMOVED] latency=0 link=yes multicast=yes port=twisted pair speed=10Gbit/s
                 resources: irq:19 memory:fe213000-fe213fff memory:fe212000-fe212fff memory:fe210000-fe211fff ioport:3000(size=16) memory:fe200000-fe20ffff
         *-pci:11
              description: PCI bridge
