@@ -19,6 +19,10 @@ import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
 @Slf4j
 public class ScaleService {
 
+    private static final String API_ANSWER_SCALED_TO_MIN_REPL =
+            ".*Scaling .* from .* to 1 replicas.*" +
+                    "|.*is already descaled to the minimum number.*";
+
     private static final String urlFormat = "http://%s:%s%s";
     private String apiUrl;
 
@@ -41,24 +45,25 @@ public class ScaleService {
      * @param instruction holds information about the type of the request,
      *                   will be translated to the correct request
      */
-    public void sendScaleRequest(ScalingInstruction instruction) {
-//        if (instruction.getScalingDirection() == DOWN) {
-//            return;
-//        }
-
+    public boolean sendScaleRequest(ScalingInstruction instruction) {
         String requestJson = delegationProperties.getRequestBody(instruction);
         log.info("request json: {}", requestJson);
+
+        String answer = null;
 
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
-            String answer = restTemplate.postForObject(apiUrl, entity, String.class);
+            answer = restTemplate.postForObject(apiUrl, entity, String.class);
             log.info("scaler api answer: {}", answer);
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        return answer != null
+                && answer.toLowerCase().matches(API_ANSWER_SCALED_TO_MIN_REPL);
     }
 
 }

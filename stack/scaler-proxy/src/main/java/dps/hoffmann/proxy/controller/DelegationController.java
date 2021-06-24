@@ -4,6 +4,7 @@ import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.service.RequestService;
 import dps.hoffmann.proxy.service.TranslationService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 @RestController
 @Slf4j
@@ -24,6 +26,9 @@ public class DelegationController {
     @Autowired
     private TranslationService translationService;
 
+    @Autowired
+    private Semaphore emptyInstrBinSemaphore;
+
     /**
      * Endpoint that delegates the call to the actual scaler service with the
      * appropriate json body / endpoint args
@@ -33,14 +38,19 @@ public class DelegationController {
     public void delegate(@RequestBody String jsonBody) {
         log.info("called delegation endpoint: {}", jsonBody);
         List<ScalingInstruction> instructions = translationService.translateAlertManJson(jsonBody);
-        requestService.delegate(instructions);
+
+        if (requestService.delegate(instructions)) {
+            emptyInstrBinSemaphore.release();
+        }
     }
 
+    @SneakyThrows
     @GetMapping("/manual-scale")
     public void scale(
             @RequestParam int additionalCnt,
             @RequestParam LogicalService service
-            ) {
+    ) {
+        emptyInstrBinSemaphore.acquire();
         log.info("manual scale: {}", additionalCnt);
 
         List<ScalingInstruction> instructions = translationService.translateManualScaleInstr(
