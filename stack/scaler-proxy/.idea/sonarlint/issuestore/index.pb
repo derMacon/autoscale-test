@@ -46,3 +46,11 @@ q
 Asrc/main/java/dps/hoffmann/proxy/config/ScalingConfiguration.java,0\4\0415d61c2f27d20a2a304408eb068f4c0d12bea3
 r
 Bsrc/main/java/dps/hoffmann/proxy/config/ActiveMqConfiguration.java,7\1\710a24082d761c321f9cce3e7c73bbfcdca06cce
+m
+=src/main/java/dps/hoffmann/proxy/TestreceiverApplication.java,b\f\bfd4d7693820502d1107ca0499754eaf296450b6
+^
+.src/main/java/dps/hoffmann/proxy/TestMain.java,0\4\0458b29a6ba0855cb73bc9a8177687fa47889284
+k
+;src/main/java/dps/hoffmann/proxy/utils/ConversionUtils.java,4\9\4903eb5f956b2779997b77c413dea3df943a4c4d
+r
+Bsrc/main/java/dps/hoffmann/proxy/controller/MetricsController.java,d\0\d068f2c0ebd192abfd792212f486a861c16af1ca

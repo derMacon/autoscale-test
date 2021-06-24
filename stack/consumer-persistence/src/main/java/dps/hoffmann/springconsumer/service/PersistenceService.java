@@ -1,19 +1,13 @@
 package dps.hoffmann.springconsumer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dps.hoffmann.springconsumer.model.Payment;
 import dps.hoffmann.springconsumer.repository.PaymentRepository;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Persists a given payment by sending it to the right component who in turn will save it to a
@@ -31,6 +25,13 @@ public class PersistenceService {
     public void save(Payment payment) {
         log.info("save payment: {}", payment);
         paymentRepository.save(payment);
+    }
+
+    public List<Payment> findAll() {
+        log.info("persistence - find all");
+        List<Payment> out = new ArrayList<>();
+        paymentRepository.findAll().forEach(out::add);
+        return out;
     }
 
 }

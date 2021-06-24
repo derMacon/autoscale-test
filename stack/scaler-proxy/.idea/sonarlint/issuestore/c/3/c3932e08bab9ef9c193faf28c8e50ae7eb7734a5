@@ -1,5 +1,4 @@
 
-]	java:S125-"<This block of commented-out lines of code should be removed.(²¢²çúÿÿÿÿ8¥ï¦û¡/
-o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÃˆÀä
 h
-java:S1128"KRemove this unused import 'dps.hoffmann.proxy.model.ScalingDirection.DOWN'.(¬€êÊ8¥ï¦û¡/
+java:S1128"KRemove this unused import 'dps.hoffmann.proxy.model.ScalingDirection.DOWN'.(¬€êÊ8½©‹ó£/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÃˆÀä8½©‹ó£/
