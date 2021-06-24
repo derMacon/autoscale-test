@@ -4,6 +4,8 @@ import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
 import dps.hoffmann.proxy.model.Tupel;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,12 +24,15 @@ import static dps.hoffmann.proxy.utils.TimestampUtils.getDuration;
 
 @Service
 @Slf4j
+@Getter
 public class MetricsService {
 
     @Autowired
+    @Getter(AccessLevel.NONE)
     private MeterRegistry meterRegistry;
 
     @Autowired
+    @Getter(AccessLevel.NONE)
     private PersistenceService persistenceService;
 
     @Autowired

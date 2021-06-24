@@ -35,7 +35,7 @@ public class BenchmarkingController {
     @RequestMapping(value = "/start",
             method = POST,
             consumes = APPLICATION_JSON_VALUE)
-    public void startSingleBenchmark(@RequestBody String jsonBody) throws JsonProcessingException {
+    public void startPaymentBenchmark(@RequestBody String jsonBody) throws JsonProcessingException {
         log.info("new benchmark request: {}", jsonBody);
         ParsedInstruction req = mapper.readValue(jsonBody, ParsedInstruction.class);
         benchmarkService.benchmark(req);

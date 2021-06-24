@@ -40,6 +40,7 @@ public class DelegationController {
         List<ScalingInstruction> instructions = translationService.translateAlertManJson(jsonBody);
 
         if (requestService.delegate(instructions)) {
+            log.info("scaled down to minimum replicas");
             emptyInstrBinSemaphore.release();
         }
     }
@@ -50,8 +51,9 @@ public class DelegationController {
             @RequestParam int additionalCnt,
             @RequestParam LogicalService service
     ) {
-        emptyInstrBinSemaphore.acquire();
         log.info("manual scale: {}", additionalCnt);
+        emptyInstrBinSemaphore.acquire();
+        log.info("after semaphore");
 
         List<ScalingInstruction> instructions = translationService.translateManualScaleInstr(
                 service,
