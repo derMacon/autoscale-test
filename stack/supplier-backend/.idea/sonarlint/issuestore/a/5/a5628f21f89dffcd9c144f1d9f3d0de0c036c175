@@ -1,7 +1,7 @@
 
 c
 java:S5361c"HReplace this call to "replaceAll()" by a call to the "replace()" method.(×ÿÁ’øÿÿÿÿ
-P
-java:S16110":Remove the parentheses around the "scalingInstr" parameter(Žõ…ö
 ¦
 java:S1130>"ŠRemove the declaration of thrown exception 'dps.hoffmann.producer.model.error.InvalidParserRequestException' which is a runtime exception.(ûáƒÖøÿÿÿÿ
+P
+java:S16110":Remove the parentheses around the "scalingInstr" parameter(Žõ…ö

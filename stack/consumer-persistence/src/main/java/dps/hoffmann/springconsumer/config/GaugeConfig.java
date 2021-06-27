@@ -21,6 +21,16 @@ public class GaugeConfig {
         return createEmptyArr(RoundtripStat.values().length);
     }
 
+    @Bean("currSpringProcessingDuration")
+    public AtomicInteger[] currSpringProcessingDuration() {
+        return createEmptyArr(RoundtripStat.values().length);
+    }
+
+    @Bean("currNodeProcessingDuration")
+    public AtomicInteger[] currNodeProcessingDuration() {
+        return createEmptyArr(RoundtripStat.values().length);
+    }
+
     private AtomicInteger[] createEmptyArr(int len) {
         AtomicInteger[] arr = new AtomicInteger[RoundtripStat.values().length];
         for (int i = 0; i < arr.length; i++) {

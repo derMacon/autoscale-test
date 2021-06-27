@@ -1,13 +1,21 @@
 
-T
-java:S1135>"2Complete the task associated to this TODO comment.(£Àù¸øÿÿÿÿ8íÍ£ƒ¤/
-H
-java:S1172h",Remove this unused method parameter "stats".(‚“¡O8ı£Ó‚¤/
-L
-java:S1481<"*Remove this unused "stats" local variable.( Ğ·èúÿÿÿÿ8¾Ö¢ƒ¤/
+n
+java:S1128"LRemove this unused import 'org.springframework.context.event.EventListener'.(¦ñÛĞüÿÿÿÿ8º¬Ôë¤/
+<
+java:S1640V"Convert this Map to an EnumMap.(°¡ò¼8ÇÙåë¤/
+A
+java:S1640?"Convert this Map to an EnumMap.(Î¶Ïÿÿÿÿÿ8ÇÙåë¤/
+A
+java:S16405"Convert this Map to an EnumMap.( Ğ·èúÿÿÿÿ8ÇÙåë¤/
+v
+java:S1128"YRemove this unused import 'org.springframework.boot.context.event.ApplicationReadyEvent'.(Ğ‰“8º¬Ôë¤/
+>
+java:S1659W"!Declare "div" on a separate line.(Õ÷ÔÄ8›ÿïë¤/
 K
-java:S1128"/Remove this unused import 'java.sql.Timestamp'.(èò½+8¨Üå‚¤/
-T
-java:S1135i"2Complete the task associated to this TODO comment.(ñ•Ôøÿÿÿÿ8Ù˜Â‚¤/
+java:S1128"/Remove this unused import 'java.sql.Timestamp'.(èò½+8¨Üå‚¤/
 [
-java:S1854<"9Remove this useless assignment to local variable "stats".( Ğ·èúÿÿÿÿ8¾Ö¢ƒ¤/
+java:S18545"9Remove this useless assignment to local variable "stats".( Ğ·èúÿÿÿÿ8¾Ö¢ƒ¤/
+T
+java:S11357"2Complete the task associated to this TODO comment.(£Àù¸øÿÿÿÿ8íÍ£ƒ¤/
+L
+java:S14815"*Remove this unused "stats" local variable.( Ğ·èúÿÿÿÿ8¾Ö¢ƒ¤/

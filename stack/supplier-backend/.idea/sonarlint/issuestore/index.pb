@@ -35,3 +35,10 @@ Fsrc/main/java/dps/hoffmann/producer/model/BenchmarkBackendRequest.java,1\5\150
 Lsrc/main/java/dps/hoffmann/producer/model/instruction/ParsedInstruction.java,f\7\f7912fc7285536a699d0c600446734982935e1bb
 z
 Jsrc/main/java/dps/hoffmann/producer/controller/BenchmarkingController.java,c\c\ccbd09f1e5d28803aa9d7c21add906bf59670545
+:
+
+Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+w
+Gsrc/main/java/dps/hoffmann/producer/model/instruction/BatchVisitor.java,0\f\0f94932add5e1ea5340df7c636aa2c6fc5dd45f8

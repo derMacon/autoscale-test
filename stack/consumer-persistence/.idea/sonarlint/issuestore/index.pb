@@ -18,3 +18,5 @@ t
 Dsrc/main/java/dps/hoffmann/springconsumer/service/WorkerService.java,e\1\e11fc403c44d6d46af45d069b70a7042c41a0bbd
 t
 Dsrc/main/java/dps/hoffmann/springconsumer/service/MetricService.java,2\f\2f065ef29e612dd1247207c18e0bc9bea8c76929
+k
+;src/main/java/dps/hoffmann/springconsumer/utils/MyMath.java,3\c\3ca8ffb10d651fe8c87b7e5b3930bf197380cb70
