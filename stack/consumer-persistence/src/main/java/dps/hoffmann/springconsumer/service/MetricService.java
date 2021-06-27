@@ -102,7 +102,12 @@ public class MetricService {
     }
 
     private void updateGaugeValues(Map<RoundtripStat, Integer> stats) {
-        // todo
+        for (Map.Entry<RoundtripStat, Integer> entry : stats.entrySet()) {
+            log.info("update node roundtrip: {} -> {}", entry.getKey(), entry.getValue());
+            this.averageNodeRoundtripStats[entry.getKey().ordinal()].set(entry.getValue());
+            log.info("update spring roundtrip: {} -> {}", entry.getKey(), entry.getValue());
+            this.averageSpringRoundtripStats[entry.getKey().ordinal()].set(entry.getValue());
+        }
     }
 
 }
