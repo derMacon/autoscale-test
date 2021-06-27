@@ -53,9 +53,9 @@ public class MetricService {
                     averageSpringRoundtripStats[i]);
 
             // init current gauge reference
-            meterRegistry.gauge(arr[i].getAverageName(LogicalServiceName.NODE),
+            meterRegistry.gauge(arr[i].getCurrName(LogicalServiceName.NODE),
                     currNodeProcessingDuration[i]);
-            meterRegistry.gauge(arr[i].getAverageName(LogicalServiceName.SPRING),
+            meterRegistry.gauge(arr[i].getCurrName(LogicalServiceName.SPRING),
                     currSpringProcessingDuration[i]);
         }
     }
