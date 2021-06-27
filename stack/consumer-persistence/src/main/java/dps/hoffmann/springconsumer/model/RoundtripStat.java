@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum RoundtripStat {
 
-    TOTAL_ROUNDTRIP("roundtrip.average.total.%s"),
-    PROCESSING_DURATION("roundtrip.average.processing.%s"),
-    RECEIVING_DURATION("roundtrip.average.receiving.%s");
+    TOTAL_ROUNDTRIP("roundtrip.total.%s"),
+    PROCESSING_DURATION("roundtrip.processing.%s"),
+    RECEIVING_DURATION("roundtrip.receiving.%s");
 
     private final String format;
 

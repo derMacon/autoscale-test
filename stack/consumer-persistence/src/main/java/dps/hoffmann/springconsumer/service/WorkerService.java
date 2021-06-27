@@ -43,12 +43,6 @@ public class WorkerService {
         persistenceService.save(payment);
         metricService.recalcMetrics(persistenceService.findAll());
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
 
 }
