@@ -26,9 +26,14 @@ public class MetricsController {
         return download(metricsService.getOverallAvGaugeRefs());
     }
 
-    @RequestMapping("/specificAvGaugeRefs")
-    public ResponseEntity<Resource> getSpecificAvGaugeRefs() {
-        return download(metricsService.getSpecificAvGaugeRefs());
+    @RequestMapping("/nodeSpecificAvGaugeRefs")
+    public ResponseEntity<Resource> getNodeSpecificAvGaugeRefs() {
+        return download(metricsService.getNodeSpecificAverage());
+    }
+
+    @RequestMapping("/springSpecificAvGaugeRefs")
+    public ResponseEntity<Resource> getSpringSpecificAvGaugeRefs() {
+        return download(metricsService.getSpringSpecificAverage());
     }
 
     private ResponseEntity<Resource> download(AtomicInteger[] values) {
