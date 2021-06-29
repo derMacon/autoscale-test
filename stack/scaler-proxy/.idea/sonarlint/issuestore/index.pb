@@ -54,3 +54,11 @@ k
 ;src/main/java/dps/hoffmann/proxy/utils/ConversionUtils.java,4\9\4903eb5f956b2779997b77c413dea3df943a4c4d
 r
 Bsrc/main/java/dps/hoffmann/proxy/controller/MetricsController.java,d\0\d068f2c0ebd192abfd792212f486a861c16af1ca
+r
+Bsrc/test/java/dps/hoffmann/proxy/TestreceiverApplicationTests.java,4\2\423a3b33dff6a680ed14a7a961c8a5d5f03733f9
+s
+Csrc/test/java/dps/hoffmann/proxy/model/ScalingInstructionUtils.java,6\a\6a5dc3120911d70825e5c34f694514ba2995dec4
+j
+:src/main/java/dps/hoffmann/proxy/model/StatsGenerator.java,c\4\c446116be0c585c32c8e3282db92d94fc2581404
+n
+>src/test/java/dps/hoffmann/proxy/model/StatsGeneratorTest.java,8\7\874c9db1c4c794a269c2dd84fcf7fe10ea1cce4e

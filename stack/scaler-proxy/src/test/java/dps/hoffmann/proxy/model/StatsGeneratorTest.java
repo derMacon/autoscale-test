@@ -108,7 +108,7 @@ class StatsGeneratorTest {
         AtomicInteger[] arr = genRandomArr(3);
         gen.updateTierGaugeRefs(arr, createScalePropsIt());
 
-        Assert.isTrue(arr[0].get() == 4500);
+        Assert.isTrue(arr[0].get() == 4000);
         Assert.isTrue(arr[1].get() == 4000);
         Assert.isTrue(arr[2].get() == 0);
 

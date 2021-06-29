@@ -1,5 +1,8 @@
 
+]	java:S125G"<This block of commented-out lines of code should be removed.(àœÌ’ûÿÿÿÿ8íû™ ¥/
+
+java:S4144="_Update this method so that its implementation is not identical to "nodeTierAverage" on line 51.(¼á ¨ùÿÿÿÿ8§—Ù¢¥/
+…
+java:S4144)"cUpdate this method so that its implementation is not identical to "nodeSpecificAverage" on line 31.(©½ñ¸úÿÿÿÿ8áœ¦ ¥/
 a
 java:S1128"FRemove this unused import 'dps.hoffmann.proxy.model.ScalingDirection'.(°ĞÁˆùÿÿÿÿ
-y
-java:S3305"WInject this field value directly into "specificAverages", the only method that uses it.(ˆ¡İ™ùÿÿÿÿ8Ş‡áû¢/

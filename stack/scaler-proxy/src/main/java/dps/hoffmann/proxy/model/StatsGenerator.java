@@ -100,7 +100,8 @@ public class StatsGenerator {
 
     public void updateTierGaugeRefs(AtomicInteger[] tierGaugeRefs,
                                     Iterator<Tupel<Integer, Integer>> it) {
-        Map<Integer, List<Integer>> stats = createSpecificStatsMap(this.filteredInput);
+
+        Map<String, List<Integer>> stats = createBatchStatsMap(this.filteredInput);
 
         // clean old gauge refs
         for (AtomicInteger curr : tierGaugeRefs) {
@@ -115,16 +116,37 @@ public class StatsGenerator {
 
     }
 
-    private int getTierAverage(Map<Integer, List<Integer>> stats,
+    private static Map<String, List<Integer>> createBatchStatsMap(List<ScalingInstruction> scalingInstructions) {
+        Map<String, List<Integer>> stats = new HashMap<>();
+
+        for (ScalingInstruction currInstr : scalingInstructions) {
+            if (!stats.containsKey(currInstr.getScalingBatchId())) {
+                stats.put(currInstr.getScalingBatchId(), new ArrayList<>());
+            }
+            stats.get(currInstr.getScalingBatchId()).add(getDuration(currInstr));
+        }
+
+        return stats;
+    }
+
+    /**
+     * Generates the average over all batches in the current tier
+     * @param stats map with the batch ids as key and the durations of the startup times as value
+     *             list for each key
+     * @param tierProperties Tupel holding upper and lower bound of the current tier
+     * @return average over all batches in the specified tier
+     */
+    private int getTierAverage(Map<String, List<Integer>> stats,
                                Tupel<Integer, Integer> tierProperties) {
 
         int lowerBoundExcl = tierProperties.getFst();
         int upperBoundIncl = tierProperties.getSnd();
 
         List<Integer> relevantDurations = new LinkedList<>();
-        for (Map.Entry<Integer, List<Integer>> entry: stats.entrySet()) {
-            if (entry.getKey() > lowerBoundExcl && entry.getKey() <= upperBoundIncl) {
-                relevantDurations.addAll(entry.getValue());
+        for (Map.Entry<String, List<Integer>> entry: stats.entrySet()) {
+            int batchSize = entry.getValue().size();
+            if (batchSize > lowerBoundExcl && batchSize <= upperBoundIncl) {
+                relevantDurations.add(getAverage(entry.getValue()));
             }
         }
 
