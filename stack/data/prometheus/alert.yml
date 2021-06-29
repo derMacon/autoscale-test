@@ -1,6 +1,15 @@
 groups:
   - name: springScaleAlert
     rules:
+      - alert: spring_baseline
+        expr: >
+          org_apache_activemq_Broker_ConsumerCount{
+          brokerName="localhost",
+          destinationName="springqueue", 
+          destinationType="Queue",
+          instance="activemq:8080", 
+          job="services"
+          } < 1
       - alert: spring_ql1_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -343,6 +352,15 @@ groups:
 
   - name: nodeScaleAlert
     rules:
+      - alert: node_baseline
+        expr: >
+          org_apache_activemq_Broker_ConsumerCount{
+          brokerName="localhost",
+          destinationName="nodequeue", 
+          destinationType="Queue",
+          instance="activemq:8080", 
+          job="services"
+          } < 1
       - alert: node_ql1_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{

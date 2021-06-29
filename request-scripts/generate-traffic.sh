@@ -9,7 +9,7 @@ printf "\
 
 "
 
-for file in $(find ./request-scripts -name '*.benchmark'); do
+for file in $(find ./requests -name '*.benchmark'); do
   echo "send request: $file"
-  ./request-scripts/curl-benchmark.sh $file
+  ./curl-benchmark.sh $file
 done
