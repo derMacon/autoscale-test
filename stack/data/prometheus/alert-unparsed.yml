@@ -23,7 +23,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${SCALING_CB0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql2_cl0
         expr: >
@@ -47,7 +47,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${SCALING_CB0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql3_cl0
         expr: >
@@ -64,7 +64,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${SCALING_CB0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql0_cl1
         expr: >
