@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.model;
 
 public enum ScalingInterval {
+    CL0,
     DIFF_CL0_CL1,
     DIFF_CL0_CL2,
     DIFF_CL0_CL3,

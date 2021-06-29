@@ -47,6 +47,9 @@ public class RequestMapper {
     @Getter
     public enum InstructionType {
 
+        SPRING_BASELINE(SPRING, "spring_baseline", UP, CL0),
+        NODE_BASELINE(NODE, "node_baseline", UP, CL0),
+        
         SPRING_QL1_CL0(SPRING, "spring_ql1_cl0", UP, DIFF_CL0_CL1),
         SPRING_QL2_CL0(SPRING, "spring_ql2_cl0", UP, DIFF_CL0_CL2),
         SPRING_QL3_CL0(SPRING, "spring_ql3_cl0", UP, DIFF_CL0_CL3),
