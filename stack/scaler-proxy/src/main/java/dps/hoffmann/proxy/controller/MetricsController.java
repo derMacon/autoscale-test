@@ -46,7 +46,7 @@ public class MetricsController {
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .contentLength(data.length)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentType(MediaType.parseMediaType("text/csv"))
                 .body(resource);
     }
 

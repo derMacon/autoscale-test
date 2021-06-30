@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6487b189-0b9e-4a98-93d1-8f94f976aac5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/4/0458b29a6ba0855cb73bc9a8177687fa47889284" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/4/0458b29a6ba0855cb73bc9a8177687fa47889284" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/7/371a46896a256e4601bed6e2feec1924978f1ca6" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/7/371a46896a256e4601bed6e2feec1924978f1ca6" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/b/4b50a94b547b24bc6d9710fab08ace1d6a182822" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/b/4b50a94b547b24bc6d9710fab08ace1d6a182822" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/7/874c9db1c4c794a269c2dd84fcf7fe10ea1cce4e" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/7/874c9db1c4c794a269c2dd84fcf7fe10ea1cce4e" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/3/e3f8f2d43162ca6e16e5a80d07830b95cc1daf61" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/3/e3f8f2d43162ca6e16e5a80d07830b95cc1daf61" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/controller/MetricsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/controller/MetricsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/model/RequestMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/model/RequestMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/model/StatsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/model/StatsGenerator.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1u4sEx09xKplhLLU5JeDRrPvuZG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="dps.hoffmann.proxy.model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.StatsGeneratorTest.testUpdateTierGaugeRefsLowerTier">
+    <configuration name="TestMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dps.hoffmann.proxy.TestMain" />
+      <module name="scaleproxy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.hoffmann.proxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatsGeneratorTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="scaleproxy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.hoffmann.proxy.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dps.hoffmann.proxy.model" />
+      <option name="MAIN_CLASS_NAME" value="dps.hoffmann.proxy.model.StatsGeneratorTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatsGeneratorTest.testUpdateSpecificGaugeRefsLowerTier" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="scaleproxy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.hoffmann.proxy.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dps.hoffmann.proxy.model" />
+      <option name="MAIN_CLASS_NAME" value="dps.hoffmann.proxy.model.StatsGeneratorTest" />
+      <option name="METHOD_NAME" value="testUpdateSpecificGaugeRefsLowerTier" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatsGeneratorTest.testUpdateTierGaugeRefsLowerTier" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="scaleproxy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.hoffmann.proxy.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dps.hoffmann.proxy.model" />
+      <option name="MAIN_CLASS_NAME" value="dps.hoffmann.proxy.model.StatsGeneratorTest" />
+      <option name="METHOD_NAME" value="testUpdateTierGaugeRefsLowerTier" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestreceiverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="scaleproxy" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="dps.hoffmann.proxy.TestreceiverApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StatsGeneratorTest.testUpdateTierGaugeRefsLowerTier" />
+        <item itemvalue="Application.TestMain" />
+        <item itemvalue="JUnit.StatsGeneratorTest.testUpdateSpecificGaugeRefsLowerTier" />
+        <item itemvalue="JUnit.StatsGeneratorTest.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6487b189-0b9e-4a98-93d1-8f94f976aac5" name="Default Changelist" comment="" />
+      <created>1623936090210</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623936090210</updated>
+      <workItem from="1623936091634" duration="2409000" />
+      <workItem from="1623944374789" duration="2762000" />
+      <workItem from="1624005006362" duration="3048000" />
+      <workItem from="1624020913056" duration="5718000" />
+      <workItem from="1624121121051" duration="10864000" />
+      <workItem from="1624185557185" duration="596000" />
+      <workItem from="1624196606586" duration="882000" />
+      <workItem from="1624274412026" duration="17990000" />
+      <workItem from="1624387859748" duration="1082000" />
+      <workItem from="1624449909768" duration="785000" />
+      <workItem from="1624534380955" duration="9212000" />
+      <workItem from="1624573528029" duration="1151000" />
+      <workItem from="1624575732919" duration="660000" />
+      <workItem from="1624787324542" duration="1562000" />
+      <workItem from="1624906451012" duration="12250000" />
+      <workItem from="1624979517272" duration="6089000" />
+      <workItem from="1625060083880" duration="562000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/dps/hoffmann/proxy/model/StatsGenerator.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/dps/hoffmann/proxy/model/StatsGeneratorTest.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

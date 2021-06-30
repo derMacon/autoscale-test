@@ -52,7 +52,7 @@ public class StatsGenerator {
         // set new gauge refs
         for (Map.Entry<Integer, List<Integer>> entry : stats.entrySet()) {
             int average = getAverage(entry.getValue());
-            log.info("%s - udpateSpecificGaugeRefs: {} -> {}",
+            log.info("{} - updateSpecificGaugeRefs: {} -> {}",
                     this.logicalService,
                     entry.getKey(),
                     entry.getValue());
