@@ -26,9 +26,9 @@ public class PayOptionGenerator implements InstructionGenerator {
 
     @Override
     public List<String> getDisplayName() {
-        return Arrays.asList(new String[] {
-            RANDOMIZE_REQUEST_INSTRUCTION,
-            USE_STANDARD_REQUEST_INSTRUCTION
+        return Arrays.asList(new String[]{
+                RANDOMIZE_REQUEST_INSTRUCTION,
+                USE_STANDARD_REQUEST_INSTRUCTION
         });
     }
 

@@ -17,7 +17,7 @@ class StatsGeneratorTest {
         ScalingInstruction instr1 = createInstr(NODE, "fstBatchId", 1);
         ScalingInstruction instr2 = createInstr(NODE, "fstBatchId", 3);
 
-        List<ScalingInstruction> lst = Arrays.asList(new ScalingInstruction[] {instr1, instr2});
+        List<ScalingInstruction> lst = Arrays.asList(new ScalingInstruction[]{instr1, instr2});
 
         StatsGenerator gen = new StatsGenerator(NODE, lst);
         AtomicInteger[] arr = genRandomArr(30);
@@ -38,7 +38,7 @@ class StatsGeneratorTest {
         ScalingInstruction instr5 = createInstr(NODE, "sndBatchId", 1);
         ScalingInstruction instr6 = createInstr(NODE, "sndBatchId", 1);
 
-        List<ScalingInstruction> input = Arrays.asList(new ScalingInstruction[] {
+        List<ScalingInstruction> input = Arrays.asList(new ScalingInstruction[]{
                 instr1,
                 instr2,
                 instr3,
@@ -82,7 +82,7 @@ class StatsGeneratorTest {
         ScalingInstruction instr17 = createInstr(NODE, "thrdBatchId", 4);
         ScalingInstruction instr18 = createInstr(NODE, "thrdBatchId", 5);
 
-        List<ScalingInstruction> input = Arrays.asList(new ScalingInstruction[] {
+        List<ScalingInstruction> input = Arrays.asList(new ScalingInstruction[]{
                 instr1,
                 instr2,
                 instr3,

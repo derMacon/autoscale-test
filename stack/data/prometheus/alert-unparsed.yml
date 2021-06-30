@@ -33,7 +33,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: spring_ql2_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -57,7 +57,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: spring_ql3_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -74,7 +74,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: spring_ql0_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -106,7 +106,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: spring_ql2_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -138,7 +138,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: spring_ql3_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -163,7 +163,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: spring_ql0_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -195,7 +195,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m 
+        for: 0m
       - alert: spring_ql1_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -227,7 +227,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m 
+        for: 0m
       - alert: spring_ql3_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -252,7 +252,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m  
+        for: 0m
       - alert: spring_ql0_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -284,7 +284,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB3}
-        for: 0m 
+        for: 0m
       - alert: spring_ql1_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -316,7 +316,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB3}
-        for: 0m 
+        for: 0m
       - alert: spring_ql2_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -348,7 +348,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB3}
-        for: 0m 
+        for: 0m
 
   - name: nodeScaleAlert
     rules:
@@ -384,7 +384,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: node_ql2_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -408,7 +408,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: node_ql3_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -425,7 +425,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } == ${SCALING_CB0}
-        for: 0m 
+        for: 0m
       - alert: node_ql0_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -457,7 +457,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: node_ql2_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -489,7 +489,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: node_ql3_cl1
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -514,7 +514,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB1}
-        for: 0m 
+        for: 0m
       - alert: node_ql0_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -546,7 +546,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m 
+        for: 0m
       - alert: node_ql1_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -578,7 +578,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m 
+        for: 0m
       - alert: node_ql3_cl2
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -603,7 +603,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB2}
-        for: 0m  
+        for: 0m
       - alert: node_ql0_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -635,7 +635,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB3}
-        for: 0m 
+        for: 0m
       - alert: node_ql1_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -667,7 +667,7 @@ groups:
            instance="activemq:8080", 
            job="services"
           } <= ${SCALING_CB3}
-        for: 0m 
+        for: 0m
       - alert: node_ql2_cl3
         expr: >
           org_apache_activemq_Broker_QueueSize{

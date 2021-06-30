@@ -5,16 +5,16 @@ services:
   activemq:
     image: bwolf/activemq-prometheus
     ports:
-    - published: 61616
-      target: 61616
-    - published: 61613
-      target: 61613
-    - published: 8161
-      target: 8161
-    - published: 8080
-      target: 8080
+      - published: 61616
+        target: 61616
+      - published: 61613
+        target: 61613
+      - published: 8161
+        target: 8161
+      - published: 8080
+        target: 8080
     restart: unless-stopped
-    
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -84,18 +84,18 @@ services:
     volumes:
       - spring-db:/var/lib/postgresql/data
     restart: unless-stopped
-    
+
   prometheus:
     command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
     deploy:
       replicas: 1
     image: prom/prometheus:v2.21.0
     ports:
-    - published: 9000
-      target: 9090
+      - published: 9000
+        target: 9090
     volumes:
-    - /mnt/c/Users/silas/Documents/Studium/8.Semester/bsc_thesis/thesis/nodejs-projects/autoscale/clean6/stack-scale-benchmark/stack/data/prometheus:/etc/prometheus:rw
-    - prometheus-data:/prometheus:rw
+      - /mnt/c/Users/silas/Documents/Studium/8.Semester/bsc_thesis/thesis/nodejs-projects/autoscale/clean6/stack-scale-benchmark/stack/data/prometheus:/etc/prometheus:rw
+      - prometheus-data:/prometheus:rw
 
   node-consumer:
     image: node-consumer:latest
@@ -105,7 +105,7 @@ services:
       - activemq
       - script-db
     restart: unless-stopped
-    environment: 
+    environment:
       - PG_HOSTNAME=script-db
       - AMQ_BROKER_HOSTNAME=activemq
       - PG_DATABASE_NAME=${SCRIPT_DATABASE_NAME}

@@ -22,10 +22,11 @@ public class StatsController {
     /**
      * checks if the connection with the queue service
      * is working intended
+     *
      * @return true if the all connection used in the
      * queue service as are up and running
      */
-    @RequestMapping(value="/health")
+    @RequestMapping(value = "/health")
     public ResponseEntity health() {
         HttpStatus status;
         if (queueService.isUp()) {

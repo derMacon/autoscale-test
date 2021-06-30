@@ -25,8 +25,8 @@ public class StatsGenerator {
 
     public StatsGenerator(LogicalService serviceName, List<ScalingInstruction> pastInstructions) {
         this.filteredInput = pastInstructions.stream()
-                        .filter(e -> e.getLogicalServiceName().equals(serviceName))
-                        .collect(Collectors.toList());
+                .filter(e -> e.getLogicalServiceName().equals(serviceName))
+                .collect(Collectors.toList());
         this.logicalService = serviceName;
     }
 
@@ -131,8 +131,9 @@ public class StatsGenerator {
 
     /**
      * Generates the average over all batches in the current tier
-     * @param stats map with the batch ids as key and the durations of the startup times as value
-     *             list for each key
+     *
+     * @param stats          map with the batch ids as key and the durations of the startup times as value
+     *                       list for each key
      * @param tierProperties Tupel holding upper and lower bound of the current tier
      * @return average over all batches in the specified tier
      */
@@ -143,7 +144,7 @@ public class StatsGenerator {
         int upperBoundIncl = tierProperties.getSnd();
 
         List<Integer> relevantDurations = new LinkedList<>();
-        for (Map.Entry<String, List<Integer>> entry: stats.entrySet()) {
+        for (Map.Entry<String, List<Integer>> entry : stats.entrySet()) {
             int batchSize = entry.getValue().size();
             if (batchSize > lowerBoundExcl && batchSize <= upperBoundIncl) {
                 relevantDurations.add(getAverage(entry.getValue()));

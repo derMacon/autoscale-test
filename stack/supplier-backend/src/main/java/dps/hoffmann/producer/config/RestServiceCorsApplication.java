@@ -13,6 +13,7 @@ public class RestServiceCorsApplication {
 
     /**
      * Adds wildcard pattern to header
+     *
      * @return updated mvc configurer config
      */
     @Bean

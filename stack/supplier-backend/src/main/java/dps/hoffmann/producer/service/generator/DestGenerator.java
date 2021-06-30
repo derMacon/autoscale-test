@@ -21,7 +21,7 @@ public class DestGenerator implements InstructionGenerator {
 
     @Override
     public List<String> getDisplayName() {
-        return Arrays.asList(new String[] {
+        return Arrays.asList(new String[]{
                 amqProperties.getNodequeue(),
                 amqProperties.getSpringqueue(),
         });

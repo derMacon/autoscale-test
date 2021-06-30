@@ -13,6 +13,7 @@ public class RestClientConfig {
 
     /**
      * Creates the message converter singleton that is used throughout the project
+     *
      * @return message converter singleton instance
      */
     @Bean

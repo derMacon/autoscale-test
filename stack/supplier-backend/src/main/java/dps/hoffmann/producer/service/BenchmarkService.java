@@ -41,6 +41,7 @@ public class BenchmarkService {
      * Benchmark a parsed instruction. The object mainly holds fields with the various options a
      * user can select. Those option are translated into supplier instances giving the needed
      * information for the actual send process to the queue.
+     *
      * @param parsedInstruction parsed user input
      */
     @SneakyThrows
@@ -96,6 +97,7 @@ public class BenchmarkService {
 
     /**
      * Generates the current time as Timestamp
+     *
      * @return
      */
     private static Timestamp now() {
@@ -105,6 +107,7 @@ public class BenchmarkService {
 
     /**
      * Defines if all messages should be send in one transaction or not
+     *
      * @param request data object holding relevant information
      * @return true if all messages should be send in one transaction
      */

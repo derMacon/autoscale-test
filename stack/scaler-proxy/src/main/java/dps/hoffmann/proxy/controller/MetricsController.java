@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,31 +27,41 @@ public class MetricsController {
 
     @RequestMapping("/overallAvGaugeRefs")
     public ResponseEntity<Resource> getOverallAvGaugeRefs() {
-        return download(metricsService.getOverallAvGaugeRefs());
+        String csv = convertToCsv(metricsService.getOverallAvGaugeRefs());
+        return download(csv);
     }
 
     @RequestMapping("/nodeSpecificAvGaugeRefs")
     public ResponseEntity<Resource> getNodeSpecificAvGaugeRefs() {
-        return download(metricsService.getNodeSpecificAverage());
+        String csv = convertToCsv(metricsService.getNodeSpecificAverage());
+        return download(csv);
     }
 
     @RequestMapping("/springSpecificAvGaugeRefs")
     public ResponseEntity<Resource> getSpringSpecificAvGaugeRefs() {
-        return download(metricsService.getSpringSpecificAverage());
+        String csv = convertToCsv(metricsService.getSpringSpecificAverage());
+        return download(csv);
     }
 
-    private ResponseEntity<Resource> download(AtomicInteger[] values) {
-        log.info("download - convert values: {}", Arrays.asList(values));
-        byte[] data = integersToBytes(values);
-        ByteArrayResource resource = new ByteArrayResource(data);
+    private static String convertToCsv(AtomicInteger[] values) {
+        StringBuilder strb = new StringBuilder();
+        for (int i = 0; i < values.length; i++) {
+            strb.append(i +  "," + values[i]);
+        }
+        return strb.toString();
+    }
+
+    private ResponseEntity<Resource> download(String csvContent) {
+        log.info("download - values: {}", csvContent);
+        ByteArrayResource resource = new ByteArrayResource(csvContent.getBytes(StandardCharsets.UTF_8));
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Disposition", "attachment; filename=benchmark-data.csv");
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .contentLength(data.length)
-                .contentType(MediaType.parseMediaType("text/csv"))
+//                .contentLength(data.length)
+                .contentType(MediaType.parseMediaType("application/csv"))
                 .body(resource);
     }
 

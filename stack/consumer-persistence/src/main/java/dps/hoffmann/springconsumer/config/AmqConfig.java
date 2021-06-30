@@ -27,16 +27,16 @@ public class AmqConfig {
     private String brokerUrl;
 
     @Bean
-    public ConnectionFactory connectionFactory(){
+    public ConnectionFactory connectionFactory() {
         log.info("broker url: " + brokerUrl);
-        ActiveMQConnectionFactory activeMQConnectionFactory  = new ActiveMQConnectionFactory();
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL(brokerUrl);
         activeMQConnectionFactory.setTrustedPackages(Arrays.asList(
                 "dps.hoffmann.springconsumer",
                 "java.time",
                 "java.sql",
                 "java.lang"));
-        return  activeMQConnectionFactory;
+        return activeMQConnectionFactory;
     }
 
     @Bean
@@ -73,6 +73,7 @@ public class AmqConfig {
 
     /**
      * Creates the object mapper singleton used throughout the project
+     *
      * @return singleton object mapper instance
      */
     public ObjectMapper objectMapper() {

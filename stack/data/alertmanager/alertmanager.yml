@@ -5,7 +5,7 @@ route:
   repeat_interval: 10s
 
 receivers:
-- name: 'slack'
-  webhook_configs:
-  - url: 'http://scaler-proxy:9245/delegate'
-    send_resolved: false
+  - name: 'slack'
+    webhook_configs:
+      - url: 'http://scaler-proxy:9245/delegate'
+        send_resolved: false

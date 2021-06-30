@@ -36,6 +36,7 @@ public class PersistenceService {
     /**
      * Pushes a given generated message to the persistence queue so that the message will be
      * saved to a database as soon as a service is available and has an open connection.
+     *
      * @param outputPaymentMsg
      */
     @SneakyThrows

@@ -13,6 +13,7 @@ public class PaymentUtils {
 
     /**
      * Creates a templating output payment message for testing purposes
+     *
      * @param containerId identifier of the container
      * @return new output instance
      */
@@ -31,6 +32,7 @@ public class PaymentUtils {
 
     /**
      * Creates a timestamp with the current system time
+     *
      * @return new timestamp instance
      */
     public static Timestamp now() {

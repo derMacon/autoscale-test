@@ -25,6 +25,7 @@ public class DefaultController {
     /**
      * Liveness probe, can be used by metric scrapers like prometheus to
      * monitor service
+     *
      * @return true if component is up and running
      */
     @RequestMapping("/health")

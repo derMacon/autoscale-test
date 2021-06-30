@@ -18,6 +18,7 @@ public class ScalingConfiguration {
 
     /**
      * States if there are any unacknowledge messages
+     *
      * @return binary semaphore initialized with value 1 representing that there are no
      * unacknowledge instructions (will change to 0 when there are new instructions)
      */

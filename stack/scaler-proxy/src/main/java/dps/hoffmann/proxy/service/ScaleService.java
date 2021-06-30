@@ -42,8 +42,9 @@ public class ScaleService {
 
     /**
      * Makes the call to the scaler service with the appropriate request body
+     *
      * @param instruction holds information about the type of the request,
-     *                   will be translated to the correct request
+     *                    will be translated to the correct request
      */
     public boolean sendScaleRequest(ScalingInstruction instruction) {
         String requestJson = delegationProperties.getRequestBody(instruction);
@@ -58,7 +59,7 @@ public class ScaleService {
             HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
             answer = restTemplate.postForObject(apiUrl, entity, String.class);
             log.info("scaler api answer: {}", answer);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -12,6 +12,7 @@ public class GeneralConfig {
 
     /**
      * Container id, used when the output gets written to the database
+     *
      * @return random alphabetical identifier
      */
     @Bean
@@ -21,6 +22,7 @@ public class GeneralConfig {
 
     /**
      * Objectmapper to convert in and outgoing messages
+     *
      * @return objectmapper for json conversion
      */
     @Bean

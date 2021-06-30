@@ -4,7 +4,7 @@ services:
 
   activemq:
     image: bwolf/activemq-prometheus
-    deploy: 
+    deploy:
       replicas: 1
     networks:
       - scaler
@@ -14,7 +14,7 @@ services:
       - "8161:8161"
       - "8080:8080"
     restart: unless-stopped
-  
+
   pgadmin:
     image: dpage/pgadmin4
     networks:
@@ -60,7 +60,7 @@ services:
     volumes:
       - history-db:/var/lib/postgresql/data
     restart: unless-stopped
-    
+
   consumer-persistence:
     image: consumer-persistence
     build: consumer-persistence/
@@ -81,7 +81,7 @@ services:
       - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
       - SERVER_PORT=${CONSUMER_PERSISTENCE_SERVER_PORT}
       - "SPRING_PROFILES_ACTIVE=prod"
-    
+
   supplier-backend:
     image: supplier-backend
     build: supplier-backend/
@@ -126,7 +126,7 @@ services:
     restart: unless-stopped
     deploy:
       replicas: 1
-    environment: 
+    environment:
       - AMQ_BROKER_HOSTNAME=activemq
       - AMQ_STOMP_PORT=${AMQ_STOMP_PORT}
       - AMQ_USER_NAME=${AMQ_USER_NAME}
@@ -154,11 +154,11 @@ services:
       - AMQ_BROKER_HOSTNAME=activemq
       - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
       - SERVER_PORT=${SPRING_SERVER_PORT}
-  
+
   scaler-proxy:
     image: scaler-proxy
     build: scaler-proxy/
-    deploy: 
+    deploy:
       replicas: 1
     networks:
       - scaler
@@ -181,7 +181,7 @@ services:
       - SCALING_CB1=${SCALING_CB1}
       - SCALING_CB2=${SCALING_CB2}
       - SCALING_CB3=${SCALING_CB3}
-  
+
   scaler:
     image: thomasjpfan/docker-scaler:${TAG:-master}
     environment:
@@ -202,7 +202,7 @@ services:
         - com.df.servicePath=/scaler
         - com.df.port=8080
       placement:
-        constraints: [node.role == manager]
+        constraints: [ node.role == manager ]
 
   alertmanager:
     image: prom/alertmanager:v0.20.0
@@ -218,7 +218,7 @@ services:
       - '--web.external-url=http://localhost:9093/'
     volumes:
       - ./data/alertmanager/alertmanager.yml:/alertmanager.yml
-  
+
   prometheus:
     image: prom/prometheus:v2.21.0
     deploy:

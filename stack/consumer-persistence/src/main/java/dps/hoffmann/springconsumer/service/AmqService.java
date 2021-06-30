@@ -18,7 +18,6 @@ public class AmqService {
     private WorkerService workerService;
 
     /**
-     * 
      * @param message
      * @throws JMSException
      * @throws JsonProcessingException

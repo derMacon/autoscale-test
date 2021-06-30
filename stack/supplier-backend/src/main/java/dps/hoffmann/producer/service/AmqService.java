@@ -49,6 +49,7 @@ public class AmqService {
 
     /**
      * Gives an update on the status of the connection
+     *
      * @return
      */
     public boolean isUp() {
@@ -75,6 +76,7 @@ public class AmqService {
      * Creates a consumer that takes in a payment message and generates a supplier for the
      * destinations of the specified. Useful when the user wants to create a batch that holds
      * different kinds of destination, e.g. he wants randomize the destination.
+     *
      * @param sessionIsTransacted flag determining if all messages should be send in one
      *                            transaction or if it is spread over time
      * @return consumer generating a destination supplier
@@ -82,16 +84,17 @@ public class AmqService {
     public BiConsumer<PaymentMessage, Supplier<String>> getConsumer(boolean sessionIsTransacted) {
         return sessionIsTransacted
                 ? (message, destGen) -> sendObjPaymentQueueMessage(
-                        transactedJmsTemplate, message, destGen)
+                transactedJmsTemplate, message, destGen)
                 : (message, destGen) -> sendObjPaymentQueueMessage(
-                        nonTransactedJmsTemplate, message, destGen);
+                nonTransactedJmsTemplate, message, destGen);
     }
 
     /**
      * The actual sending process of a single message to the broker
+     *
      * @param jmsTemplate dao for broker communication
-     * @param paymentMsg payment message holding all relevant information for the consumer
-     * @param destGen queue destination supplier
+     * @param paymentMsg  payment message holding all relevant information for the consumer
+     * @param destGen     queue destination supplier
      */
     private void sendObjPaymentQueueMessage(
             JmsTemplate jmsTemplate,
@@ -137,7 +140,7 @@ public class AmqService {
             if (sum > 0) {
                 Thread.sleep(500);
             }
-        } while(sum > 0);
+        } while (sum > 0);
 
         this.queriedDestinations.clear();
         log.info("finished waiting");
@@ -145,7 +148,7 @@ public class AmqService {
 
     /**
      * Counts pending messages in a given queue
-     *
+     * <p>
      * src: https://stackoverflow.com/questions/13603949/count-number-of-messages-in-a-jms-queue
      *
      * @param destination queue name

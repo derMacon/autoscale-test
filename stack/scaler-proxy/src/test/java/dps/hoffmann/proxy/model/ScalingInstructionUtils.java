@@ -37,7 +37,7 @@ public class ScalingInstructionUtils {
                         out = new Tupel<>(5, 10);
                         break;
                     case 2:
-                        out = new Tupel<>(10,  30);
+                        out = new Tupel<>(10, 30);
                         break;
                 }
                 return out;

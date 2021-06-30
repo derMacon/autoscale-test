@@ -28,16 +28,16 @@ public class ActiveMqConfiguration {
     private String brokerUrl;
 
     @Bean
-    public ConnectionFactory connectionFactory(){
+    public ConnectionFactory connectionFactory() {
         log.info("broker url: " + brokerUrl);
-        ActiveMQConnectionFactory activeMQConnectionFactory  = new ActiveMQConnectionFactory();
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL(brokerUrl);
         activeMQConnectionFactory.setTrustedPackages(Arrays.asList(
                 "dps.hoffmann.proxy",
                 "java.time",
                 "java.sql",
                 "java.lang"));
-        return  activeMQConnectionFactory;
+        return activeMQConnectionFactory;
     }
 
     @Bean

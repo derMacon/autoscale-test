@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 type SpecificationInputProps = {};
 type SpecificationInputState = {};
 
 class Dashboard extends React.Component<SpecificationInputProps, SpecificationInputState> {
 
-	constructor(props: SpecificationInputProps) {
+    constructor(props: SpecificationInputProps) {
         super(props);
-	}
-	
+    }
+
     render() {
         return (
             <div>
-				Specification input
+                Specification input
             </div>
         );
     }

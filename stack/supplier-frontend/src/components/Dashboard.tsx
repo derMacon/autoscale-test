@@ -7,14 +7,14 @@ type DashboardState = {};
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
-	constructor(props: DashboardProps) {
+    constructor(props: DashboardProps) {
         super(props);
-	}
-	
+    }
+
     render() {
         return (
             <div>
-				<BenchmarkControl/>
+                <BenchmarkControl/>
             </div>
         );
     }

@@ -16,6 +16,7 @@ public class PersistenceService {
 
     /**
      * Saves a parsed instruction to the database
+     *
      * @param parsedInstruction user options
      * @return persisted parsed instruction (new instance with updated id)
      */

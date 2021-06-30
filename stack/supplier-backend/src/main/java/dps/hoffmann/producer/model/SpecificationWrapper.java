@@ -17,7 +17,7 @@ public class SpecificationWrapper implements Serializable {
     public boolean equals(Object o) {
         return o instanceof SpecificationWrapper
                 && this.getSpecificationName().equalsIgnoreCase(
-                        ((SpecificationWrapper)o).getSpecificationName());
+                ((SpecificationWrapper) o).getSpecificationName());
     }
 
 }

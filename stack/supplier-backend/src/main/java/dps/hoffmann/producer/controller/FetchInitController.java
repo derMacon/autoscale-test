@@ -35,6 +35,7 @@ public class FetchInitController {
 
     /**
      * Displays the payment options
+     *
      * @return payment options
      */
     @RequestMapping("/payment")
@@ -45,6 +46,7 @@ public class FetchInitController {
 
     /**
      * Displays the path options
+     *
      * @return path options
      */
     @RequestMapping("/path")
@@ -55,6 +57,7 @@ public class FetchInitController {
 
     /**
      * Displays the backend destination options
+     *
      * @return backend destination options
      */
     @RequestMapping("/backend")

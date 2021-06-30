@@ -14,12 +14,14 @@ public interface InstructionGenerator {
 
     /**
      * List the options from which the user can select
+     *
      * @return list of options from which the user can select
      */
     List<String> getDisplayName();
 
     /**
      * Creates a supplier instance that gives out values according to the given parsed instruction
+     *
      * @param request pojo holding the user selected options
      * @return supplier instance generating information according to the given parsed instruction
      */

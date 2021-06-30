@@ -13,7 +13,7 @@ public class TimestampUtils {
             return null;
         }
 
-        return (int)Math.abs(t1.getTime() - t2.getTime());
+        return (int) Math.abs(t1.getTime() - t2.getTime());
     }
 
 }

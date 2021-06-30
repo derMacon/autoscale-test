@@ -22,7 +22,7 @@ public class InstructionFactory {
     }
 
     public static Instruction createWaitInstruction(LogicalServiceName serviceName,
-                                                       Integer[] args) {
+                                                    Integer[] args) {
         return new WaitInstruction(args[0]);
     }
 

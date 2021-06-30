@@ -53,9 +53,10 @@ public class ActiveMqConfiguration {
      * Provides the jms template instance
      * IMPORTANT: to make the whole main producer method transactional,
      * the option from the template must be set to session transacted
+     *
      * @return jms template instance
      */
-    @Bean(name="transactedTemplate")
+    @Bean(name = "transactedTemplate")
     public JmsTemplate transactedJmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setConnectionFactory(cachingConnectionFactory());
@@ -67,9 +68,10 @@ public class ActiveMqConfiguration {
      * Provides the jms template instance
      * IMPORTANT: to make the whole main producer method transactional,
      * the option from the template must be set to session transacted
+     *
      * @return jms template instance
      */
-    @Bean(name="nonTransactedTemplate")
+    @Bean(name = "nonTransactedTemplate")
     public JmsTemplate nonTransactedJmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setConnectionFactory(cachingConnectionFactory());
