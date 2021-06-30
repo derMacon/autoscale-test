@@ -1,6 +1,7 @@
 package dps.hoffmann.proxy.controller;
 
 import dps.hoffmann.proxy.service.MetricsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import static dps.hoffmann.proxy.utils.ConversionUtils.integersToBytes;
 
 @RestController
 @RequestMapping("/metrics")
+@Slf4j
 public class MetricsController {
 
     @Autowired
@@ -37,6 +39,7 @@ public class MetricsController {
     }
 
     private ResponseEntity<Resource> download(AtomicInteger[] values) {
+        log.info("download - conrter values: {}", values);
         byte[] data = integersToBytes(values);
         ByteArrayResource resource = new ByteArrayResource(data);
 
