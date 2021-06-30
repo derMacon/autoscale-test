@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static dps.hoffmann.proxy.utils.ConversionUtils.integersToBytes;
 
 @RestController
 @RequestMapping("/metrics")

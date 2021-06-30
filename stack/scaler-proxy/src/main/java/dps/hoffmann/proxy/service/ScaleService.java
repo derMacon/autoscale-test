@@ -20,7 +20,7 @@ import static dps.hoffmann.proxy.model.ScalingDirection.DOWN;
 public class ScaleService {
 
     private static final String API_ANSWER_SCALED_TO_MIN_REPL =
-            ".*Scaling .* from .* to 1 replicas.*" +
+            ".*scaling .* from .* to 1 replicas.*" +
                     "|.*is already descaled to the minimum number.*";
 
     private static final String urlFormat = "http://%s:%s%s";

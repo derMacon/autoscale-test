@@ -18,6 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestMain {
 
+    private static final String API_ANSWER_SCALED_TO_MIN_REPL =
+            ".*scaling .* from .* to 1 replicas.*" +
+                    "|.*is already descaled to the minimum number.*";
+
     @SneakyThrows
     public static void main(String[] args) {
 //        System.out.println("hi");
@@ -41,18 +45,12 @@ public class TestMain {
 //        csvPrinter.flush();
 
 
-        String dateInString = "Tue Jun 29 00:00:00 CEST 2021";
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
-//        LocalDate dateTime = LocalDate.parse(dateInString, formatter);
-//        Timestamp t = new Timestamp()
 
-        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
-        Date date = parser.parse(dateInString);
+        String test = "{\"status\":\"OK\",\"message\":\"Scaling vossibility_spring-consumer from " +
+                "2 to 1 replicas (min: 1, max: 150)\"}";
 
-        String pattern = "dd.MM.yyyy";
-        String out = new SimpleDateFormat(pattern).format(date);
 
-        System.out.println(out);
+        System.out.println(test.toLowerCase().matches(API_ANSWER_SCALED_TO_MIN_REPL));
 
     }
 
