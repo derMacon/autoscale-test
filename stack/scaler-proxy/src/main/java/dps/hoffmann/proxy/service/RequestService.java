@@ -21,9 +21,6 @@ import static dps.hoffmann.proxy.model.ScalingDirection.UP;
 public class RequestService {
 
     @Autowired
-    private TranslationService translationService;
-
-    @Autowired
     private ScaleService scaleService;
 
     @Autowired
@@ -38,26 +35,28 @@ public class RequestService {
     // todo delete counter -> only for debugging purposes
     private int cnt = 0;
 
-    public void delegate(List<ScalingInstruction> instructions) {
+    public boolean delegate(List<ScalingInstruction> instructions) {
 
         if (!unacknowledgedInstructions.isEmpty()) {
             log.info("unacknowledged instr not empty when delegation called: {}",
                     unacknowledgedInstructions);
-            return;
+            return false;
         }
 
         log.info("translated request type from json body: {}", instructions);
 
+        boolean scaledToMinRepl = false;
         for (ScalingInstruction instruction : instructions) {
             log.info("scale instruction: {}", instruction);
             instruction.setReceivedRequestTimestamp(now());
             if (instruction.getScalingDirection() == UP) {
                 unacknowledgedInstructions.add(instruction);
             }
-            scaleService.sendScaleRequest(instruction);
+            scaledToMinRepl = scaledToMinRepl || scaleService.sendScaleRequest(instruction);
         }
 
         log.info("unacknowledged msg after delegate: {}", unacknowledgedInstructions);
+        return scaledToMinRepl;
     }
 
 

@@ -31,12 +31,12 @@ public class RequestMapper {
         serviceNameMapping.put(SPRING, springServiceName);
 
         scalingIntervalMapping = new HashMap<>();
-        scalingIntervalMapping.put(DIFF_CL0_CL1, abs(scalingProperties.getCl0() - scalingProperties.getCl1()));
-        scalingIntervalMapping.put(DIFF_CL0_CL2, abs(scalingProperties.getCl0() - scalingProperties.getCl2()));
-        scalingIntervalMapping.put(DIFF_CL1_CL2, abs(scalingProperties.getCl1() - scalingProperties.getCl2()));
-        scalingIntervalMapping.put(DIFF_CL0_CL3, abs(scalingProperties.getCl0() - scalingProperties.getCl3()));
-        scalingIntervalMapping.put(DIFF_CL1_CL3, abs(scalingProperties.getCl1() - scalingProperties.getCl3()));
-        scalingIntervalMapping.put(DIFF_CL2_CL3, abs(scalingProperties.getCl2() - scalingProperties.getCl3()));
+        scalingIntervalMapping.put(DIFF_CL0_CL1, abs(scalingProperties.getCb0() - scalingProperties.getCb1()));
+        scalingIntervalMapping.put(DIFF_CL0_CL2, abs(scalingProperties.getCb0() - scalingProperties.getCb2()));
+        scalingIntervalMapping.put(DIFF_CL1_CL2, abs(scalingProperties.getCb1() - scalingProperties.getCb2()));
+        scalingIntervalMapping.put(DIFF_CL0_CL3, abs(scalingProperties.getCb0() - scalingProperties.getCb3()));
+        scalingIntervalMapping.put(DIFF_CL1_CL3, abs(scalingProperties.getCb1() - scalingProperties.getCb3()));
+        scalingIntervalMapping.put(DIFF_CL2_CL3, abs(scalingProperties.getCb2() - scalingProperties.getCb3()));
     }
 
 
@@ -47,6 +47,9 @@ public class RequestMapper {
     @Getter
     public enum InstructionType {
 
+        SPRING_BASELINE(SPRING, "spring_baseline", UP, CL0),
+        NODE_BASELINE(NODE, "node_baseline", UP, CL0),
+        
         SPRING_QL1_CL0(SPRING, "spring_ql1_cl0", UP, DIFF_CL0_CL1),
         SPRING_QL2_CL0(SPRING, "spring_ql2_cl0", UP, DIFF_CL0_CL2),
         SPRING_QL3_CL0(SPRING, "spring_ql3_cl0", UP, DIFF_CL0_CL3),

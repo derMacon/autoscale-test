@@ -28,39 +28,6 @@ services:
     ports:
       - "${PGADMIN_LISTEN_PORT}:5050"
 
-  script-db:
-    image: postgres:13-alpine
-    ports:
-      - "${SCRIPT_DATABASE_PORT}:${SCRIPT_DATABASE_PORT}"
-    command: -p ${SCRIPT_DATABASE_PORT}
-    networks:
-      - scaler
-    environment:
-      - DEBUG=false
-      - POSTGRES_USER=${SCRIPT_USER_NAME}
-      - POSTGRES_PASSWORD=${SCRIPT_USER_PASSWORD}
-      - POSTGRES_DB=${SCRIPT_DATABASE_NAME}
-    volumes:
-      - script-db:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  spring-db:
-    image: postgres:13-alpine
-    container_name: spring-db
-    networks:
-      - scaler
-    ports:
-      - "${SPRING_DATABASE_PORT}:${SPRING_DATABASE_PORT}"
-    command: -p ${SPRING_DATABASE_PORT}
-    environment:
-      - DEBUG=false
-      - POSTGRES_USER=${SPRING_USER_NAME}
-      - POSTGRES_PASSWORD=${SPRING_USER_PASSWORD}
-      - POSTGRES_DB=${SPRING_DATABASE_NAME}
-    volumes:
-      - spring-db:/var/lib/postgresql/data
-    restart: unless-stopped
-
   consumer-db:
     image: postgres:13-alpine
     container_name: consumer-db
@@ -200,9 +167,6 @@ services:
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"
       - DELEGATION_HOSTNAME=scaler
-      - AMQ_SMALL_CONSUMER_CNT=${AMQ_SMALL_CONSUMER_CNT}
-      - AMQ_MEDIUM_CONSUMER_CNT=${AMQ_MEDIUM_CONSUMER_CNT}
-      - AMQ_LARGE_CONSUMER_CNT=${AMQ_LARGE_CONSUMER_CNT}
       - DATABASE_HOST=history-db
       - DATABASE_USER=${SUPPLIER_USER_NAME}
       - DATABASE_PASSWORD=${SUPPLIER_USER_PASSWORD}
@@ -210,6 +174,13 @@ services:
       - DATABASE_PORT=${SUPPLIER_DATABASE_PORT}
       - AMQ_NODE_ACK_QUEUE=${AMQ_NODE_ACK_QUEUE}
       - AMQ_SPRING_ACK_QUEUE=${AMQ_SPRING_ACK_QUEUE}
+      - SCALING_QB0=${SCALING_QB0}
+      - SCALING_QB1=${SCALING_QB1}
+      - SCALING_QB2=${SCALING_QB2}
+      - SCALING_CB0=${SCALING_CB0}
+      - SCALING_CB1=${SCALING_CB1}
+      - SCALING_CB2=${SCALING_CB2}
+      - SCALING_CB3=${SCALING_CB3}
   
   scaler:
     image: thomasjpfan/docker-scaler:${TAG:-master}
@@ -284,6 +255,4 @@ volumes:
   prometheus-data:
   pgadmin-data:
   history-db:
-  script-db:
-  spring-db:
   consumer-db:

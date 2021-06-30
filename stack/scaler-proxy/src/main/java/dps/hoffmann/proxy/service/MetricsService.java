@@ -2,11 +2,17 @@ package dps.hoffmann.proxy.service;
 
 import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.model.ScalingInstruction;
+import dps.hoffmann.proxy.model.StatsGenerator;
 import dps.hoffmann.proxy.model.Tupel;
+import dps.hoffmann.proxy.properties.ScalingProperties;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +23,48 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static dps.hoffmann.proxy.model.LogicalService.NODE;
+import static dps.hoffmann.proxy.model.LogicalService.SPRING;
 import static dps.hoffmann.proxy.utils.TimestampUtils.getDuration;
 
 @Service
 @Slf4j
+@Getter
 public class MetricsService {
 
+    private static final String TIER_GAUGE_KEY = "startup.tier%d.%s";
+    private static final String SPECIFIC_GAUGE_KEY = "startup.specific.%s.cc%d";
+
     @Autowired
+    private ScalingProperties scalingProperties;
+
+    @Autowired
+    @Getter(AccessLevel.NONE)
     private MeterRegistry meterRegistry;
 
     @Autowired
+    @Getter(AccessLevel.NONE)
     private PersistenceService persistenceService;
 
     @Autowired
-    private AtomicInteger[] gaugeValueRefs;
+    @Qualifier("overall-average")
+    private AtomicInteger[] overallAvGaugeRefs;
+
+    @Autowired
+    @Qualifier("node-specific-average")
+    private AtomicInteger[] nodeSpecificAverage;
+
+    @Autowired
+    @Qualifier("spring-specific-average")
+    private AtomicInteger[] springSpecificAverage;
+
+    @Autowired
+    @Qualifier("node-tier-average")
+    public AtomicInteger[] nodeTierAverage;
+
+    @Autowired
+    @Qualifier("spring-tier-average")
+    public AtomicInteger[] springTierAverage;
 
     /**
      * Updates the metrics that will be scraped by evaluating the values in the database
@@ -39,18 +73,18 @@ public class MetricsService {
     public void updateMetrics() {
         initGauge();
 
-        List<ScalingInstruction> pastInstructions = persistenceService.findAll();
-        log.info("past instructions: ", pastInstructions);
+        List<ScalingInstruction> pastInstr = persistenceService.findAll();
 
-        Map<LogicalService, List<Integer>> overallStats = createOverallStatsMap(pastInstructions);
-        Map<Tupel<LogicalService, Integer>, List<Integer>> specificStats =
-                createSpecificStatsMap(pastInstructions);
+        StatsGenerator nodeGenerator = new StatsGenerator(NODE, pastInstr);
+        nodeGenerator.updateOverallGaugeRef(overallAvGaugeRefs[NODE.ordinal()]);
+        nodeGenerator.updateSpecificGaugeRefs(nodeSpecificAverage);
+        nodeGenerator.updateTierGaugeRefs(nodeTierAverage, scalingProperties.iterator());
 
-        Map<LogicalService, Integer> overallAverageDurations = calcAverageDurations(overallStats);
-        Map<Tupel<LogicalService, Integer>, Integer> specificAverageDurations = calcAverageDurations(specificStats);
+        StatsGenerator springGenerator = new StatsGenerator(SPRING, pastInstr);
+        springGenerator.updateOverallGaugeRef(overallAvGaugeRefs[SPRING.ordinal()]);
+        springGenerator.updateSpecificGaugeRefs(springSpecificAverage);
+        springGenerator.updateTierGaugeRefs(springTierAverage, scalingProperties.iterator());
 
-        updateOverallGaugeValues(overallAverageDurations);
-        updateSpecificGaugeValues(specificAverageDurations);
     }
 
     private Map<Tupel<LogicalService, Integer>, List<Integer>> createSpecificStatsMap(List<ScalingInstruction> entries) {
@@ -87,57 +121,37 @@ public class MetricsService {
         return out;
     }
 
-
-
     private void initGauge() {
+        // overall both
         for (LogicalService service : LogicalService.values()) {
             String gaugeKey = "scale.up." + service.name().toLowerCase();
-            meterRegistry.gauge(gaugeKey, gaugeValueRefs[service.ordinal()]);
+            meterRegistry.gauge(gaugeKey, overallAvGaugeRefs[service.ordinal()]);
         }
+
+        // specific node
+        for (int i = 1; i <= nodeSpecificAverage.length; i++) {
+            String gaugeKey = String.format(SPECIFIC_GAUGE_KEY, NODE.name().toLowerCase(), i);
+            meterRegistry.gauge(gaugeKey, nodeSpecificAverage[i - 1]);
+        }
+
+        // specific spring
+        for (int i = 1; i <= springSpecificAverage.length; i++) {
+            String gaugeKey = String.format(SPECIFIC_GAUGE_KEY, SPRING.name().toLowerCase(), i);
+            meterRegistry.gauge(gaugeKey, springSpecificAverage[i - 1]);
+        }
+
+        // tier node
+        for (int i = 1; i <= nodeTierAverage.length; i++) {
+            String gaugeKey = String.format(TIER_GAUGE_KEY, i, NODE.name().toLowerCase());
+            meterRegistry.gauge(gaugeKey, nodeTierAverage[i - 1]);
+        }
+
+        // tier spring
+        for (int i = 1; i <= springTierAverage.length; i++) {
+            String gaugeKey = String.format(TIER_GAUGE_KEY, i, SPRING.name().toLowerCase());
+            meterRegistry.gauge(gaugeKey, springTierAverage[i - 1]);
+        }
+
     }
 
-    private Map<LogicalService, List<Integer>> createOverallStatsMap(List<ScalingInstruction> instructions) {
-        Map<LogicalService, List<Integer>> out = new HashMap<>();
-        for (LogicalService service : LogicalService.values()) {
-            out.put(service, new ArrayList<>());
-        }
-
-        for (ScalingInstruction instruction : instructions) {
-            out.get(instruction.getLogicalServiceName()).add(getDuration(instruction));
-        }
-
-        return out;
-    }
-
-    private <T> Map<T, Integer> calcAverageDurations(Map<T, List<Integer>> allDurations) {
-        Map<T, Integer> averageDurations = new HashMap<>();
-        for (Map.Entry<T, List<Integer>> entry : allDurations.entrySet()) {
-            averageDurations.put(entry.getKey(), calcAverage(entry.getValue()));
-        }
-        return averageDurations;
-    }
-
-    private static int calcAverage(List<Integer> nums) {
-        int out = 0;
-        for (int curr : nums) {
-            out += curr;
-        }
-        return nums.isEmpty()
-                ? 0
-                : out / nums.size();
-    }
-
-    private void updateOverallGaugeValues(Map<LogicalService, Integer> averages) {
-        for (LogicalService service : LogicalService.values()) {
-            int startingTime = averages.get(service).intValue();
-            log.info("average duration time: {} -> {}", service, startingTime);
-            gaugeValueRefs[service.ordinal()].set(startingTime);
-        }
-    }
-
-    private void updateSpecificGaugeValues(Map<Tupel<LogicalService, Integer>, Integer> averages) {
-        for (Map.Entry<Tupel<LogicalService, Integer>, Integer> entry : averages.entrySet()) {
-            log.info("specific average time: {} -> {}", entry.getKey(), entry.getValue());
-        }
-    }
 }

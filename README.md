@@ -51,10 +51,14 @@ The first two steps can be automatically started by calling the [./clean-build-r
 - `docker service logs vossibility_prometheus`
 
 ### Todos
+- take keyword 'microprofile' out of table of contents or say something about it in the text
+- create processing time benchmark
+- test individual on server 
+- test benchmark on server 
 - rename projects
-- make spring / node consumer implement two face commit
-- isUp method in supplier backend may cause problems db connection pool
-- create readme for request scripts
+- write intro to thesis
+- find resources to container startup times
+- make spring / node consumer implement two face commit (is glaub ich egal)
 - timestamps in wrong timezone (proxy service)
 - javadoc proxy service
 - lint code checks on all project

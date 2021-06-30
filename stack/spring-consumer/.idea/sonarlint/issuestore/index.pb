@@ -24,3 +24,5 @@ x
 Hsrc/main/java/dps/hoffmann/springconsumer/service/ExtractionService.java,f\9\f9f4f53946446052861281aff7bb4ef6aceb5f80
 u
 Esrc/main/java/dps/hoffmann/springconsumer/model/OutputPaymentMsg.java,5\c\5cbd726bb4c7dc251a9dc12ee51d90e7412f2dff
+c
+3src/main/java/dps/hoffmann/springconsumer/Main.java,9\6\96878f1b23f901a4048b80f0aa55fa6f09358600

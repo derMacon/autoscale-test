@@ -28,7 +28,6 @@ public class ExtractionService {
         String extractedElem = extractElem(inputMessage.getXpath(), inputMessage.getContent());
 
         return new OutputPaymentMsg(inputMessage)
-                .withProcessedTimestamp(now())
                 .withContainerId(containerId)
                 .withExtractedElement(extractedElem);
     }

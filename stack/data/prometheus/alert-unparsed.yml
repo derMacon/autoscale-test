@@ -1,6 +1,15 @@
 groups:
   - name: springScaleAlert
     rules:
+      - alert: spring_baseline
+        expr: >
+          org_apache_activemq_Broker_ConsumerCount{
+          brokerName="localhost",
+          destinationName="${AMQ_SPRING_QUEUE_NAME}", 
+          destinationType="Queue",
+          instance="activemq:8080", 
+          job="services"
+          } < ${SCALING_CB0}
       - alert: spring_ql1_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -8,14 +17,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -23,7 +32,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql2_cl0
         expr: >
@@ -32,14 +41,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -47,7 +56,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql3_cl0
         expr: >
@@ -56,7 +65,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -64,7 +73,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: spring_ql0_cl1
         expr: >
@@ -80,7 +89,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -88,7 +97,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -96,7 +105,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: spring_ql2_cl1
         expr: >
@@ -105,14 +114,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -120,7 +129,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -128,7 +137,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: spring_ql3_cl1
         expr: >
@@ -137,7 +146,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -145,7 +154,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -153,7 +162,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: spring_ql0_cl2
         expr: >
@@ -169,7 +178,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -177,7 +186,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -185,7 +194,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m 
       - alert: spring_ql1_cl2
         expr: >
@@ -194,14 +203,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -209,7 +218,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -217,7 +226,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m 
       - alert: spring_ql3_cl2
         expr: >
@@ -226,7 +235,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -234,7 +243,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -242,7 +251,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m  
       - alert: spring_ql0_cl3
         expr: >
@@ -258,7 +267,7 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -266,7 +275,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -274,7 +283,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
       - alert: spring_ql1_cl3
         expr: >
@@ -283,14 +292,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -298,7 +307,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -306,7 +315,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
       - alert: spring_ql2_cl3
         expr: >
@@ -315,14 +324,14 @@ groups:
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_SPRING_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -330,7 +339,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -338,11 +347,20 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
 
   - name: nodeScaleAlert
     rules:
+      - alert: node_baseline
+        expr: >
+          org_apache_activemq_Broker_ConsumerCount{
+          brokerName="localhost",
+          destinationName="${AMQ_NODE_QUEUE_NAME}", 
+          destinationType="Queue",
+          instance="activemq:8080", 
+          job="services"
+          } < ${SCALING_CB0}
       - alert: node_ql1_cl0
         expr: >
           org_apache_activemq_Broker_QueueSize{
@@ -350,14 +368,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -365,7 +383,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: node_ql2_cl0
         expr: >
@@ -374,14 +392,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -389,7 +407,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: node_ql3_cl0
         expr: >
@@ -398,7 +416,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -406,7 +424,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } == ${cl0}
+          } == ${SCALING_CB0}
         for: 0m 
       - alert: node_ql0_cl1
         expr: >
@@ -422,7 +440,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -430,7 +448,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -438,7 +456,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: node_ql2_cl1
         expr: >
@@ -447,14 +465,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -462,7 +480,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -470,7 +488,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: node_ql3_cl1
         expr: >
@@ -479,7 +497,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -487,7 +505,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl0}
+          } > ${SCALING_CB0}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -495,7 +513,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl1}
+          } <= ${SCALING_CB1}
         for: 0m 
       - alert: node_ql0_cl2
         expr: >
@@ -511,7 +529,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -519,7 +537,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -527,7 +545,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m 
       - alert: node_ql1_cl2
         expr: >
@@ -536,14 +554,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -551,7 +569,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -559,7 +577,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m 
       - alert: node_ql3_cl2
         expr: >
@@ -568,7 +586,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql2}
+          } > ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -576,7 +594,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl1}
+          } > ${SCALING_CB1}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -584,7 +602,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl2}
+          } <= ${SCALING_CB2}
         for: 0m  
       - alert: node_ql0_cl3
         expr: >
@@ -600,7 +618,7 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql0}
+          } <= ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -608,7 +626,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -616,7 +634,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
       - alert: node_ql1_cl3
         expr: >
@@ -625,14 +643,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql0}
+          } > ${SCALING_QB0}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql1}
+          } <= ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -640,7 +658,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -648,7 +666,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
       - alert: node_ql2_cl3
         expr: >
@@ -657,14 +675,14 @@ groups:
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } > ${ql1}
+          } > ${SCALING_QB1}
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
            destinationName="${AMQ_NODE_QUEUE_NAME}",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
-          } <= ${ql2}
+          } <= ${SCALING_QB2}
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -672,7 +690,7 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } > ${cl2}
+          } > ${SCALING_CB2}
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
@@ -680,5 +698,5 @@ groups:
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
-          } <= ${cl3}
+          } <= ${SCALING_CB3}
         for: 0m 
