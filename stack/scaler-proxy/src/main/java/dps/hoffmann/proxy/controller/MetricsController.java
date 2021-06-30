@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static dps.hoffmann.proxy.utils.ConversionUtils.integersToBytes;
@@ -39,7 +40,7 @@ public class MetricsController {
     }
 
     private ResponseEntity<Resource> download(AtomicInteger[] values) {
-        log.info("download - conrter values: {}", values);
+        log.info("download - convert values: {}", Arrays.asList(values));
         byte[] data = integersToBytes(values);
         ByteArrayResource resource = new ByteArrayResource(data);
 
