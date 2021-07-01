@@ -26,13 +26,15 @@ public class MetricController {
 
     @RequestMapping("/roundtripNode")
     public ResponseEntity<Resource> getRoundtripNode() {
+        log.info("user called node roundtrip stats endpoint");
         AtomicInteger[] arr = metricService.getAverageNodeRoundtripStats();
         String csv = convertToCsv(arr);
         return createDownloadableResource(csv);
     }
 
-    @RequestMapping("/roundtripNode")
+    @RequestMapping("/roundtripSpring")
     public ResponseEntity<Resource> getRoundtripSpring() {
+        log.info("user called sprignm roundtrip stats endpoint");
         AtomicInteger[] arr = metricService.getAverageSpringRoundtripStats();
         String csv = convertToCsv(arr);
         return createDownloadableResource(csv);
@@ -51,7 +53,7 @@ public class MetricController {
                     .replaceAll("_", "");
 
             strb.append(formattedName + "," + formattedName + "\n");
-            
+
         }
 
         return strb.toString();
