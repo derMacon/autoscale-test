@@ -35,21 +35,35 @@ public class MetricsController {
         return download(content.toString());
     }
 
+    @RequestMapping("/nodeTierAverage")
+    public ResponseEntity<Resource> nodeTierAverage() {
+        String csv = convertToCsv(metricsService.getNodeTierAverage());
+        return download(csv);
+    }
+
+    @RequestMapping("/springTierAverage")
+    public ResponseEntity<Resource> springTierAverage() {
+        String csv = "tier,startupTime\n";
+        csv += convertToCsv(metricsService.getSpringTierAverage());
+        return download(csv);
+    }
+
     @RequestMapping("/nodeSpecificAvGaugeRefs")
     public ResponseEntity<Resource> getNodeSpecificAvGaugeRefs() {
-        String csv = convertToCsv(metricsService.getNodeSpecificAverage());
+        String csv = "additionalCnt,startupTime\n";
+        csv += convertToCsv(metricsService.getNodeSpecificAverage());
         return download(csv);
     }
 
     @RequestMapping("/springSpecificAvGaugeRefs")
     public ResponseEntity<Resource> getSpringSpecificAvGaugeRefs() {
-        String csv = convertToCsv(metricsService.getSpringSpecificAverage());
+        String csv = "additionalCnt,startupTime\n";
+        csv += convertToCsv(metricsService.getSpringSpecificAverage());
         return download(csv);
     }
 
     private static String convertToCsv(AtomicInteger[] values) {
         StringBuilder strb = new StringBuilder();
-        strb.append("additionalCnt,startupTime\n");
         for (int i = 0; i < values.length; i++) {
             strb.append((i + 1) +  "," + values[i] + "\n");
         }
@@ -65,7 +79,6 @@ public class MetricsController {
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-//                .contentLength(data.length)
                 .contentType(MediaType.parseMediaType("application/csv"))
                 .body(resource);
     }
