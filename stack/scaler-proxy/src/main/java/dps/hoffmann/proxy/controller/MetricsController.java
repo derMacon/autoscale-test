@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -37,7 +36,8 @@ public class MetricsController {
 
     @RequestMapping("/nodeTierAverage")
     public ResponseEntity<Resource> nodeTierAverage() {
-        String csv = convertToCsv(metricsService.getNodeTierAverage());
+        String csv = "tier,startupTime\n";
+        csv = convertToCsv(metricsService.getNodeTierAverage());
         return download(csv);
     }
 

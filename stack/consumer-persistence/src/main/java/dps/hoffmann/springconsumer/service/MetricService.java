@@ -4,6 +4,7 @@ import dps.hoffmann.springconsumer.model.Payment;
 import dps.hoffmann.springconsumer.model.RoundtripStat;
 import dps.hoffmann.springconsumer.model.ServiceStats;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,8 +23,8 @@ import static dps.hoffmann.springconsumer.utils.TimestampUtils.diff;
 
 @Service
 @Slf4j
+@Getter
 public class MetricService {
-
 
     @Autowired
     @Qualifier("averageNodeProcessingDuration")
