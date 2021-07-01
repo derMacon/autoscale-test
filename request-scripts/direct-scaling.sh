@@ -19,7 +19,7 @@ spring_request() {
 	request $1 $2 $3 'SPRING'
 }
 
-for scalingOffset in $(seq 1 $1)
+for scalingOffset in $(seq 29 $1)
 do 
 	for curr_rep in $(seq 1 $2)
 	do 

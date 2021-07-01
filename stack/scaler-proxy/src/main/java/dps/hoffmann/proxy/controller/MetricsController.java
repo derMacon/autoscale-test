@@ -1,5 +1,6 @@
 package dps.hoffmann.proxy.controller;
 
+import dps.hoffmann.proxy.model.LogicalService;
 import dps.hoffmann.proxy.service.MetricsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,12 @@ public class MetricsController {
 
     @RequestMapping("/overallAvGaugeRefs")
     public ResponseEntity<Resource> getOverallAvGaugeRefs() {
-        String csv = convertToCsv(metricsService.getOverallAvGaugeRefs());
-        return download(csv);
+        AtomicInteger[] arr = metricsService.getOverallAvGaugeRefs();
+	StringBuilder content = new StringBuilder("serviceName,averageStartupTime\n");
+	for (LogicalService curr : LogicalService.values()) {
+	    content.append(curr.name().toLowerCase() + "," + arr[curr.ordinal()] + "\n");
+	}
+        return download(content.toString());
     }
 
     @RequestMapping("/nodeSpecificAvGaugeRefs")
@@ -44,8 +49,9 @@ public class MetricsController {
 
     private static String convertToCsv(AtomicInteger[] values) {
         StringBuilder strb = new StringBuilder();
+        strb.append("additionalCnt,startupTime\n");
         for (int i = 0; i < values.length; i++) {
-            strb.append(i +  "," + values[i]);
+            strb.append((i + 1) +  "," + values[i] + "\n");
         }
         return strb.toString();
     }

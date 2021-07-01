@@ -29,7 +29,7 @@ public class GaugeConfig {
 
     @Bean("node-specific-average")
     public AtomicInteger[] nodeSpecificAverage() {
-        int len = scalingProperties.getHighestContainerBound();
+        int len = scalingProperties.getHighestContainerBound() - 1;
         AtomicInteger[] values = new AtomicInteger[len];
         for (int i = 0; i < len; i++) {
             values[i] = new AtomicInteger(0);
@@ -39,7 +39,7 @@ public class GaugeConfig {
 
     @Bean("spring-specific-average")
     public AtomicInteger[] springSpecificAverage() {
-        int len = scalingProperties.getHighestContainerBound();
+        int len = scalingProperties.getHighestContainerBound() - 1;
         AtomicInteger[] values = new AtomicInteger[len];
         for (int i = 0; i < len; i++) {
             values[i] = new AtomicInteger(0);
