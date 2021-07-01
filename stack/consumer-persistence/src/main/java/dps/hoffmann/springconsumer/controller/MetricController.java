@@ -42,7 +42,7 @@ public class MetricController {
 
 
     private static String convertToCsv(AtomicInteger[] values) {
-        StringBuilder strb = new StringBuilder();
+        StringBuilder strb = new StringBuilder("statName,duration");
         RoundtripStat[] vals = RoundtripStat.values();
 
         for (int i = 0; i < vals.length; i++) {
@@ -52,7 +52,7 @@ public class MetricController {
                     .toLowerCase()
                     .replaceAll("_", "");
 
-            strb.append(formattedName + "," + formattedName + "\n");
+            strb.append(formattedName + "," + values[i] + "\n");
 
         }
 
