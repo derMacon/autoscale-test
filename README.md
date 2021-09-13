@@ -2,7 +2,7 @@
 
 Project to showcase the general approach of processing an instant payment provided by the DPS Gmbh. The focus of the project is to monitor the duration it takes for a swarm of containers to start completely. When confronted with multiple unacknowledged messages the project will scale the consumer components appropriate to the number of messages.
 
-![overview](./_docs/slides/overview.png)
+![overview](./_docs/img/overview-bw.png)
 
 ## Run Application
 When the benchmark tests starts up the following stages have to be executed
