@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+
+  activemq:
+    image: bwolf/activemq-prometheus
+    networks:
+      - scaler
+    ports:
+      - "61616:61616"
+      - "61613:61613"
+      - "8161:8161"
+      - "7823:8080"
+      - "49156:5672"
+    restart: unless-stopped
+
+  quarkus-db:
+    image: postgres:13-alpine
+    networks:
+      - scaler
+    ports:
+      - "7005:7005"
+    command: -p 7005
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=quarkus-db
+    volumes:
+      - quarkus-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    networks:
+      - scaler
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:5050"
+
+volumes:
+  quarkus-db:
+  pgadmin-data:
+
+networks:
+  scaler:
+    external: true

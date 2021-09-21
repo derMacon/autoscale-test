@@ -7,9 +7,9 @@ docker-compose-parsed.yaml
 
  
 # Maven
-*/log/
-*/target/
-*/mvnw*
+**/log/
+**/target/
+**/mvnw*
 
 
 # ------- react -------- #

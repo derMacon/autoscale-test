@@ -19,8 +19,8 @@ public class PriceConsumer {
 
     private Random random = new Random();
 
-    @Inject
-    EntityManager em;
+//    @Inject
+//    EntityManager em;
 
     @Incoming("requests")       // <1>
     @Blocking                   // <3>
@@ -29,8 +29,7 @@ public class PriceConsumer {
         // simulate some hard working task
         Thread.sleep(200);
         System.out.println("req: " + quoteRequest);
-//        Gift gift = new Gift();
-//        gift.setName(UUID.randomUUID().toString());
-//        em.persist(gift);
+//        em.persist(new Testdata(new Random().nextInt(), UUID.randomUUID().toString()));
+
     }
 }
