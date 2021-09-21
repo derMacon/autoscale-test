@@ -1,11 +1,9 @@
-package org.acme.jms;
+package dps.hoffmann.quarkusconsumer;
+
+import dps.hoffmann.quarkusconsumer.model.Testdata;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

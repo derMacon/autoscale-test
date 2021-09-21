@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 @Getter
 public enum LogicalServiceName {
     NODE("NODE\\{(.*?)\\}", "nodequeue"),
-    SPRING("SPRING\\{(.*?)\\}", "springqueue");
+    SPRING("SPRING\\{(.*?)\\}", "springqueue"),
+    QUARKUS("QUARKUS\\{(.*?)\\}", "quarkusqueue");
 
     private final String batchFormat;
     private final String queueDestination;
