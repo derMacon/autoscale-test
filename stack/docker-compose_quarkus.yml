@@ -16,7 +16,6 @@ services:
 
   quarkus-consumer:
     image: quarkus-consumer
-    # build: quarkus-consumer/
     build:
       context: quarkus-consumer/
       dockerfile: Dockerfile.multistage

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-STACK_DIR=stack
-
 # https://stackoverflow.com/questions/43053013/how-do-i-check-that-a-docker-host-is-in-swarm-mode
 function isSwarmNode(){
     if [ "$(docker info | grep Swarm | sed 's/Swarm: //g')" == "inactive" ]; then
@@ -12,10 +10,10 @@ function isSwarmNode(){
 }
 
 
-
-
+STACK_DIR=stack
 echo 'remove development stack if existent'
 docker-compose -f $STACK_DIR/docker-compose_dev.yml down -v
+docker-compose -f $STACK_DIR/docker-compose_quarkus.yml down -v
 
 echo 'parse prometheus alert rule config'
 export $(cat $STACK_DIR/.env | xargs)

@@ -154,6 +154,17 @@ services:
       - AMQ_BROKER_HOSTNAME=activemq
       - AMQ_BROKER_PORT=${AMQ_TCP_PORT}
       - SERVER_PORT=${SPRING_SERVER_PORT}
+
+  quarkus-consumer:
+    image: quarkus-consumer
+    build:
+      context: quarkus-consumer/
+      dockerfile: Dockerfile.multistage
+    networks:
+      - scaler
+    ports:
+      - "8371:8080"
+    restart: unless-stopped
   
   scaler-proxy:
     image: scaler-proxy

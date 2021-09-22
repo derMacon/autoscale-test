@@ -1,0 +1,354 @@
+version: '3'
+services:
+  activemq:
+    deploy:
+      replicas: 1
+    image: bwolf/activemq-prometheus
+    networks:
+      scaler: null
+    ports:
+    - mode: 'ingress'
+      target: 61616
+      published: 61616
+      protocol: tcp
+    - mode: ingress
+      target: 61613
+      published: 61613
+      protocol: tcp
+    - mode: ingress
+      target: 8161
+      published: 8161
+      protocol: tcp
+    - mode: ingress
+      target: 8080
+      published: 8080
+      protocol: tcp
+    restart: unless-stopped
+  alertmanager:
+    command:
+    - --log.level=debug
+    - --config.file=/alertmanager.yml
+    - --web.external-url=http://localhost:9093/
+    deploy:
+      replicas: 1
+    image: prom/alertmanager:v0.20.0
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 9093
+      published: 9093
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/data/alertmanager/alertmanager.yml
+      target: /alertmanager.yml
+      bind:
+        create_host_path: true
+  consumer-db:
+    command:
+    - -p
+    - "9292"
+    container_name: consumer-db
+    environment:
+      DEBUG: "false"
+      POSTGRES_DB: consumer-db
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+    image: postgres:13-alpine
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 9292
+      published: 9292
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: 'volume'
+      source: consumer-db
+      target: /var/lib/postgresql/data
+      volume: {}
+  consumer-persistence:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/consumer-persistence
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/consumer-persistence/Dockerfile
+    environment:
+      AMQ_BROKER_HOSTNAME: activemq
+      AMQ_BROKER_PORT: "61616"
+      AMQ_CONSUMER_PERSISTENCE_QUEUE: persistencequeue
+      AMQ_NODE_QUEUE_NAME: nodequeue
+      DATABASE_HOST: consumer-db
+      DATABASE_NAME: consumer-db
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: "9292"
+      DATABASE_USER: admin
+      SERVER_PORT: "8965"
+      SPRING_PROFILES_ACTIVE: prod
+    image: consumer-persistence
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 8965
+      published: 8965
+      protocol: tcp
+    restart: unless-stopped
+  grafana:
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: '"admin"'
+      GF_SECURITY_ADMIN_USER: '"admin"'
+    image: grafana/grafana:latest
+    links:
+    - prometheus:prometheus
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 3000
+      published: 3000
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/data/grafana
+      target: /var/lib/grafana
+      bind:
+        create_host_path: true
+  history-db:
+    command:
+    - -p
+    - "7004"
+    environment:
+      DEBUG: "false"
+      POSTGRES_DB: payment-history
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+    image: postgres:13-alpine
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 7004
+      published: 7004
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: volume
+      source: history-db
+      target: /var/lib/postgresql/data
+      volume: {}
+  node-consumer:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/node-consumer
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/node-consumer/Dockerfile
+    deploy:
+      replicas: 1
+    environment:
+      AMQ_BROKER_HOSTNAME: activemq
+      AMQ_CONSUMER_PERSISTENCE_QUEUE: persistencequeue
+      AMQ_NODE_ACK_QUEUE: nodeack
+      AMQ_NODE_QUEUE_NAME: nodequeue
+      AMQ_STOMP_PORT: "61613"
+      AMQ_USER_NAME: admin
+      AMQ_USER_PASS: admin
+    image: node-consumer:latest
+    networks:
+      scaler: null
+    restart: unless-stopped
+  pgadmin:
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: "5050"
+    image: dpage/pgadmin4
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 5050
+      published: 5050
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: pgadmin-data
+      target: /var/lib/pgadmin
+      volume: {}
+  prometheus:
+    command:
+    - --web.enable-lifecycle
+    - --config.file=/etc/prometheus/prometheus.yml
+    deploy:
+      replicas: 1
+    image: prom/prometheus:v2.21.0
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 9090
+      published: 9000
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/data/prometheus
+      target: /etc/prometheus
+      bind:
+        create_host_path: true
+    - type: volume
+      source: prometheus-data
+      target: /prometheus
+      volume: {}
+  quarkus-consumer:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/quarkus-consumer
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/quarkus-consumer/Dockerfile.multistage
+    image: quarkus-consumer
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 8080
+      published: 8371
+      protocol: tcp
+    restart: unless-stopped
+  scaler:
+    deploy:
+      replicas: 1
+      labels:
+        com.df.distribute: "true"
+        com.df.notify: "true"
+        com.df.port: "8080"
+        com.df.servicePath: /scaler
+      placement:
+        constraints:
+        - node.role == manager
+    environment:
+      ALERTMANAGER_ADDRESS: http://alert-manager:9093
+      DEFAULT_MAX_REPLICAS: "150"
+      SERVER_PREFIX: /scaler
+    image: thomasjpfan/docker-scaler:master
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 8080
+      published: 8743
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+      bind:
+        create_host_path: true
+  scaler-proxy:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/scaler-proxy
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/scaler-proxy/Dockerfile
+    deploy:
+      replicas: 1
+    environment:
+      AMQ_NODE_ACK_QUEUE: nodeack
+      AMQ_SPRING_ACK_QUEUE: springack
+      DATABASE_HOST: history-db
+      DATABASE_NAME: payment-history
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: "7004"
+      DATABASE_USER: admin
+      DELEGATION_HOSTNAME: scaler
+      SCALING_CB0: "1"
+      SCALING_CB1: "5"
+      SCALING_CB2: "10"
+      SCALING_CB3: "30"
+      SCALING_QB0: "15"
+      SCALING_QB1: "30"
+      SCALING_QB2: "100"
+      SPRING_PROFILES_ACTIVE: prod
+    image: scaler-proxy
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 9245
+      published: 9245
+      protocol: tcp
+  spring-consumer:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/spring-consumer
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/spring-consumer/Dockerfile
+    environment:
+      AMQ_BROKER_HOSTNAME: activemq
+      AMQ_BROKER_PORT: "61616"
+      AMQ_SPRING_QUEUE_NAME: springqueue
+      DATABASE_HOST: spring-db
+      DATABASE_NAME: spring-db
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: "7693"
+      DATABASE_USER: admin
+      SERVER_PORT: "7143"
+      SPRING_PROFILES_ACTIVE: prod
+    image: spring-consumer
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 7143
+      published: 7143
+      protocol: tcp
+    restart: unless-stopped
+  supplier-backend:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/supplier-backend
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/supplier-backend/Dockerfile
+    environment:
+      AMQ_BROKER_HOSTNAME: activemq
+      AMQ_BROKER_PORT: "61616"
+      AMQ_NODE_QUEUE_NAME: nodequeue
+      AMQ_SPRING_QUEUE_NAME: springqueue
+      DATABASE_HOST: history-db
+      DATABASE_NAME: payment-history
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: "7004"
+      DATABASE_USER: admin
+      SERVER_PORT: "8284"
+      SPRING_PROFILES_ACTIVE: prod
+    image: supplier-backend
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 8284
+      published: 8284
+      protocol: tcp
+    restart: unless-stopped
+  supplier-frontend:
+    build:
+      context: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/supplier-frontend
+      dockerfile: /mnt/c/Dokumente und Einstellungen/silas/Documents/Arbeit/demo-projects/bsc-prototype/stack-scale-benchmark/stack/supplier-frontend/Dockerfile
+    deploy:
+      replicas: 1
+    environment:
+      API_HOSTNAME: supplier-backend
+      API_PORT: "8284"
+      CHOKIDAR_USEPOLLING: "true"
+    image: supplier-frontend
+    networks:
+      scaler: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: 7384
+      protocol: tcp
+    restart: unless-stopped
+networks:
+  scaler:
+    name: scaler
+    external: true
+volumes:
+  consumer-db:
+    name: stack_consumer-db
+  history-db:
+    name: stack_history-db
+  pgadmin-data:
+    name: stack_pgadmin-data
+  prometheus-data:
+    name: stack_prometheus-data
