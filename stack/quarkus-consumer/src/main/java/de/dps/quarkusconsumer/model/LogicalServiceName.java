@@ -1,4 +1,4 @@
-package dps.hoffmann.quarkusconsumer.model;
+package de.dps.quarkusconsumer.model;
 
 /**
  * Names of scalable services

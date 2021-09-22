@@ -1,4 +1,5 @@
-package dps.hoffmann.quarkusconsumer.model;
+package de.dps.quarkusconsumer.model;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

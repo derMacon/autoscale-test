@@ -1,4 +1,4 @@
-package dps.hoffmann.quarkusconsumer.model;
+package de.dps.quarkusconsumer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.With;
 
 import java.sql.Timestamp;
 
-import static dps.hoffmann.quarkusconsumer.utils.PaymentUtils.now;
+import static de.dps.quarkusconsumer.utils.PaymentUtils.now;
 
 /**
  * Message pushed to the persistence queue
@@ -35,12 +35,12 @@ public class OutputPaymentMsg {
     private Timestamp processedTimestamp;
     private String content;
 
-    public OutputPaymentMsg(old old) {
+    public OutputPaymentMsg(InputPaymentMsg inputMsg) {
         this.serviceName = LogicalServiceName.SPRING;
-        this.batchId = old.getBatchId();
-        this.sentTimestamp = old.getSentTimestamp();
+        this.batchId = inputMsg.getBatchId();
+        this.sentTimestamp = inputMsg.getSentTimestamp();
         this.receivedTimestamp = now();
-        this.content = old.getContent();
+        this.content = inputMsg.getContent();
     }
 
 }

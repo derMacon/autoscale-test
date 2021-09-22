@@ -1,1 +1,0 @@
-create table if not exists testdata2(testid int, teststr varchar(255), primary key (testid));

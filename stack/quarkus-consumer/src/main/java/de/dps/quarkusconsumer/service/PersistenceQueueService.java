@@ -1,7 +1,8 @@
-package dps.hoffmann.quarkusconsumer.service;
+package de.dps.quarkusconsumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dps.hoffmann.quarkusconsumer.model.OutputPaymentMsg;
+import de.dps.quarkusconsumer.model.OutputPaymentMsg;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,11 +14,11 @@ import javax.inject.Inject;
  * a database
  */
 @ApplicationScoped
+@AllArgsConstructor
 @Slf4j
 public class PersistenceQueueService {
 
-    @Inject
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @SneakyThrows
     public void save(OutputPaymentMsg outputPaymentMsg) {

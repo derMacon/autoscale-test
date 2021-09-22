@@ -1,8 +1,8 @@
-package dps.hoffmann.quarkusconsumer.service;
+package de.dps.quarkusconsumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dps.hoffmann.quarkusconsumer.model.InputPaymentMsg;
-import dps.hoffmann.quarkusconsumer.model.OutputPaymentMsg;
+import de.dps.quarkusconsumer.model.InputPaymentMsg;
+import de.dps.quarkusconsumer.model.OutputPaymentMsg;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,16 +23,23 @@ public class WorkerService {
     PersistenceQueueService persistenceService;
 
     @SneakyThrows
-    public void work(String msgBody) {
+    public OutputPaymentMsg work(String msgBody) {
         InputPaymentMsg inputMessage = objectMapper.readValue(msgBody, InputPaymentMsg.class);
         OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
-        persistenceService.save(outputMessage);
 
+        // todo sleep needs to happen after value was put in acknowledgement queue
+        // not before ...
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        return outputMessage;
+
+//        String out = objectMapper.writeValueAsString(outputMessage);
+//        log.info("out: {}", out);
+//        return out;
     }
 
 }

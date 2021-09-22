@@ -1,4 +1,4 @@
-package dps.hoffmann.quarkusconsumer.model;
+package de.dps.quarkusconsumer.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 @ToString
-public class old {
+public class InputPaymentMsgOld {
 
     private Integer batchId;
     private String content;

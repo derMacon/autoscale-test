@@ -1,4 +1,4 @@
-package dps.hoffmann.quarkusconsumer.utils;
+package de.dps.quarkusconsumer.utils;
 
 import java.sql.Timestamp;
 
