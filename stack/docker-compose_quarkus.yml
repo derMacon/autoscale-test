@@ -19,7 +19,7 @@ services:
     # build: quarkus-consumer/
     build:
       context: quarkus-consumer/
-      dockerfile: quarkus-consumer/Dockerfile.multistage
+      dockerfile: Dockerfile.multistage
     networks:
       - scaler
     ports:
