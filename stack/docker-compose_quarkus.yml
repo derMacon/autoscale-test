@@ -14,6 +14,18 @@ services:
       - "49156:5672"
     restart: unless-stopped
 
+  quarkus-consumer:
+    image: quarkus-consumer
+    # build: quarkus-consumer/
+    build:
+      context: quarkus-consumer/
+      dockerfile: quarkus-consumer/Dockerfile.multistage
+    networks:
+      - scaler
+    ports:
+      - "8371:8080"
+    restart: unless-stopped
+
   quarkus-db:
     image: postgres:13-alpine
     networks:
