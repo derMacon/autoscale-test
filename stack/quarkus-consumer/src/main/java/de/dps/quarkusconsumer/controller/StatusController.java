@@ -1,5 +1,8 @@
 package de.dps.quarkusconsumer.controller;
 
+import io.vertx.mutiny.core.eventbus.EventBus;
+
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import java.io.BufferedReader;
@@ -12,6 +15,9 @@ import java.util.stream.Collectors;
 public class StatusController {
 
     private int version = 0;
+
+    @Inject
+    EventBus bus;
 
     @Path("version")
     @GET

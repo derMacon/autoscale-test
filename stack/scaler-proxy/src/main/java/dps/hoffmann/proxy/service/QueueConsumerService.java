@@ -35,4 +35,13 @@ public class QueueConsumerService {
         message.acknowledge();
     }
 
+    @JmsListener(destination = "${amq.queue.quarkus.acknowledgement}")
+    // todo maybe make this transactional???
+    public void onQuarkusMessage(Message message) throws JMSException {
+        String containerId = ((ActiveMQTextMessage) message).getText();
+        log.info("new uuid message: {}", containerId);
+        requestService.acknowledgeQuarkusScaling(containerId);
+        message.acknowledge();
+    }
+
 }

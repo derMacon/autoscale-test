@@ -68,6 +68,10 @@ public class RequestService {
         acknowledgeScaling(containerId, LogicalService.SPRING);
     }
 
+    public void acknowledgeQuarkusScaling(String containerId) {
+        acknowledgeScaling(containerId, LogicalService.QUARKUS);
+    }
+
     private void acknowledgeScaling(String containerId, LogicalService acknowledgingService) {
         log.info("ack cnt: {}", cnt++);
         if (unacknowledgedInstructions.isEmpty()) {

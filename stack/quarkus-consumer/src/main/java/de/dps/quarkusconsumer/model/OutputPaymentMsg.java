@@ -1,13 +1,6 @@
 package de.dps.quarkusconsumer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.With;
+import io.vertx.core.json.JsonObject;
 
 import java.sql.Timestamp;
 
@@ -16,14 +9,6 @@ import static de.dps.quarkusconsumer.utils.PaymentUtils.now;
 /**
  * Message pushed to the persistence queue
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@With
-@Builder
 public class OutputPaymentMsg {
 
     private String containerId;
@@ -43,4 +28,79 @@ public class OutputPaymentMsg {
         this.content = inputMsg.getContent();
     }
 
+    public String getContainerId() {
+        return containerId;
+    }
+
+    public int getBatchId() {
+        return batchId;
+    }
+
+    public LogicalServiceName getServiceName() {
+        return serviceName;
+    }
+
+    public String getExtractedElement() {
+        return extractedElement;
+    }
+
+    public Timestamp getSentTimestamp() {
+        return sentTimestamp;
+    }
+
+    public Timestamp getReceivedTimestamp() {
+        return receivedTimestamp;
+    }
+
+    public Timestamp getProcessedTimestamp() {
+        return processedTimestamp;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
+    }
+
+    public void setBatchId(int batchId) {
+        this.batchId = batchId;
+    }
+
+    public void setServiceName(LogicalServiceName serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public void setExtractedElement(String extractedElement) {
+        this.extractedElement = extractedElement;
+    }
+
+    public void setSentTimestamp(Timestamp sentTimestamp) {
+        this.sentTimestamp = sentTimestamp;
+    }
+
+    public void setReceivedTimestamp(Timestamp receivedTimestamp) {
+        this.receivedTimestamp = receivedTimestamp;
+    }
+
+    public void setProcessedTimestamp(Timestamp processedTimestamp) {
+        this.processedTimestamp = processedTimestamp;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public JsonObject toJsonObject() {
+        return new JsonObject()
+                .put("containerId", this.containerId)
+                .put("batchId", this.batchId)
+                .put("serviceName", this.serviceName)
+                .put("extractedElement", this.extractedElement)
+                .put("sentTimestamp", this.sentTimestamp)
+                .put("receivedTimestamp", this.receivedTimestamp)
+                .put("processedTimestamp", this.processedTimestamp)
+                .put("content", this.content);
+    }
 }

@@ -1,13 +1,14 @@
 package de.dps.quarkusconsumer.utils;
 
 import de.dps.quarkusconsumer.service.ExtractionService;
-import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -16,19 +17,20 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class XmlUtils {
 
 
     // todo remove sneaky throw
-    @SneakyThrows
     public static boolean validateAgainstXSD(String xmlStr, String xsdPath) {
         String xsdContent = ResourceUtils.readResource(ExtractionService.class, xsdPath);
-        InputStream xsdInput = IOUtils.toInputStream(xsdContent, "UTF-8");
-        InputStream xmlInput = IOUtils.toInputStream(xmlStr, "UTF-8");
+
 
         try {
+            InputStream xsdInput = IOUtils.toInputStream(xsdContent, "UTF-8");
+            InputStream xmlInput = IOUtils.toInputStream(xmlStr, "UTF-8");
             SchemaFactory factory = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(new StreamSource(xsdInput));
@@ -36,6 +38,7 @@ public class XmlUtils {
             validator.validate(new StreamSource(xmlInput));
             return true;
         } catch (Exception ex) {
+            // todo exception handling
             return false;
         }
 
@@ -49,7 +52,6 @@ public class XmlUtils {
      * @param xmlContent content from which the element should be extracted
      * @return element from the xml content
      */
-    @SneakyThrows
     public static String extractElem(String xPath, String xmlContent) {
         String output = null;
         try {
@@ -67,6 +69,13 @@ public class XmlUtils {
             NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
             output = nodes.item(0).getFirstChild().getNodeValue();
         } catch (XPathExpressionException e) {
+            // todo exception handling
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return output;

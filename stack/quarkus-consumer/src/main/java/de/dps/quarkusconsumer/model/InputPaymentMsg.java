@@ -1,17 +1,7 @@
 package de.dps.quarkusconsumer.model;
 
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.sql.Timestamp;
 
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class InputPaymentMsg {
 
     private Integer batchId;
@@ -19,4 +9,39 @@ public class InputPaymentMsg {
     private String xpath;
     private Timestamp sentTimestamp;
 
+
+    public InputPaymentMsg() {
+    }
+
+    public Integer getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Integer batchId) {
+        this.batchId = batchId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getXpath() {
+        return xpath;
+    }
+
+    public void setXpath(String xpath) {
+        this.xpath = xpath;
+    }
+
+    public Timestamp getSentTimestamp() {
+        return sentTimestamp;
+    }
+
+    public void setSentTimestamp(Timestamp sentTimestamp) {
+        this.sentTimestamp = sentTimestamp;
+    }
 }

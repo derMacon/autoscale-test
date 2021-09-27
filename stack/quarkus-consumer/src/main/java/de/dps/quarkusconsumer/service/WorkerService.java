@@ -1,16 +1,14 @@
 package de.dps.quarkusconsumer.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dps.quarkusconsumer.model.InputPaymentMsg;
 import de.dps.quarkusconsumer.model.OutputPaymentMsg;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 @ApplicationScoped
-@Slf4j
 public class WorkerService {
 
     @Inject
@@ -22,9 +20,13 @@ public class WorkerService {
     @Inject
     PersistenceQueueService persistenceService;
 
-    @SneakyThrows
     public OutputPaymentMsg work(String msgBody) {
-        InputPaymentMsg inputMessage = objectMapper.readValue(msgBody, InputPaymentMsg.class);
+        InputPaymentMsg inputMessage = null;
+        try {
+            inputMessage = objectMapper.readValue(msgBody, InputPaymentMsg.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
 
         // todo sleep needs to happen after value was put in acknowledgement queue
