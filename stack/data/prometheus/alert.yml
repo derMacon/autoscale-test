@@ -707,7 +707,7 @@ groups:
         expr: >
           org_apache_activemq_Broker_ConsumerCount{
           brokerName="localhost",
-          destinationName="", 
+          destinationName="quarkusqueue", 
           destinationType="Queue",
           instance="activemq:8080", 
           job="services"
@@ -716,21 +716,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 15
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 30
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -740,21 +740,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 30
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 100
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -764,14 +764,14 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 100
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -781,21 +781,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } >= 0
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 15
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -803,7 +803,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -813,21 +813,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 30
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 100
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -835,7 +835,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -845,14 +845,14 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 100
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -860,7 +860,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -870,21 +870,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } >= 0
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 15
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -892,7 +892,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -902,21 +902,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 15
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 30
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -924,7 +924,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -934,7 +934,7 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 100
@@ -949,7 +949,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -959,21 +959,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } >= 0
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 15
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -981,7 +981,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -991,21 +991,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 15
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 30
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -1013,7 +1013,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -1023,21 +1023,21 @@ groups:
         expr: >
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } > 30
           and 
           org_apache_activemq_Broker_QueueSize{
            brokerName="localhost", 
-           destinationName="",
+           destinationName="quarkusqueue",
            destinationType="Queue", 
            instance="activemq:8080", job="services"
           } <= 100
           and 
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
@@ -1045,7 +1045,7 @@ groups:
           and
           org_apache_activemq_Broker_ConsumerCount{
            brokerName="localhost",
-           destinationName="", 
+           destinationName="quarkusqueue", 
            destinationType="Queue",
            instance="activemq:8080", 
            job="services"
