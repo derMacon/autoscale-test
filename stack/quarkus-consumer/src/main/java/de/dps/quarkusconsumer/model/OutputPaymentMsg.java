@@ -1,5 +1,6 @@
 package de.dps.quarkusconsumer.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.vertx.core.json.JsonObject;
 
 import java.sql.Timestamp;
@@ -16,6 +17,8 @@ public class OutputPaymentMsg {
     private int batchId;
     private LogicalServiceName serviceName;
     private String extractedElement;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private LocalDateTime sentTimestamp;
     private LocalDateTime receivedTimestamp;
     private LocalDateTime processedTimestamp;
