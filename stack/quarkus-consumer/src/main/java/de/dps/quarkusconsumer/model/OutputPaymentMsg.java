@@ -18,10 +18,13 @@ public class OutputPaymentMsg {
     private LogicalServiceName serviceName;
     private String extractedElement;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime sentTimestamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime receivedTimestamp;
-    private LocalDateTime processedTimestamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private LocalDateTime processedTimestamp; // 2021-09-28T15:40:14.978+00:00
+
     private String content;
 
     public OutputPaymentMsg(InputPaymentMsg inputMsg) {

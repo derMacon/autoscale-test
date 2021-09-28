@@ -1,5 +1,6 @@
 package de.dps.quarkusconsumer.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
@@ -12,6 +13,8 @@ public class InputPaymentMsg {
     private Integer batchId;
     private String content;
     private String xpath;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSzz")
     private LocalDateTime sentTimestamp;
 
     public Integer getBatchId() {

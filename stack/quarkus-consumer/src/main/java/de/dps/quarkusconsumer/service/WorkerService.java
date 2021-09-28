@@ -2,6 +2,7 @@ package de.dps.quarkusconsumer.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import de.dps.quarkusconsumer.model.InputPaymentMsg;
 import de.dps.quarkusconsumer.model.OutputPaymentMsg;
 
@@ -22,6 +23,8 @@ public class WorkerService {
 
     public OutputPaymentMsg work(String msgBody) {
         InputPaymentMsg inputMessage = null;
+
+        objectMapper.setDateFormat(new StdDateFormat().withColonInTimeZone(true));
         try {
             inputMessage = objectMapper.readValue(msgBody, InputPaymentMsg.class);
         } catch (JsonProcessingException e) {
