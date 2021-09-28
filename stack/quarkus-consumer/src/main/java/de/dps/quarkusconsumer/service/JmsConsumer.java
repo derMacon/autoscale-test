@@ -90,6 +90,7 @@ public class JmsConsumer {
     private String extractAmqMsg(Message<String> msg) {
         String out = null;
         String rawMsgBody = ((AmqpMessage) msg).getBody().toString();
+        LOG.info("raw amq msg: " + rawMsgBody);
 
         final String regex = "AmqpValue\\{(.*)\\}";
         Pattern p = Pattern.compile(regex);
@@ -99,6 +100,7 @@ public class JmsConsumer {
             out = m.group(1);
         }
 
+        LOG.info("output: " + out);
         return out;
     }
 
