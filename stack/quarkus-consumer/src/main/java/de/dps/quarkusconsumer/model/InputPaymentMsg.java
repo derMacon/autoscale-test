@@ -9,10 +9,6 @@ public class InputPaymentMsg {
     private String xpath;
     private Timestamp sentTimestamp;
 
-
-    public InputPaymentMsg() {
-    }
-
     public Integer getBatchId() {
         return batchId;
     }
