@@ -54,7 +54,6 @@ public class JmsConsumer {
      */
     @Blocking
     @Incoming("input-requests")
-//    @Outgoing("persistence-requests")
     @Acknowledgment(Acknowledgment.Strategy.MANUAL)
     public CompletionStage<Void> process(Message<String> message) {
         LOG.info("new msg");

@@ -31,9 +31,9 @@ public class ExtractionService {
             return null;
         }
 
+        OutputPaymentMsg out =  new OutputPaymentMsg(inputMessage);
         String extractedElem = extractElem(inputMessage.getXpath(), inputMessage.getContent());
 
-        OutputPaymentMsg out =  new OutputPaymentMsg(inputMessage);
         out.setContainerId(containerInfo.getId());
         out.setExtractedElement(extractedElem);
 

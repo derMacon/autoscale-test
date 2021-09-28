@@ -21,7 +21,7 @@ public class OutputPaymentMsg {
     private String content;
 
     public OutputPaymentMsg(InputPaymentMsg inputMsg) {
-        this.serviceName = LogicalServiceName.SPRING;
+        this.serviceName = LogicalServiceName.QUARKUS;
         this.batchId = inputMsg.getBatchId();
         this.sentTimestamp = inputMsg.getSentTimestamp();
         this.receivedTimestamp = now();
@@ -92,15 +92,4 @@ public class OutputPaymentMsg {
         this.content = content;
     }
 
-    public JsonObject toJsonObject() {
-        return new JsonObject()
-                .put("containerId", this.containerId)
-                .put("batchId", this.batchId)
-                .put("serviceName", this.serviceName)
-                .put("extractedElement", this.extractedElement)
-                .put("sentTimestamp", this.sentTimestamp)
-                .put("receivedTimestamp", this.receivedTimestamp)
-                .put("processedTimestamp", this.processedTimestamp)
-                .put("content", this.content);
-    }
 }
