@@ -28,20 +28,7 @@ public class WorkerService {
             e.printStackTrace();
         }
         OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
-
-        // todo sleep needs to happen after value was put in acknowledgement queue
-        // not before ...
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return outputMessage;
-
-//        String out = objectMapper.writeValueAsString(outputMessage);
-//        log.info("out: {}", out);
-//        return out;
     }
 
 }

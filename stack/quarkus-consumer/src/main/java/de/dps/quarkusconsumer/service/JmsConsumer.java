@@ -5,15 +5,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dps.quarkusconsumer.model.OutputPaymentMsg;
 import io.smallrye.reactive.messaging.amqp.AmqpMessage;
 import io.smallrye.reactive.messaging.annotations.Blocking;
+import org.apache.commons.logging.Log;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static de.dps.quarkusconsumer.utils.MyTimeUtils.myWait;
 
 /**
  * A bean consuming data from the "request" AMQP queue and giving out a random quote.
@@ -23,6 +30,9 @@ import java.util.regex.Pattern;
 public class JmsConsumer {
 
     private static final Logger LOG = Logger.getLogger(JmsConsumer.class);
+
+    @Channel("persistence-requests")
+    Emitter<String> persistenceEmitter;
 
     private WorkerService workerService;
     private ObjectMapper objectMapper;
@@ -44,9 +54,9 @@ public class JmsConsumer {
      */
     @Blocking
     @Incoming("input-requests")
-    @Outgoing("persistence-requests")
+//    @Outgoing("persistence-requests")
     @Acknowledgment(Acknowledgment.Strategy.MANUAL)
-    public String process(Message<String> message) {
+    public CompletionStage<Void> process(Message<String> message) {
         LOG.info("new msg");
         OutputPaymentMsg out =  workerService.work(extractAmqMsg(message));
 
@@ -57,8 +67,16 @@ public class JmsConsumer {
             e.printStackTrace();
         }
 
+        persistenceEmitter.send(json);
         message.ack();
-        return json;
+
+        LOG.info("before wait");
+        myWait(3000);
+        LOG.info("after wait");
+
+        // slightly hacky
+        // src: https://stackoverflow.com/questions/59055537/completionstage-completablefuture-void-what-to-return
+        return CompletableFuture.runAsync(()->{});
     }
 
     /**

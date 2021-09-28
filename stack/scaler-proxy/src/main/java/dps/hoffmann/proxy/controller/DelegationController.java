@@ -51,7 +51,7 @@ public class DelegationController {
             @RequestParam int additionalCnt,
             @RequestParam LogicalService service
     ) {
-        log.info("manual scale: {}", additionalCnt);
+        log.info("manual scale: {} - {}", additionalCnt, service.name());
         emptyInstrBinSemaphore.acquire();
         log.info("after semaphore");
 

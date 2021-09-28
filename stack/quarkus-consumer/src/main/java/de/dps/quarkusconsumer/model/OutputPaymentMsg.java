@@ -4,7 +4,7 @@ import io.vertx.core.json.JsonObject;
 
 import java.sql.Timestamp;
 
-import static de.dps.quarkusconsumer.utils.PaymentUtils.now;
+import static de.dps.quarkusconsumer.utils.MyTimeUtils.now;
 
 /**
  * Message pushed to the persistence queue

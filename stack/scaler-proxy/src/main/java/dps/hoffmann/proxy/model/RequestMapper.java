@@ -24,11 +24,13 @@ public class RequestMapper {
     public RequestMapper(
         ScalingProperties scalingProperties,
         @Value("${delegation.nodeservice}") String nodeServiceName,
-        @Value("${delegation.springservice}") String springServiceName
+        @Value("${delegation.springservice}") String springServiceName,
+        @Value("${delegation.quarkusservice}") String quarkusServiceName
     ) {
         serviceNameMapping = new HashMap<>();
         serviceNameMapping.put(NODE, nodeServiceName);
         serviceNameMapping.put(SPRING, springServiceName);
+        serviceNameMapping.put(QUARKUS, quarkusServiceName);
 
         scalingIntervalMapping = new HashMap<>();
         scalingIntervalMapping.put(DIFF_CL0_CL1, abs(scalingProperties.getCb0() - scalingProperties.getCb1()));

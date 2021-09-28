@@ -1,9 +1,7 @@
 package de.dps.quarkusconsumer.service;
 
 import de.dps.quarkusconsumer.model.ContainerInfo;
-import io.quarkus.runtime.StartupEvent;
 import io.smallrye.common.annotation.Blocking;
-import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Message;
@@ -11,7 +9,7 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import static de.dps.quarkusconsumer.utils.PaymentUtils.now;
+import static de.dps.quarkusconsumer.utils.MyTimeUtils.now;
 
 @ApplicationScoped
 public class StartupAckService {
