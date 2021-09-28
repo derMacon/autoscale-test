@@ -1,12 +1,21 @@
 package de.dps.quarkusconsumer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Timestamp;
 
 public class InputPaymentMsg {
 
+    @JsonProperty("batchId")
     private Integer batchId;
+
+    @JsonProperty("content")
     private String content;
+
+    @JsonProperty("xpath")
     private String xpath;
+
+    @JsonProperty("sentTimestamp")
     private Timestamp sentTimestamp;
 
     public Integer getBatchId() {

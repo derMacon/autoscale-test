@@ -25,6 +25,7 @@ public class WorkerService {
         try {
             inputMessage = objectMapper.readValue(msgBody, InputPaymentMsg.class);
         } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
