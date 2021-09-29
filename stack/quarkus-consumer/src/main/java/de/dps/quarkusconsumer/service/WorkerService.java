@@ -5,12 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import de.dps.quarkusconsumer.model.InputPaymentMsg;
 import de.dps.quarkusconsumer.model.OutputPaymentMsg;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 @ApplicationScoped
 public class WorkerService {
+
+    private static final Logger LOG = Logger.getLogger(WorkerService.class);
 
     @Inject
     ObjectMapper objectMapper;
@@ -31,6 +34,8 @@ public class WorkerService {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+
+        LOG.info("worker - parsed iput msg: " + inputMessage);
         OutputPaymentMsg outputMessage = extractionService.createPayment(inputMessage);
         return outputMessage;
     }

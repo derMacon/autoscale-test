@@ -1,6 +1,7 @@
 package de.dps.quarkusconsumer.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.vertx.core.json.JsonObject;
 
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import static de.dps.quarkusconsumer.utils.MyTimeUtils.now;
 /**
  * Message pushed to the persistence queue
  */
+@RegisterForReflection
 public class OutputPaymentMsg {
 
     private String containerId;
@@ -97,5 +99,19 @@ public class OutputPaymentMsg {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "OutputPaymentMsg{" +
+                "containerId='" + containerId + '\'' +
+                ", batchId=" + batchId +
+                ", serviceName=" + serviceName +
+                ", extractedElement='" + extractedElement + '\'' +
+                ", sentTimestamp=" + sentTimestamp +
+                ", receivedTimestamp=" + receivedTimestamp +
+                ", processedTimestamp=" + processedTimestamp +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

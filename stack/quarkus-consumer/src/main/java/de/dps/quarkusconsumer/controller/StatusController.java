@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Path("info")
 public class StatusController {
 
-    private int version = 0;
+    private int version = 1;
 
     @Inject
     EventBus bus;

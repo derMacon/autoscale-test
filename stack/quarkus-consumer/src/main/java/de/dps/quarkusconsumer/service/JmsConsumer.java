@@ -66,6 +66,7 @@ public class JmsConsumer {
             e.printStackTrace();
         }
 
+        LOG.info("created json: " + json);
         persistenceEmitter.send(json);
         message.ack();
 
@@ -100,7 +101,7 @@ public class JmsConsumer {
             out = m.group(1);
         }
 
-        LOG.info("output: " + out);
+        LOG.info("extracted amq msg: " + out);
         return out;
     }
 

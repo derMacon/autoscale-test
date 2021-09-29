@@ -48,4 +48,14 @@ public class InputPaymentMsg {
     public void setSentTimestamp(LocalDateTime sentTimestamp) {
         this.sentTimestamp = sentTimestamp;
     }
+
+    @Override
+    public String toString() {
+        return "InputPaymentMsg{" +
+                "batchId=" + batchId +
+                ", content='" + content + '\'' +
+                ", xpath='" + xpath + '\'' +
+                ", sentTimestamp=" + sentTimestamp +
+                '}';
+    }
 }

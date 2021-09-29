@@ -2,6 +2,7 @@ package de.dps.quarkusconsumer.utils;
 
 import de.dps.quarkusconsumer.service.ExtractionService;
 import org.apache.commons.io.IOUtils;
+import org.jboss.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -22,23 +23,39 @@ import java.io.InputStream;
 
 public class XmlUtils {
 
+    private final static Logger LOG = Logger.getLogger(XmlUtils.class);
 
-    // todo remove sneaky throw
     public static boolean validateAgainstXSD(String xmlStr, String xsdPath) {
+        LOG.info("xmlUtils - xmlStr: " + xmlStr + "; xsdPath: " + xsdPath);
         String xsdContent = ResourceUtils.readResource(ExtractionService.class, xsdPath);
-
 
         try {
             InputStream xsdInput = IOUtils.toInputStream(xsdContent, "UTF-8");
             InputStream xmlInput = IOUtils.toInputStream(xmlStr, "UTF-8");
+
+            LOG.info("xsdInput null: " + xsdInput == null);
+            LOG.info("xmlInput null: " + xmlInput == null);
+
+//            com.sun.org.apache.xerces.internal.impl.dv.xs.SchemaDVFactoryImpl ref =
+//                    new com.sun.org.apache.xerces.internal.impl.dv.xs.SchemaDVFactoryImpl();
+
             SchemaFactory factory = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new StreamSource(xsdInput));
+
+            LOG.info("schema factory: " + factory);
+
+            StreamSource src = new StreamSource(xsdInput);
+            LOG.info("streamSource: " + src);
+            Schema schema = factory.newSchema(src);
+            LOG.info("schema: " + schema);
+
             Validator validator = schema.newValidator();
+            LOG.info("validator: " + validator);
             validator.validate(new StreamSource(xmlInput));
             return true;
         } catch (Exception ex) {
             // todo exception handling
+            LOG.info("xml utils exc: " + ex.getMessage());
             return false;
         }
 
