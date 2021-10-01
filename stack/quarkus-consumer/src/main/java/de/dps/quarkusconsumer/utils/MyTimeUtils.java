@@ -1,6 +1,7 @@
 package de.dps.quarkusconsumer.utils;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class MyTimeUtils {
 

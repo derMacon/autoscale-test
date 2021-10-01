@@ -32,10 +32,13 @@ public class ExtractionService {
         }
 
         OutputPaymentMsg out =  new OutputPaymentMsg(inputMessage);
+        LOG.info("extr - initialized output msg: " + out);
         String extractedElem = extractElem(inputMessage.getXpath(), inputMessage.getContent());
+        LOG.info("extr - elem: " + extractedElem);
 
         out.setContainerId(containerInfo.getId());
         out.setExtractedElement(extractedElem);
+        LOG.info("extr - final output msg: " + out);
 
         return out;
     }
