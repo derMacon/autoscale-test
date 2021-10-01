@@ -49,3 +49,14 @@ The first two steps can be automatically started by calling the [./clean-build-r
 - `docker service rm <SERVICE-NAME>`
 - `docker service update --force vossibility_prometheus`
 - `docker service logs vossibility_prometheus`
+
+### Current state: Quarkus project
+- in a containerized environment it is possible to build a native image and run a container
+	- Dockerfile provided by the official quarkus documentation
+	- it is possible to send a message that also gets persisted (whole lifecycle)
+- those quarkus consumer containers who were added during runtime somehow do not participate in the processing
+	- take a look at the prefetch size for the broker connection. In a spring environment it is possible to set that to 1
+- during dev and build time all dependencies can be used. However during runtime there is no JVM in the background, so that it is not possible to use reflections on which many components rely.
+	- for that quarkus has multiple extensions that can be used in production but sometimes those extensions still rely on other components that use reflections
+	- to still be able to use those it is necessary to register the classes with a specific annotation
+	- if it's an external dependency that uses reflections the registration has to be configured in a dedicated json settings file in the root of the resources

@@ -1,6 +1,7 @@
 ## Todos
+- those quarkus consumer containers who were added during runtime somehow do not participate in the processing
+	- take a look at the prefetch size for the broker connection. In a spring environment it is possible to set that to 1
 - set receiving timestamp at beginning (not in outputmsg constructor)
 - rename projects
 - timestamps in wrong timezone (proxy service)
 - lint code checks on all project
-- rename entry point in proxy (still says testapp in title)
