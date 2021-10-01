@@ -25,22 +25,6 @@ services:
       - "8371:8080"
     restart: unless-stopped
 
-  quarkus-db:
-    image: postgres:13-alpine
-    networks:
-      - scaler
-    ports:
-      - "7005:7005"
-    command: -p 7005
-    environment:
-      - DEBUG=false
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=quarkus-db
-    volumes:
-      - quarkus-db:/var/lib/postgresql/data
-    restart: unless-stopped
-
   pgadmin:
     image: dpage/pgadmin4
     networks:
@@ -89,7 +73,6 @@ services:
 
     
 volumes:
-  quarkus-db:
   pgadmin-data: 
   history-db:
   consumer-db:

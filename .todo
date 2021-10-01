@@ -1,0 +1,6 @@
+## Todos
+- set receiving timestamp at beginning (not in outputmsg constructor)
+- rename projects
+- timestamps in wrong timezone (proxy service)
+- lint code checks on all project
+- rename entry point in proxy (still says testapp in title)

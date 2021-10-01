@@ -700,3 +700,354 @@ groups:
            job="services"
           } <= 30
         for: 0m 
+
+  - name: quarkusScaleAlert
+    rules:
+      - alert: quarkus_baseline
+        expr: >
+          org_apache_activemq_Broker_ConsumerCount{
+          brokerName="localhost",
+          destinationName="quarkusqueue", 
+          destinationType="Queue",
+          instance="activemq:8080", 
+          job="services"
+          } < 1
+      - alert: quarkus_ql1_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
+        for: 0m 
+      - alert: quarkus_ql2_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
+        for: 0m 
+      - alert: quarkus_ql3_cl0
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } == 1
+        for: 0m 
+      - alert: quarkus_ql0_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
+        for: 0m 
+      - alert: quarkus_ql2_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
+        for: 0m 
+      - alert: quarkus_ql3_cl1
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 1
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 5
+        for: 0m 
+      - alert: quarkus_ql0_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m 
+      - alert: quarkus_ql1_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m 
+      - alert: quarkus_ql3_cl2
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 5
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 10
+        for: 0m  
+      - alert: quarkus_ql0_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } >= 0
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 15
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+        for: 0m 
+      - alert: quarkus_ql1_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 15
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 30
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+        for: 0m 
+      - alert: quarkus_ql2_cl3
+        expr: >
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } > 30
+          and 
+          org_apache_activemq_Broker_QueueSize{
+           brokerName="localhost", 
+           destinationName="quarkusqueue",
+           destinationType="Queue", 
+           instance="activemq:8080", job="services"
+          } <= 100
+          and 
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } > 10
+          and
+          org_apache_activemq_Broker_ConsumerCount{
+           brokerName="localhost",
+           destinationName="quarkusqueue", 
+           destinationType="Queue",
+           instance="activemq:8080", 
+           job="services"
+          } <= 30
+        for: 0m 

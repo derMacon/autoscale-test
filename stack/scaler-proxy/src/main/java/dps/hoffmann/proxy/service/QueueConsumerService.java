@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
+import static dps.hoffmann.proxy.utils.ConversionUtils.translateActveMqByteMessage;
+
 @Service
 @Slf4j
 public class QueueConsumerService {
@@ -21,7 +23,7 @@ public class QueueConsumerService {
     // todo maybe make this transactional???
     public void onNodeJsMessage(Message message) throws JMSException {
         String containerId = ((ActiveMQTextMessage) message).getText();
-        log.info("new uuid message: {}", containerId);
+        log.info("node - new uuid message: {}", containerId);
         requestService.acknowledgeNodeJsScaling(containerId);
         message.acknowledge();
     }
@@ -30,8 +32,17 @@ public class QueueConsumerService {
     // todo maybe make this transactional???
     public void onSpringMessage(Message message) throws JMSException {
         String containerId = ((ActiveMQTextMessage) message).getText();
-        log.info("new uuid message: {}", containerId);
+        log.info("spring - new uuid message: {}", containerId);
         requestService.acknowledgeSpringScaling(containerId);
+        message.acknowledge();
+    }
+
+    @JmsListener(destination = "${amq.queue.quarkus.acknowledgement}")
+    // todo maybe make this transactional???
+    public void onQuarkusMessage(Message message) throws JMSException {
+        String containerId = translateActveMqByteMessage(message);
+        log.info("quarkus - new uuid message: {}", containerId);
+        requestService.acknowledgeQuarkusScaling(containerId);
         message.acknowledge();
     }
 
