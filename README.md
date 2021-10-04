@@ -1,6 +1,6 @@
 # Instant Payment Demo
 
-Project to showcase the general approach of processing an instant payment provided by the DPS Gmbh. The focus of the project is to monitor the duration it takes for a swarm of containers to start completely. When confronted with multiple unacknowledged messages the project will scale the consumer components appropriate to the number of messages.
+Project to showcase the general approach of processing an instant payment provided by the DPS Gmbh. The focus of the project is to monitor the duration it takes for a swarm of containers to start completely. When confronted with multiple unacknowledged messages the project will scale the consumer components appropriate to the number of messages. The whole thesis describing the project in detail can be viewed [here](https://github.com/derMacon/serverless-bsc-thesis).
 
 ![overview](./_docs/img/overview-bw.png)
 
